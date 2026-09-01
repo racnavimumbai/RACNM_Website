@@ -1,69 +1,673 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import {
+  Sparkles,
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  MapPin,
+  FileText,
+  Users,
+  ChevronRight,
+  Quote,
+  Maximize2
+} from 'lucide-react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import {
+  getInitiatives,
+  getEvents,
+  getGalleryPhotos,
+  getEditorials,
+  Initiative,
+  EventItem,
+  GalleryPhoto,
+  Editorial
+} from '@/lib/data/api';
+import LightboxModal from '@/components/LightboxModal';
+import PdfViewerModal from '@/components/PdfViewerModal';
+import FilmReelBackground from '@/components/FilmReelBackground';
+import ParticleField from '@/components/ParticleField';
+import AnimatedCounter from '@/components/AnimatedCounter';
+import SectionDivider from '@/components/SectionDivider';
+import { formatDate } from '@/lib/utils';
+
+// Variants for staggered entrance
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+export default function HomePage() {
+  const [initiatives, setInitiatives] = useState<Initiative[]>([]);
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
+  const [editorials, setEditorials] = useState<Editorial[]>([]);
+  const [activeInitiativeIdx, setActiveInitiativeIdx] = useState<number>(0);
+  
+  // Modal states
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentPhotoIdx, setCurrentPhotoIdx] = useState(0);
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState<{ title: string; url: string | null }>({ title: '', url: null });
+
+  useEffect(() => {
+    async function loadData() {
+      const [inits, evts, phts, edts] = await Promise.all([
+        getInitiatives(),
+        getEvents(),
+        getGalleryPhotos(),
+        getEditorials()
+      ]);
+      setInitiatives(inits);
+      setEvents(evts.filter(e => e.status === 'published'));
+      setPhotos(phts);
+      setEditorials(edts.filter(e => e.status === 'published'));
+    }
+    loadData();
+  }, []);
+
+  const featuredEvents = events.filter(e => e.is_featured).slice(0, 3);
+  const latestEditorial = editorials[0];
+  const activeInitiative = initiatives[activeInitiativeIdx] || initiatives[0];
+
+  const handleOpenPhoto = (idx: number) => {
+    setCurrentPhotoIdx(idx);
+    setLightboxOpen(true);
+  };
+
+  const handleOpenPdf = (title: string, url: string | null) => {
+    setSelectedPdf({ title, url });
+    setPdfModalOpen(true);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <div className="space-y-32 pb-32 bg-[#08080b] text-[#f8fafc]">
+      
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION                                                  */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-[92vh] flex flex-col justify-center items-center overflow-hidden pt-20 hero-backlight">
+        
+        {/* Moving Film Reel Photo Background */}
+        <FilmReelBackground photos={photos} onPhotoClick={handleOpenPhoto} />
+
+        {/* Floating Gold Particles */}
+        <ParticleField count={40} />
+
+        {/* Soft Ambient Radial Light Beam */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#d4af37]/20 via-[#ca8a04]/8 to-transparent blur-[180px] rounded-full pointer-events-none z-1" />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center space-y-8 pointer-events-none"
+        >
+          
+          {/* Legacy Pill Tag */}
+          <motion.div variants={itemVariants} className="relative z-20 mb-4 inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#0f0f15]/95 border border-[#d4af37]/50 shadow-2xl text-xs font-extrabold text-[#d4af37] backdrop-blur-xl pointer-events-auto">
+            <Sparkles className="w-4 h-4 text-[#d4af37] glow-pulse" />
+            <span className="tracking-widest uppercase font-sans">45 YEARS OF LEGACY • EST. 1982 IN VASHI</span>
+          </motion.div>
+
+          {/* Transparent MO.png Emblem Centerpiece with Translucent Black Backdrop Glow */}
+          <motion.div variants={itemVariants} className="relative w-full max-w-lg mx-auto py-2 flex items-center justify-center pointer-events-auto">
+            {/* Opaque Dark Backdrop for MO Emblem (Offset downward to avoid overlap with legacy pill) */}
+            <div className="absolute w-[240px] h-[240px] sm:w-[310px] sm:h-[310px] rounded-full bg-[#08080b] shadow-[0_20px_50px_35px_#08080b] pointer-events-none z-0" />
+
+            <motion.img
+              animate={{ y: [-6, 6, -6] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              whileHover={{ scale: 1.08, rotate: 2 }}
+              src="/images/MO.png"
+              alt="Rotaract Club of Navi Mumbai Magnum Opus Official Logo"
+              className="relative z-10 w-auto h-56 sm:h-72 lg:h-80 object-contain filter drop-shadow-[0_20px_45px_rgba(212,175,55,0.45)] cursor-pointer"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </motion.div>
+
+          {/* Headline & Narrative */}
+          <motion.div variants={itemVariants} className="space-y-4 max-w-4xl mx-auto pointer-events-auto">
+            <h1 className="font-serif-heading text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight">
+              Crafting Our <span className="text-gold-gradient">MAGNUM OPUS</span>
+            </h1>
+            <p className="font-sans-body text-zinc-300 text-base sm:text-xl font-normal leading-relaxed max-w-2xl mx-auto">
+              The official digital sanctuary of <strong className="text-white font-semibold">Rotaract Club of Navi Mumbai</strong> (District 3142, Zone 1). Four and a half decades of empowering youth, creating ground-level impact, and building lifelong bonds.
+            </p>
+          </motion.div>
+
+          {/* Action CTAs */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-4 pt-2 pointer-events-auto">
+            <Link
+              href="/events"
+              className="px-8 py-4 btn-gold-action uppercase tracking-wider text-xs font-extrabold flex items-center gap-2 shadow-2xl"
+            >
+              <span>Explore Living Stories</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/join"
+              className="px-8 py-4 btn-outline-action uppercase tracking-wider text-xs font-bold shadow-xl"
+            >
+              <Users className="w-4 h-4 text-[#d4af37]" />
+              <span>Become a Member</span>
+            </Link>
+          </motion.div>
+
+          {/* Thoreau Quote Card */}
+          <motion.div variants={itemVariants} className="pt-6 max-w-2xl mx-auto pointer-events-auto">
+            <div className="p-6 rounded-2xl modern-card text-left relative">
+              <Quote className="w-8 h-8 text-[#d4af37]/30 absolute top-4 right-4" />
+              <p className="font-serif-heading italic text-zinc-200 text-base sm:text-lg">
+                &ldquo;How vain it is to sit down to write when you have not stood up to live.&rdquo;
+              </p>
+              <span className="block mt-2 text-xs font-semibold text-[#d4af37] text-right font-sans">
+                — Henry David Thoreau (RCNM Philosophical Anchor)
+              </span>
+            </div>
+          </motion.div>
+
+        </motion.div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* ANIMATED LEGACY STATS                                         */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6 p-8 sm:p-12 modern-card-gold"
+        >
+          
+          {[
+            { number: 45, suffix: '', label: 'Years of Service', sublabel: 'Est. 1982 in Vashi', gold: true },
+            { number: 1000, suffix: '+', label: 'Projects Executed', sublabel: 'Social & Community Action', gold: false },
+            { number: 50000, suffix: '+', label: 'Lives Impacted', sublabel: 'Across Navi Mumbai', gold: true },
+            { number: 1, suffix: '', label: 'Oldest Pioneer Club', sublabel: 'Zone 1, District 3142', gold: false, prefix: 'Zone ' },
+          ].map((stat, idx) => (
+            <div key={idx} className={`space-y-1 text-center p-4 ${idx < 3 ? 'border-r border-white/10' : ''} hover:-translate-y-1 transition-transform duration-300`}>
+              <AnimatedCounter
+                target={stat.number}
+                suffix={stat.suffix}
+                prefix={stat.prefix}
+                className={`font-serif-heading font-bold text-4xl sm:text-6xl block ${stat.gold ? 'stat-number' : 'text-white'}`}
+              />
+              <span className="text-xs font-bold uppercase tracking-widest text-white block">{stat.label}</span>
+              <span className="text-[11px] text-zinc-400 block">{stat.sublabel}</span>
+            </div>
+          ))}
+
+        </motion.div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* THRUST AREAS VISUAL EXPLORER                                  */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
+          className="space-y-3 text-center sm:text-left"
+        >
+          <span className="text-xs font-bold text-[#d4af37] tracking-widest uppercase flex items-center justify-center sm:justify-start gap-2">
+            <Sparkles className="w-4 h-4" />
+            <span>OUR CORE PILLARS</span>
+          </span>
+          <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+            Thrust Areas of RCNM
+          </h2>
+          <p className="text-zinc-400 text-sm sm:text-base max-w-2xl">
+            Thrust areas are the compass guiding us toward progress and innovation across Navi Mumbai.
+          </p>
+        </motion.div>
+
+        {initiatives.length > 0 && (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariants}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl modern-card-gold p-8 sm:p-12"
           >
-            Documentation
-          </a>
+            
+            {/* Left Nav List */}
+            <div className="lg:col-span-5 space-y-3">
+              {initiatives.map((item, idx) => (
+                <motion.button
+                  key={item.id}
+                  onClick={() => setActiveInitiativeIdx(idx)}
+                  onMouseEnter={() => setActiveInitiativeIdx(idx)}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                  className={`w-full p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between border ${
+                    activeInitiativeIdx === idx
+                      ? 'bg-gradient-to-r from-[#d4af37]/25 via-[#181824] to-[#0e0e13] border-[#d4af37] text-white shadow-xl shadow-[#d4af37]/5'
+                      : 'bg-[#0a0a0d] border-white/5 text-zinc-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-[#d4af37] font-extrabold uppercase tracking-wider block">
+                      {item.category}
+                    </span>
+                    <h3 className="font-serif-heading text-xl font-bold">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${activeInitiativeIdx === idx ? 'text-[#d4af37] translate-x-1' : 'text-zinc-600'}`} />
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Right Active Showcase */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="relative aspect-video rounded-2xl overflow-hidden border-2 border-[#d4af37]/40 shadow-2xl group">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeInitiative?.id}
+                    initial={{ opacity: 0, scale: 1.08 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    src={activeInitiative?.cover_image}
+                    alt={activeInitiative?.title}
+                    className="w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#040405] via-transparent to-transparent" />
+                <div className="absolute top-4 right-4 px-3.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
+                  {activeInitiative?.category}
+                </div>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeInitiative?.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-3"
+                >
+                  <h3 className="font-serif-heading text-3xl font-bold text-white">
+                    {activeInitiative?.title}
+                  </h3>
+                  <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                    {activeInitiative?.description}
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href={`/initiatives/${activeInitiative?.slug}`}
+                      className="inline-flex items-center gap-2 text-xs font-bold text-[#d4af37] hover:underline uppercase tracking-wider group/link"
+                    >
+                      <span>Explore Initiative Details & Linked Events</span>
+                      <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+            </div>
+
+          </motion.div>
+        )}
+      </section>
+
+      <SectionDivider />
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* FEATURED EVENT STORIES                                        */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-24 bg-[#060609] border-y border-white/5 relative overflow-hidden gradient-mesh-bg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariants}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4"
+          >
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-[#d4af37] tracking-widest uppercase flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>LIVING STORIES & EVENTS</span>
+              </span>
+              <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+                Featured Event Stories
+              </h2>
+              <p className="text-zinc-400 text-sm max-w-xl">
+                Every event is a chapter in our Magnum Opus. Explore photographs, metrics, and narratives from our recent activities.
+              </p>
+            </div>
+
+            <Link
+              href="/events"
+              className="px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-[#d4af37] text-xs font-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all self-start md:self-auto uppercase tracking-wider group"
+            >
+              <span>View All Events</span>
+              <ArrowRight className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          >
+            {featuredEvents.map((event, idx) => (
+              <motion.div
+                key={event.id}
+                variants={itemVariants}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="elevated-card flex flex-col justify-between overflow-hidden group shadow-2xl"
+              >
+                {/* Featured Ribbon */}
+                {event.is_featured && idx === 0 && (
+                  <div className="featured-ribbon">★ FEATURED</div>
+                )}
+
+                <div className="relative h-64 overflow-hidden rounded-t-[20px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={event.cover_image}
+                    alt={event.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-transparent to-transparent opacity-90" />
+                  
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-zinc-300">
+                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-full backdrop-blur-md text-[11px] font-semibold border border-white/10">
+                      <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
+                      {formatDate(event.event_date)}
+                    </span>
+                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-full backdrop-blur-md text-[11px] font-semibold border border-white/10">
+                      <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
+                      {event.location.split(',')[0]}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <h3 className="font-serif-heading text-2xl font-bold text-white group-hover:text-[#d4af37] transition-colors duration-300 leading-snug">
+                      {event.title}
+                    </h3>
+                    <p className="text-zinc-400 text-xs line-clamp-3 leading-relaxed">
+                      {event.summary}
+                    </p>
+                  </div>
+
+                  {/* Impact metrics */}
+                  {event.impact_metrics && event.impact_metrics.length > 0 && (
+                    <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/10">
+                      {event.impact_metrics.slice(0, 2).map((m: { label: string; value: string }, metricIdx: number) => (
+                        <div key={metricIdx} className="bg-white/5 p-2.5 rounded-xl text-center border border-white/5">
+                          <span className="font-serif-heading font-bold text-[#d4af37] text-base block">{m.value}</span>
+                          <span className="text-[10px] text-zinc-400 uppercase block font-sans">{m.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="pt-3">
+                    <Link
+                      href={`/events/${event.slug}`}
+                      className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-[#d4af37] hover:text-black font-bold text-xs transition-all duration-300 border border-white/10 hover:border-[#d4af37] block uppercase tracking-wider"
+                    >
+                      Read Event Story & View Photos
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
         </div>
-      </main>
+      </section>
+
+      <SectionDivider />
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* PHOTO ARCHIVE REEL — Masonry-style                            */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4"
+        >
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-[#d4af37] tracking-widest uppercase flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
+              <span>VISUAL ARCHIVE</span>
+            </span>
+            <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+              Moments Captured in Time
+            </h2>
+            <p className="text-zinc-400 text-sm max-w-xl">
+              Photographs are the living evidence of our fellowship, energy, and work. Explore recent moments from the 45th Year.
+            </p>
+          </div>
+
+          <Link
+            href="/gallery"
+            className="px-6 py-3 rounded-full bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40 hover:bg-[#d4af37] hover:text-black text-xs font-bold flex items-center gap-2 transition-all uppercase tracking-wider group"
+          >
+            <span>Open Full Gallery</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
+
+        {/* Gallery Grid with varied sizes */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={containerVariants}
+          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 auto-rows-[140px] sm:auto-rows-[180px]"
+        >
+          {photos.slice(0, 6).map((photo, idx) => {
+            // Create varied sizes: first and fourth items span 2 rows
+            const isTall = idx === 0 || idx === 3;
+            const isWide = idx === 1;
+            return (
+              <motion.div
+                key={photo.id}
+                variants={itemVariants}
+                whileHover={{ scale: 1.03 }}
+                onClick={() => handleOpenPhoto(idx)}
+                className={`relative rounded-2xl overflow-hidden group cursor-pointer border border-white/10 hover:border-[#d4af37]/60 transition-all shadow-xl hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] ${
+                  isTall ? 'row-span-2' : ''
+                } ${isWide ? 'col-span-2' : ''}`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={photo.image_url}
+                  alt={photo.caption}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
+                  <span className="self-end p-1.5 rounded-full bg-black/60 text-white backdrop-blur-md">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </span>
+                  <p className="text-[11px] text-zinc-200 line-clamp-2 font-medium">
+                    {photo.caption}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* EDITORIAL & NEWSLETTER SPOTLIGHT                               */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {latestEditorial && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariants}
+            className="modern-card p-8 sm:p-14 relative overflow-hidden"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-bold uppercase tracking-wider">
+                  <FileText className="w-4 h-4" />
+                  <span>EDITORIAL & NEWSLETTER ARCHIVE</span>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-serif-heading text-3xl sm:text-5xl font-bold text-white leading-tight">
+                    {latestEditorial.title}
+                  </h3>
+                  <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                    {latestEditorial.summary}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-400">
+                  <span>Author: <strong className="text-white">{latestEditorial.author}</strong></span>
+                  <span>•</span>
+                  <span>Published: <strong className="text-white">{formatDate(latestEditorial.published_at)}</strong></span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  {latestEditorial.pdf_url && (
+                    <button
+                      onClick={() => handleOpenPdf(latestEditorial.title, latestEditorial.pdf_url)}
+                      className="px-8 py-4 btn-gold-action text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 shadow-xl"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>Read Newsletter PDF</span>
+                    </button>
+                  )}
+                  <Link
+                    href={`/editorials/${latestEditorial.slug}`}
+                    className="px-6 py-4 btn-outline-action text-white font-bold text-xs uppercase tracking-wider transition-all"
+                  >
+                    View All Publications
+                  </Link>
+                </div>
+              </div>
+
+              <motion.div
+                whileHover={{ scale: 1.02, rotate: 1 }}
+                transition={{ duration: 0.4 }}
+                className="relative aspect-square rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl hover:border-[#d4af37]/40 transition-colors"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={latestEditorial.cover_image}
+                  alt={latestEditorial.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-xs text-zinc-300 space-y-1">
+                  <span className="font-serif-heading text-2xl font-bold text-[#d4af37] block">
+                    MAGNUM OPUS Official Bulletin
+                  </span>
+                  Official Monthly Publication of Rotaract Club of Navi Mumbai
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* PROSPECTIVE MEMBER CONVERSION BANNER                           */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={sectionVariants}
+          className="modern-card-gold p-10 sm:p-20 text-center space-y-8 relative overflow-hidden"
+        >
+          {/* Background particles */}
+          <ParticleField count={25} />
+
+          <div className="max-w-3xl mx-auto space-y-5 relative z-10">
+            <span className="text-xs font-bold text-[#d4af37] tracking-widest uppercase">
+              BECOME PART OF SOMETHING GREATER
+            </span>
+            <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight leading-tight">
+              Ready to write your chapter in our <span className="text-gold-gradient">MAGNUM OPUS</span>?
+            </h2>
+            <p className="text-zinc-300 text-base leading-relaxed">
+              Rotaract is more than an organization — it is a sanctuary of lifelong friendships, leadership opportunities, community service, and memories that stay with you forever.
+            </p>
+            <div className="pt-4 flex items-center justify-center gap-4">
+              <Link
+                href="/join"
+                className="px-10 py-4.5 btn-gold-action text-black font-extrabold text-base uppercase tracking-wider flex items-center gap-2 shadow-2xl"
+              >
+                <span>Apply to Join RCNM</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* MODALS */}
+      <LightboxModal
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        photos={photos}
+        currentIndex={currentPhotoIdx}
+        onNavigate={idx => setCurrentPhotoIdx(idx)}
+      />
+
+      <PdfViewerModal
+        isOpen={pdfModalOpen}
+        onClose={() => setPdfModalOpen(false)}
+        title={selectedPdf.title}
+        pdfUrl={selectedPdf.url}
+      />
     </div>
   );
 }
