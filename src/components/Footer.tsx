@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Mail, MapPin, ShieldCheck, Sparkles, ArrowUp } from 'lucide-react';
+import { Mail, MapPin, Sparkles, ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { InstagramIcon, LinkedinIcon, YoutubeIcon } from '@/components/SocialIcons';
 
@@ -194,15 +194,8 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-center text-center gap-4 text-xs text-zinc-500">
             <p>© {new Date().getFullYear()} Rotaract Club of Navi Mumbai. 45 Years of Excellence (1982–2027). All rights reserved.</p>
-            
-            <div className="flex items-center gap-4">
-              <Link href="/admin/login" className="flex items-center gap-1 hover:text-[#d4af37] transition-colors text-[11px] font-bold">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>Admin CMS Portal</span>
-              </Link>
-            </div>
           </div>
         </motion.div>
       </footer>

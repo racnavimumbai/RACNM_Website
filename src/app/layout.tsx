@@ -100,8 +100,8 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#08080b] text-[#f8fafc] font-sans antialiased flex flex-col min-h-screen relative">
-        {/* Global Subtle Golden Sparkles Overlay */}
-        <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden" aria-hidden="true">
+        {/* Global Subtle Golden Sparkles Background */}
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           <ParticleField count={75} />
         </div>
 
@@ -112,7 +112,7 @@ export default function RootLayout({
         <ScrollProgress />
         
         <Header />
-        <main className="flex-1 pt-[72px] page-enter">{children}</main>
+        <main className="flex-1 pt-[72px] page-enter relative z-10">{children}</main>
         <Footer />
       </body>
     </html>

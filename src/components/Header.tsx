@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Sparkles, UserCheck, ShieldCheck } from 'lucide-react';
+import { Menu, X, Sparkles, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -118,13 +118,6 @@ export default function Header() {
             <UserCheck className="w-4 h-4" />
             <span>Join RCNM</span>
           </Link>
-          <Link
-            href="/admin"
-            title="Admin CMS Portal"
-            className="p-2.5 rounded-xl text-zinc-400 hover:text-[#d4af37] hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-[#d4af37]/40"
-          >
-            <ShieldCheck className="w-4 h-4" />
-          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -204,14 +197,6 @@ export default function Header() {
                   className="w-full text-center py-3.5 btn-gold-action text-black font-extrabold text-sm uppercase tracking-wider shadow-xl justify-center"
                 >
                   Become a Member
-                </Link>
-                <Link
-                  href="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 rounded-2xl border border-white/10 text-zinc-400 text-xs flex items-center justify-center gap-2 hover:bg-white/5 transition-colors"
-                >
-                  <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
-                  <span>Admin CMS Login</span>
                 </Link>
               </motion.div>
             </motion.div>

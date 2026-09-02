@@ -77,10 +77,13 @@ export interface BoardMember {
 export interface JoinApplication {
   id: string;
   name: string;
+  full_name?: string;
   email: string;
   phone: string;
   occupation: string;
   reason: string;
+  motivation?: string;
+  age?: number;
   status: 'pending' | 'contacted' | 'accepted' | 'rejected';
   created_at: string;
 }

@@ -28,7 +28,7 @@ export default function InitiativesPage() {
   }, []);
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#08080b] text-[#f8fafc]">
+    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[#f8fafc]">
       
       {/* Editorial Header */}
       <motion.div

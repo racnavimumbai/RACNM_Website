@@ -55,7 +55,24 @@ export default function JoinPage() {
     setErrorMessage('');
 
     try {
-      await submitJoinApplication(formData);
+      const res = await fetch('/api/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          occupation: formData.occupation,
+          motivation: formData.reason
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit application.');
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       setErrorMessage(err.message || 'Failed to submit application. Please try again.');
@@ -65,7 +82,7 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#08080b] text-[#f8fafc]">
+    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[#f8fafc]">
       
       {/* Editorial Header */}
       <motion.div

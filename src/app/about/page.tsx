@@ -57,7 +57,7 @@ const fourWayTests = [
 
 export default function AboutPage() {
   return (
-    <div className="space-y-28 py-12 pb-24 bg-[#08080b] text-[#f8fafc]">
+    <div className="space-y-28 py-12 pb-24 bg-transparent text-[#f8fafc]">
       
       {/* EDITORIAL HERO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 page-hero-glow">

@@ -106,7 +106,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-8 sm:space-y-10 pb-12 bg-[#08080b] text-[#f8fafc]">
+    <div className="space-y-8 sm:space-y-10 pb-12 bg-transparent text-[#f8fafc]">
       
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION                                                  */}
