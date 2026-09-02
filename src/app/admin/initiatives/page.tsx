@@ -155,19 +155,46 @@ export default function AdminInitiativesPage() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-300 uppercase">Thrust Category</label>
-                <select
-                  value={editingItem.category || 'Education'}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-zinc-300 uppercase block">Thrust Category (Set Any Custom Category)</label>
+                <input
+                  type="text"
+                  list="category-suggestions"
+                  value={editingItem.category || ''}
                   onChange={e => setEditingItem({ ...editingItem, category: e.target.value })}
+                  placeholder="e.g. Education, Environment, Youth Empowerment, Sports..."
                   className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
-                >
-                  <option value="Education">Education</option>
-                  <option value="Environment">Environment</option>
-                  <option value="Leadership Growth">Leadership Growth</option>
-                  <option value="Community Service">Community Service</option>
-                  <option value="International Service">International Service</option>
-                </select>
+                />
+                <datalist id="category-suggestions">
+                  <option value="Education" />
+                  <option value="Environment" />
+                  <option value="Leadership Growth" />
+                  <option value="Community Service" />
+                  <option value="International Service" />
+                  <option value="Youth Empowerment" />
+                  <option value="Sports & Culture" />
+                  <option value="Vocational Development" />
+                  <option value="Health & Sanitation" />
+                </datalist>
+
+                {/* Quick Suggestion Pills */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-[10px] text-zinc-500 font-mono">Quick Pick:</span>
+                  {['Education', 'Environment', 'Leadership Growth', 'Community Service', 'International Service', 'Youth Empowerment'].map(cat => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setEditingItem({ ...editingItem, category: cat })}
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-semibold border transition-all ${
+                        editingItem.category === cat
+                          ? 'bg-[#d4af37] text-black border-[#d4af37]'
+                          : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <ImageUploader
