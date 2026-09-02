@@ -23,7 +23,7 @@ const itemFade: Variants = {
 const timelineEvents = [
   {
     year: '1982',
-    title: 'Foundation of RCNM',
+    title: 'Foundation of RACNM',
     description: 'Chartered in Navi Mumbai, Rotaract Club of Navi Mumbai became the first community-based Rotaract club in Zone 1, establishing a landmark movement for youth service in the satellite city.'
   },
   {
@@ -39,7 +39,7 @@ const timelineEvents = [
   {
     year: '2020',
     title: 'Pandemic Resilience & Relief Operations',
-    description: 'Mobilized food supplies, medical emergency helplines, and digital learning support during the pandemic, proving the adaptive strength of RCNM youth.'
+    description: 'Mobilized food supplies, medical emergency helplines, and digital learning support during the pandemic, proving the adaptive strength of RACNM youth.'
   },
   {
     year: '2024-25',
@@ -82,7 +82,7 @@ export default function AboutPage() {
               <span className="italic font-normal text-gold-gradient">Rotaract Club of Navi Mumbai</span>
             </h1>
             <p className="font-sans-body text-zinc-300 text-base sm:text-lg leading-relaxed">
-              As the oldest community-based Rotaract club in Zone 1, District 3142, RCNM has spent 45 years nurturing leaders, creating social impact, and fostering lifelong bonds across Navi Mumbai and beyond.
+              As the oldest community-based Rotaract club in Zone 1, District 3142, RACNM has spent 45 years nurturing leaders, creating social impact, and fostering lifelong bonds across Navi Mumbai and beyond.
             </p>
           </motion.div>
         </motion.div>

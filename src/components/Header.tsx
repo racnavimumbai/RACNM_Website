@@ -116,7 +116,7 @@ export default function Header() {
             className="flex items-center gap-2 text-xs font-extrabold px-6 py-2.5 btn-gold-action uppercase tracking-wider"
           >
             <UserCheck className="w-4 h-4" />
-            <span>Join RCNM</span>
+            <span>Join RACNM</span>
           </Link>
         </div>
 

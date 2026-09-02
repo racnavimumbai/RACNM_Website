@@ -95,23 +95,23 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
       });
 
       await transporter.sendMail({
-        from: `"RCNM Web Portal" <${smtpUser}>`,
+        from: `"RACNM Web Portal" <${smtpUser}>`,
         to: recipientEmail,
         replyTo: data.email,
         subject: `[NEW MEMBER APPLICATION] ${data.full_name} - Rotaract Club of Navi Mumbai`,
         html: htmlContent
       });
 
-      console.log(`[RCNM Email] Notification email sent successfully to ${recipientEmail}`);
+      console.log(`[RACNM Email] Notification email sent successfully to ${recipientEmail}`);
       return true;
     } catch (error) {
-      console.error('[RCNM Email] SMTP dispatch error:', error);
+      console.error('[RACNM Email] SMTP dispatch error:', error);
       // Fallback log
     }
   }
 
   // Fallback log when SMTP credentials are pending configuration
-  console.log(`[RCNM Email Log] Simulated email notification to ${recipientEmail}:`);
+  console.log(`[RACNM Email Log] Simulated email notification to ${recipientEmail}:`);
   console.log(`Applicant: ${data.full_name} (${data.email}, ${data.phone})`);
   return true;
 }

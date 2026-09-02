@@ -52,7 +52,7 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
                     <h3 className="font-serif-heading font-bold text-white text-base sm:text-lg line-clamp-1">
                       {title}
                     </h3>
-                    <span className="text-[11px] text-zinc-400">RCNM Editorial Archive</span>
+                    <span className="text-[11px] text-zinc-400">RACNM Editorial Archive</span>
                   </div>
                 </div>
 

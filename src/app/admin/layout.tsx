@@ -43,12 +43,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       const supabase = getSupabaseBrowserClient();
       if (supabase) {
         const { data: { session } } = await supabase.auth.getSession();
-        if (!session && localStorage.getItem('rcnm_admin_logged') !== 'true') {
+        if (!session && localStorage.getItem('racnm_admin_logged') !== 'true') {
           router.push('/admin/login');
           return;
         }
       } else {
-        const isLogged = typeof window !== 'undefined' && localStorage.getItem('rcnm_admin_logged') === 'true';
+        const isLogged = typeof window !== 'undefined' && localStorage.getItem('racnm_admin_logged') === 'true';
         if (!isLogged) {
           router.push('/admin/login');
           return;
@@ -80,7 +80,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       await supabase.auth.signOut();
     }
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('rcnm_admin_logged');
+      localStorage.removeItem('racnm_admin_logged');
     }
     router.push('/admin/login');
   };
@@ -104,7 +104,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <div>
               <span className="font-serif-heading text-lg font-normal text-white block leading-tight">
-                RCNM Suite
+                RACNM Suite
               </span>
               <span className="text-[10px] font-mono text-[#d4af37] tracking-wider uppercase block">
                 ADMINISTRATIVE CMS
@@ -166,7 +166,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="lg:hidden bg-[#0e0e12] border-b border-zinc-800 p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-[#d4af37]" />
-            <span className="font-serif-heading text-white text-base">RCNM Admin CMS</span>
+            <span className="font-serif-heading text-white text-base">RACNM Admin CMS</span>
           </div>
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}

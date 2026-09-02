@@ -164,7 +164,7 @@ export default function JoinPage() {
               Application Received
             </h2>
             <p className="text-zinc-400 text-sm max-w-md mx-auto">
-              Thank you for applying to join RCNM. Our membership team will review your application and contact you via phone/email shortly.
+              Thank you for applying to join RACNM. Our membership team will review your application and contact you via phone/email shortly.
             </p>
           </motion.div>
         ) : (

@@ -68,10 +68,10 @@ export default function AdminLoginPage() {
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h1 className="font-serif-heading text-3xl font-bold text-white">
-            RCNM Admin CMS
+            RACNM Admin CMS
           </h1>
           <p className="text-zinc-400 text-xs">
-            Sign in with your authorized Supabase Admin account to manage portal assets.
+            Sign in with your authorized admin account to manage portal assets.
           </p>
         </div>
 
@@ -124,7 +124,7 @@ export default function AdminLoginPage() {
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Authenticating with Supabase...</span>
+                <span>Authenticating Admin...</span>
               </>
             ) : (
               <>
@@ -134,11 +134,6 @@ export default function AdminLoginPage() {
             )}
           </button>
         </form>
-
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] text-zinc-400 text-center space-y-1">
-          <span className="text-[#d4af37] font-semibold block">Supabase Auth Protected:</span>
-          <span>Only emails authorized in Supabase Dashboard $\rightarrow$ Authentication $\rightarrow$ Users can access.</span>
-        </div>
       </div>
     </div>
   );

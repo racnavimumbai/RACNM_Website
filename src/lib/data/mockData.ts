@@ -218,7 +218,7 @@ export const initialEvents: EventItem[] = [
     event_date: "2024-08-25",
     location: "CIDCO Exhibition Centre Auditorium, Navi Mumbai",
     summary: "A day-long leadership summit featuring keynote speeches, panel debates, and youth networking.",
-    description: "Distinguished speakers from entrepreneurship, social service, and public administration shared actionable frameworks with 300+ delegates. The conclave embodied RCNM's 45th Year theme — Magnum Opus — striving for personal and collective mastery.",
+    description: "Distinguished speakers from entrepreneurship, social service, and public administration shared actionable frameworks with 300+ delegates. The conclave embodied RACNM's 45th Year theme — Magnum Opus — striving for personal and collective mastery.",
     impact_metrics: [
       { label: "Delegates Attended", value: "320+" },
       { label: "Keynote Speakers", value: "6" },
@@ -242,7 +242,7 @@ export const initialEvents: EventItem[] = [
     event_date: "2024-08-04",
     location: "Railway Station Complex, Navi Mumbai",
     summary: "Collected 210 units of blood in partnership with Tata Memorial Blood Bank.",
-    description: "RCNM organized its signature blood donation camp at Navi Mumbai Railway Station, mobilising daily commuters and youth donors. Every donor received health checkups and donor certificates.",
+    description: "RACNM organized its signature blood donation camp at Navi Mumbai Railway Station, mobilising daily commuters and youth donors. Every donor received health checkups and donor certificates.",
     impact_metrics: [
       { label: "Blood Units Collected", value: "210" },
       { label: "Lives Saved (Est.)", value: "630" }
@@ -273,7 +273,7 @@ export const initialGalleryPhotos: GalleryPhoto[] = [
     event_id: "evt-2",
     album_name: "Mangrove Shield Plantation Drive",
     image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200&auto=format&fit=crop",
-    caption: "RCNM Green Warriors at Palm Beach wetlands",
+    caption: "RACNM Green Warriors at Palm Beach wetlands",
     rotaract_year: "2024-25",
     sort_order: 2,
     created_at: "2024-07-28T10:00:00Z"
@@ -329,7 +329,7 @@ export const initialEditorials: Editorial[] = [
     category: "Monthly Newsletter",
     pdf_url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     cover_image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1200&auto=format&fit=crop",
-    summary: "The inaugural bulletin of RCNM's 45th Year, featuring President's message, project highlights, and member stories.",
+    summary: "The inaugural bulletin of RACNM's 45th Year, featuring President's message, project highlights, and member stories.",
     content: "Welcome to the first edition of MAGNUM OPUS, the official monthly bulletin of the Rotaract Club of Navi Mumbai for the Rotaract Year 2024-25! As we cross our 45th year of service, we look back with reverence at our legacy since 1982 and move forward with ambitious initiatives for youth empowerment, civic action, and community care.",
     status: "published",
     published_at: "2024-08-01T10:00:00Z"

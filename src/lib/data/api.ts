@@ -18,12 +18,12 @@ export type { Initiative, EventItem, GalleryPhoto, Editorial, BoardMember, JoinA
 
 // Helper for localStorage persistence in mock mode
 const STORAGE_KEYS = {
-  INITIATIVES: 'rcnm_initiatives',
-  EVENTS: 'rcnm_events',
-  GALLERY: 'rcnm_gallery',
-  EDITORIALS: 'rcnm_editorials',
-  TEAM: 'rcnm_team',
-  APPLICATIONS: 'rcnm_applications'
+  INITIATIVES: 'racnm_initiatives',
+  EVENTS: 'racnm_events',
+  GALLERY: 'racnm_gallery',
+  EDITORIALS: 'racnm_editorials',
+  TEAM: 'racnm_team',
+  APPLICATIONS: 'racnm_applications'
 };
 
 function getLocal<T>(key: string, defaultVal: T): T {

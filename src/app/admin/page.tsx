@@ -64,7 +64,7 @@ export default function AdminDashboardPage() {
             <span>45th Year MAGNUM OPUS • Non-Technical Admin Portal</span>
           </div>
           <h1 className="font-serif-heading text-3xl sm:text-4xl font-bold text-white">
-            Welcome, RCNM Administrator
+            Welcome, RACNM Administrator
           </h1>
           <p className="text-zinc-400 text-xs sm:text-sm">
             Manage your club events, upload event photography, publish newsletters, and respond to incoming member applications.

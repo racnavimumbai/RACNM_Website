@@ -138,7 +138,7 @@ export default function Footer() {
               <ul className="space-y-2.5 text-xs">
                 {[
                   { href: '/', label: 'Home' },
-                  { href: '/about', label: 'About RCNM' },
+                  { href: '/about', label: 'About RACNM' },
                   { href: '/initiatives', label: 'Our Initiatives' },
                   { href: '/events', label: 'Events & Stories' },
                   { href: '/gallery', label: 'Photo Archive' },

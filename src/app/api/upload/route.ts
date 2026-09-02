@@ -35,7 +35,7 @@ export async function POST(request: Request) {
             'Authorization': `Bearer ${githubToken}`,
             'Content-Type': 'application/json',
             'Accept': 'application/vnd.github.v3+json',
-            'User-Agent': 'RCNM-Website-CMS'
+            'User-Agent': 'RACNM-Website-CMS'
           },
           body: JSON.stringify({
             message: `Upload image: ${filename} via Admin CMS`,

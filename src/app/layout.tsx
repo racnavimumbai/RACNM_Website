@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   description: 'Rotaract Club of Navi Mumbai is a premier community-based youth organization in Navi Mumbai (Est. 1982, Zone 1, District 3142). Celebrating 45 years of leadership, service & youth impact under MAGNUM OPUS.',
   keywords: [
     'Rotaract Club of Navi Mumbai',
-    'RCNM',
+    'RACNM',
     'Rotaract District 3142',
     'Rotaract Navi Mumbai',
     'Youth NGO Navi Mumbai',
@@ -73,7 +73,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'NGO',
     name: 'Rotaract Club of Navi Mumbai',
-    alternateName: 'RCNM',
+    alternateName: 'RACNM',
     url: 'https://rotaractclubofnavimumbai.org',
     logo: 'https://rotaractclubofnavimumbai.org/images/logo-full.png',
     foundingDate: '1982',
