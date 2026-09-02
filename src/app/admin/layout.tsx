@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -33,9 +33,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (pathname === '/admin/login') return;
+
+    const isLogged = typeof window !== 'undefined' && localStorage.getItem('rcnm_admin_logged') === 'true';
+    if (!isLogged) {
+      router.push('/admin/login');
+    } else {
+      setAuthorized(true);
+    }
+  }, [pathname, router]);
 
   if (pathname === '/admin/login') {
     return <>{children}</>;
+  }
+
+  if (!authorized) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0c] flex flex-col items-center justify-center text-zinc-400 text-xs font-mono space-y-2">
+        <div className="w-5 h-5 border-2 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
+        <span>Authenticating Admin Session...</span>
+      </div>
+    );
   }
 
   const handleLogout = () => {

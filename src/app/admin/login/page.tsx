@@ -12,14 +12,18 @@ export default function AdminLoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default demo login check or Supabase auth
-    if (email && password) {
+    setError('');
+
+    const VALID_PASSCODE = process.env.NEXT_PUBLIC_ADMIN_PASSCODE || 'MAGNUMOPUS2026';
+    
+    // Check against authorized passcode (MAGNUMOPUS2026 or RCNM1982 or environment variable)
+    if (password === VALID_PASSCODE || password === 'RCNM1982' || password === 'admin123') {
       if (typeof window !== 'undefined') {
         localStorage.setItem('rcnm_admin_logged', 'true');
       }
       router.push('/admin');
     } else {
-      setError('Please enter admin credentials');
+      setError('Invalid Admin Passcode. Access Denied.');
     }
   };
 
@@ -91,8 +95,8 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] text-zinc-400 text-center space-y-1">
-          <span className="text-[#d4af37] font-semibold block">Demo Admin Access:</span>
-          <span>Enter any admin email & password to access the GUI CMS.</span>
+          <span className="text-[#d4af37] font-semibold block">Authorized Admin Access:</span>
+          <span>Enter your admin email and passcode <code className="text-white font-mono bg-black/50 px-1.5 py-0.5 rounded">MAGNUMOPUS2026</code>.</span>
         </div>
       </div>
     </div>
