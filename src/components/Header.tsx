@@ -14,8 +14,7 @@ const navItems = [
   { name: 'Events', href: '/events' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Editorial', href: '/editorials' },
-  { name: 'Team', href: '/team' },
-  { name: 'Join Us', href: '/join' }
+  { name: 'Team', href: '/team' }
 ];
 
 export default function Header() {
