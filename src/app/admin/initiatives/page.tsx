@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getInitiatives, saveInitiative, deleteInitiative, Initiative } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { Plus, Edit2, Trash2, Sparkles, Check, X } from 'lucide-react';
+import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminInitiativesPage() {
   const [initiatives, setInitiatives] = useState<Initiative[]>([]);
@@ -46,6 +47,12 @@ export default function AdminInitiativesPage() {
     e.preventDefault();
     if (!editingItem.title) return;
 
+    if (editingItem.id) {
+      const original = initiatives.find(i => i.id === editingItem.id);
+      if (original && original.cover_image && original.cover_image !== editingItem.cover_image) {
+        deleteUploadedImage(original.cover_image);
+      }
+    }
     await saveInitiative(editingItem);
     setIsModalOpen(false);
     showToast('Initiative saved!');
@@ -54,6 +61,10 @@ export default function AdminInitiativesPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Delete this initiative?')) {
+      const target = initiatives.find(i => i.id === id);
+      if (target?.cover_image) {
+        deleteUploadedImage(target.cover_image);
+      }
       await deleteInitiative(id);
       showToast('Initiative deleted!');
       loadInitiatives();

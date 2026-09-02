@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getGalleryPhotos, saveGalleryPhoto, deleteGalleryPhoto, GalleryPhoto } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { Image as ImageIcon, Plus, Edit, Trash2, Search, X } from 'lucide-react';
+import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminGalleryPage() {
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
@@ -53,6 +54,12 @@ export default function AdminGalleryPage() {
 
     setSaving(true);
     try {
+      if (editingPhoto.id) {
+        const original = photos.find(p => p.id === editingPhoto.id);
+        if (original && original.image_url && original.image_url !== editingPhoto.image_url) {
+          deleteUploadedImage(original.image_url);
+        }
+      }
       await saveGalleryPhoto(editingPhoto);
       await loadPhotos();
       setIsModalOpen(false);
@@ -66,6 +73,10 @@ export default function AdminGalleryPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to remove this photograph from the archive?')) {
+      const target = photos.find(p => p.id === id);
+      if (target?.image_url) {
+        deleteUploadedImage(target.image_url);
+      }
       await deleteGalleryPhoto(id);
       await loadPhotos();
     }

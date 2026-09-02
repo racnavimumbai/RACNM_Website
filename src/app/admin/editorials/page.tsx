@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { getEditorials, saveEditorial, deleteEditorial, Editorial } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { FileText, Plus, Edit, Trash2, Search, X, BookOpen } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDate, deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminEditorialsPage() {
   const [editorials, setEditorials] = useState<Editorial[]>([]);
@@ -54,6 +54,12 @@ export default function AdminEditorialsPage() {
 
     setSaving(true);
     try {
+      if (editingEditorial.id) {
+        const original = editorials.find(ed => ed.id === editingEditorial.id);
+        if (original && original.cover_image && original.cover_image !== editingEditorial.cover_image) {
+          deleteUploadedImage(original.cover_image);
+        }
+      }
       await saveEditorial(editingEditorial);
       await loadEditorials();
       setIsModalOpen(false);
@@ -67,6 +73,10 @@ export default function AdminEditorialsPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this editorial publication?')) {
+      const target = editorials.find(ed => ed.id === id);
+      if (target?.cover_image) {
+        deleteUploadedImage(target.cover_image);
+      }
       await deleteEditorial(id);
       await loadEditorials();
     }

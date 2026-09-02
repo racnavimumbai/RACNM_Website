@@ -13,7 +13,7 @@ import {
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { formatDate } from '@/lib/utils';
+import { formatDate, deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -79,6 +79,12 @@ export default function AdminEventsPage() {
 
     setSaving(true);
     try {
+      if (editingEvent.id) {
+        const original = events.find(item => item.id === editingEvent.id);
+        if (original && original.cover_image && original.cover_image !== editingEvent.cover_image) {
+          deleteUploadedImage(original.cover_image);
+        }
+      }
       await saveEvent(editingEvent);
       await loadEvents();
       setIsModalOpen(false);
@@ -92,6 +98,10 @@ export default function AdminEventsPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this event from the website archive?')) {
+      const target = events.find(item => item.id === id);
+      if (target?.cover_image) {
+        deleteUploadedImage(target.cover_image);
+      }
       await deleteEvent(id);
       await loadEvents();
     }

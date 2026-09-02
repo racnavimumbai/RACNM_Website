@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getAllBoardMembers, saveBoardMember, deleteBoardMember, BoardMember } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { Plus, Edit2, Trash2, Users, Check, X } from 'lucide-react';
+import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminTeamPage() {
   const [members, setMembers] = useState<BoardMember[]>([]);
@@ -47,6 +48,12 @@ export default function AdminTeamPage() {
     e.preventDefault();
     if (!editingMember.name) return;
 
+    if (editingMember.id) {
+      const original = members.find(m => m.id === editingMember.id);
+      if (original && original.image_url && original.image_url !== editingMember.image_url) {
+        deleteUploadedImage(original.image_url);
+      }
+    }
     await saveBoardMember(editingMember);
     setIsModalOpen(false);
     showToast('Board member saved!');
@@ -55,6 +62,10 @@ export default function AdminTeamPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Delete board member?')) {
+      const target = members.find(m => m.id === id);
+      if (target?.image_url) {
+        deleteUploadedImage(target.image_url);
+      }
       await deleteBoardMember(id);
       showToast('Member removed!');
       loadMembers();

@@ -22,3 +22,16 @@ export function formatShortDate(dateString: string): string {
   };
   return new Date(dateString).toLocaleDateString("en-US", options);
 }
+
+export async function deleteUploadedImage(imageUrl: string | undefined | null) {
+  if (!imageUrl || !imageUrl.includes('/uploads/')) return;
+  try {
+    await fetch('/api/delete-image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageUrl })
+    });
+  } catch (err) {
+    console.error('Failed to delete image:', err);
+  }
+}
