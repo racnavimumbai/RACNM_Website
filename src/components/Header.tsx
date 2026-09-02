@@ -96,7 +96,7 @@ export default function Header() {
           </Link>
 
           {/* Navigation Dock */}
-          <nav className="hidden lg:flex items-center gap-1.5 bg-[#0f0f15]/90 backdrop-blur-2xl px-5 py-2.5 rounded-2xl border border-white/10 shadow-2xl shadow-black/50 relative">
+          <nav className="hidden lg:flex items-center gap-1 bg-[#0f0f15]/90 backdrop-blur-2xl px-4 py-1.5 rounded-2xl border border-white/10 shadow-2xl shadow-black/50 relative">
             {navItems.map(item => {
               const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
               return (
@@ -104,7 +104,7 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'px-4 py-2.5 text-xs font-semibold rounded-xl transition-all duration-300 tracking-wide relative z-10',
+                    'px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-300 tracking-wide relative z-10',
                     isActive
                       ? 'text-black font-extrabold'
                       : 'text-zinc-300 hover:text-white hover:bg-white/10'
@@ -127,12 +127,11 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-xl text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 ml-2 group"
-              title="Search website (Ctrl+K)"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 ml-1 group"
+              title="Search website"
             >
               <Search className="w-3.5 h-3.5 text-[#d4af37] group-hover:scale-110 transition-transform" />
-              <span className="hidden xl:inline text-[11px]">Search</span>
-              <kbd className="hidden xl:inline text-[9px] bg-black/40 text-zinc-400 px-1.5 py-0.5 rounded font-mono border border-white/10">⌘K</kbd>
+              <span>Search</span>
             </button>
           </nav>
 

@@ -24,8 +24,9 @@ const DEFAULT_FILM_IMAGES = [
 export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmReelBackgroundProps) {
   // Combine user uploaded photos with fallback images into valid GalleryPhoto array
   const fullPhotoList = useMemo<GalleryPhoto[]>(() => {
-    if (photos && photos.length > 0) {
-      return photos;
+    const validPhotos = photos ? photos.filter(p => p && p.image_url && p.image_url.trim() !== '') : [];
+    if (validPhotos.length > 0) {
+      return validPhotos;
     }
     return DEFAULT_FILM_IMAGES.map((url, idx) => ({
       id: `reel-${idx}`,
@@ -56,7 +57,7 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,8,11,0.85)_85%)] pointer-events-none z-0" />
 
       {/* Film Strip Row 1 */}
-      <div className="absolute top-10 sm:top-14 inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
+      <div className="absolute top-20 sm:top-24 inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
         <div className="film-track animate-film-left flex items-center gap-6 px-4 pointer-events-auto">
           {loopTrack1.map((item, idx) => (
             <div
@@ -91,7 +92,7 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
       </div>
 
       {/* Film Strip Row 2 */}
-      <div className="absolute top-[38%] sm:top-[40%] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
+      <div className="absolute top-[48%] sm:top-[50%] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
         <div className="film-track animate-film-right flex items-center gap-6 px-4 pointer-events-auto">
           {loopTrack2.map((item, idx) => (
             <div
