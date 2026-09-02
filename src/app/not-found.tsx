@@ -43,6 +43,7 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
+          className="space-y-6 pt-2"
         >
           <Link
             href="/"
@@ -51,6 +52,18 @@ export default function NotFound() {
             <ArrowLeft className="w-4 h-4" />
             <span>Return to Homepage</span>
           </Link>
+
+          <div className="pt-6 border-t border-white/10 flex flex-wrap justify-center gap-3 text-xs font-semibold text-zinc-400">
+            <Link href="/about" className="hover:text-[#d4af37] transition-colors">About Us</Link>
+            <span>•</span>
+            <Link href="/initiatives" className="hover:text-[#d4af37] transition-colors">Initiatives</Link>
+            <span>•</span>
+            <Link href="/events" className="hover:text-[#d4af37] transition-colors">Events</Link>
+            <span>•</span>
+            <Link href="/gallery" className="hover:text-[#d4af37] transition-colors">Gallery</Link>
+            <span>•</span>
+            <Link href="/join" className="hover:text-[#d4af37] transition-colors">Join Us</Link>
+          </div>
         </motion.div>
       </motion.div>
     </div>

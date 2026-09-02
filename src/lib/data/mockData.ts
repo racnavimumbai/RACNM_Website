@@ -101,7 +101,7 @@ export const initialInitiatives: Initiative[] = [
     id: "init-2",
     title: "Green Navi Mumbai Eco-Drive",
     slug: "green-navi-mumbai-eco-drive",
-    summary: "Sustainable mangrove conservation, urban afforestation, and zero-plastic awareness drives across Vashi & Belapur.",
+    summary: "Sustainable mangrove conservation, urban afforestation, and zero-plastic awareness drives across Navi Mumbai.",
     description: "In alignment with global environmental goals, RCNM leads weekly sapling plantation drives, lake cleanup campaigns, and plastic recycling workshops in collaboration with local civic bodies.",
     category: "Environment",
     cover_image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200&auto=format&fit=crop",
@@ -140,7 +140,7 @@ export const initialEvents: EventItem[] = [
     slug: "mega-book-donation-digital-lab",
     rotaract_year: "2024-25",
     event_date: "2024-08-15",
-    location: "NMMC School No. 28, Vashi, Navi Mumbai",
+    location: "NMMC School No. 28, Navi Mumbai",
     summary: "Donated 2,500+ books and set up 10 refurbished desktop computers for primary school students.",
     description: "On Independence Day, the Rotaract Club of Navi Mumbai celebrated by gifting educational infrastructure to 500+ underprivileged children. The event was inaugurated by District Rotaract Dignitaries and school leaders.",
     impact_metrics: [
@@ -165,7 +165,7 @@ export const initialEvents: EventItem[] = [
     slug: "mangrove-shield-sapling-plantation",
     rotaract_year: "2024-25",
     event_date: "2024-07-28",
-    location: "Palm Beach Road Wetlands, Vashi",
+    location: "Palm Beach Road Wetlands, Navi Mumbai",
     summary: "Planted 1,000 native mangrove saplings to protect Navi Mumbai's delicate coastal ecosystem.",
     description: "Over 80 Rotaract members, community volunteers, and civic partners united at dawn along Palm Beach Road to plant mangrove saplings. The initiative strengthens biodiversity and acts as a natural flood defense barrier.",
     impact_metrics: [
@@ -189,7 +189,7 @@ export const initialEvents: EventItem[] = [
     slug: "magnum-opus-conclave-2024",
     rotaract_year: "2024-25",
     event_date: "2024-08-25",
-    location: "CIDCO Exhibition Centre Auditorium, Vashi",
+    location: "CIDCO Exhibition Centre Auditorium, Navi Mumbai",
     summary: "A day-long leadership summit featuring keynote speeches, panel debates, and youth networking.",
     description: "Distinguished speakers from entrepreneurship, social service, and public administration shared actionable frameworks with 300+ delegates. The conclave embodied RCNM's 45th Year theme — Magnum Opus — striving for personal and collective mastery.",
     impact_metrics: [
@@ -213,9 +213,9 @@ export const initialEvents: EventItem[] = [
     slug: "raktadan-mahadan-blood-donation-camp",
     rotaract_year: "2024-25",
     event_date: "2024-08-04",
-    location: "Vashi Railway Station Complex, Navi Mumbai",
+    location: "Railway Station Complex, Navi Mumbai",
     summary: "Collected 210 units of blood in partnership with Tata Memorial Blood Bank.",
-    description: "RCNM organized its signature blood donation camp at Vashi Railway Station, mobilising daily commuters and youth donors. Every donor received health checkups and donor certificates.",
+    description: "RCNM organized its signature blood donation camp at Navi Mumbai Railway Station, mobilising daily commuters and youth donors. Every donor received health checkups and donor certificates.",
     impact_metrics: [
       { label: "Blood Units Collected", value: "210" },
       { label: "Lives Saved (Est.)", value: "630" }
@@ -286,7 +286,7 @@ export const initialGalleryPhotos: GalleryPhoto[] = [
     event_id: "evt-4",
     album_name: "Raktadan Mahadan Blood Donation",
     image_url: "https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=1200&auto=format&fit=crop",
-    caption: "Volunteers assisting blood donors at Vashi Station",
+    caption: "Volunteers assisting blood donors at the station",
     rotaract_year: "2024-25",
     sort_order: 6,
     created_at: "2024-08-04T12:00:00Z"
@@ -355,7 +355,7 @@ export const initialBoardMembers: BoardMember[] = [
     name: "Rtr. Rohan Mehta",
     role: "Vice President & Community Director",
     rotaract_year: "2024-25",
-    bio: "Spearheading community service initiatives, eco-drives, and blood donation campaigns across Vashi.",
+    bio: "Spearheading community service initiatives, eco-drives, and blood donation campaigns across Navi Mumbai.",
     image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
     sort_order: 3,
     social_links: {

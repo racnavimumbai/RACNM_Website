@@ -107,12 +107,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-32 pb-32 bg-[#08080b] text-[#f8fafc]">
+    <div className="space-y-8 sm:space-y-10 pb-12 bg-[#08080b] text-[#f8fafc]">
       
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION                                                  */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[92vh] flex flex-col justify-center items-center overflow-hidden pt-20 hero-backlight">
+      <section className="relative py-8 sm:py-12 flex flex-col justify-center items-center overflow-hidden pt-12 hero-backlight">
         
         {/* Moving Film Reel Photo Background */}
         <FilmReelBackground photos={photos} onPhotoClick={handleOpenPhoto} />
@@ -127,13 +127,13 @@ export default function HomePage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center space-y-8 pointer-events-none"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center space-y-6 pointer-events-none"
         >
           
-          {/* Legacy Pill Tag */}
-          <motion.div variants={itemVariants} className="relative z-20 mb-4 inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#0f0f15]/95 border border-[#d4af37]/50 shadow-2xl text-xs font-extrabold text-[#d4af37] backdrop-blur-xl pointer-events-auto">
+          {/* Legacy Chip Tag */}
+          <motion.div variants={itemVariants} className="relative z-20 mb-3 inline-flex items-center gap-2.5 px-5 py-2 rounded-xl bg-[#0f0f15]/95 border border-[#d4af37]/50 shadow-2xl text-xs font-extrabold text-[#d4af37] backdrop-blur-xl pointer-events-auto">
             <Sparkles className="w-4 h-4 text-[#d4af37] glow-pulse" />
-            <span className="tracking-widest uppercase font-sans">45 YEARS OF LEGACY • EST. 1982 IN VASHI</span>
+            <span className="tracking-widest uppercase font-sans">45 YEARS OF LEGACY • EST. 1982</span>
           </motion.div>
 
           {/* Transparent MO.png Emblem Centerpiece with Translucent Black Backdrop Glow */}
@@ -154,10 +154,10 @@ export default function HomePage() {
           {/* Headline & Narrative */}
           <motion.div variants={itemVariants} className="space-y-4 max-w-4xl mx-auto pointer-events-auto">
             <h1 className="font-serif-heading text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight">
-              Crafting Our <span className="text-gold-gradient">MAGNUM OPUS</span>
+              Creating Our <span className="text-gold-gradient">MAGNUM OPUS</span>
             </h1>
             <p className="font-sans-body text-zinc-300 text-base sm:text-xl font-normal leading-relaxed max-w-2xl mx-auto">
-              The official digital sanctuary of <strong className="text-white font-semibold">Rotaract Club of Navi Mumbai</strong> (District 3142, Zone 1). Four and a half decades of empowering youth, creating ground-level impact, and building lifelong bonds.
+              Official digital platform of the <strong className="text-white font-semibold">Rotaract Club of Navi Mumbai</strong> (District 3142, Zone 1). Celebrating 45 years of empowering youth leadership, driving community action, and building lifelong fellowship.
             </p>
           </motion.div>
 
@@ -180,7 +180,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Thoreau Quote Card */}
-          <motion.div variants={itemVariants} className="pt-6 max-w-2xl mx-auto pointer-events-auto">
+          <motion.div variants={itemVariants} className="pt-3 max-w-2xl mx-auto pointer-events-auto">
             <div className="p-6 rounded-2xl modern-card text-left relative">
               <Quote className="w-8 h-8 text-[#d4af37]/30 absolute top-4 right-4" />
               <p className="font-serif-heading italic text-zinc-200 text-base sm:text-lg">
@@ -208,7 +208,7 @@ export default function HomePage() {
         >
           
           {[
-            { number: 45, suffix: '', label: 'Years of Service', sublabel: 'Est. 1982 in Vashi', gold: true },
+            { number: 45, suffix: '', label: 'Years of Service', sublabel: 'Est. 1982', gold: true },
             { number: 1000, suffix: '+', label: 'Projects Executed', sublabel: 'Social & Community Action', gold: false },
             { number: 50000, suffix: '+', label: 'Lives Impacted', sublabel: 'Across Navi Mumbai', gold: true },
             { number: 1, suffix: '', label: 'Oldest Pioneer Club', sublabel: 'Zone 1, District 3142', gold: false, prefix: 'Zone ' },
@@ -233,7 +233,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* THRUST AREAS VISUAL EXPLORER                                  */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -306,7 +306,7 @@ export default function HomePage() {
                   />
                 </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#040405] via-transparent to-transparent" />
-                <div className="absolute top-4 right-4 px-3.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
+                <div className="absolute top-4 right-4 px-3.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
                   {activeInitiative?.category}
                 </div>
               </div>
@@ -349,8 +349,8 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* FEATURED EVENT STORIES                                        */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-24 bg-[#060609] border-y border-white/5 relative overflow-hidden gradient-mesh-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-8 sm:py-10 bg-[#060609] border-y border-white/5 relative overflow-hidden gradient-mesh-bg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           
           <motion.div
             initial="hidden"
@@ -374,7 +374,7 @@ export default function HomePage() {
 
             <Link
               href="/events"
-              className="px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-[#d4af37] text-xs font-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all self-start md:self-auto uppercase tracking-wider group"
+              className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-[#d4af37] text-xs font-bold text-white flex items-center gap-2 hover:bg-white/10 transition-all self-start md:self-auto uppercase tracking-wider group"
             >
               <span>View All Events</span>
               <ArrowRight className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 transition-transform" />
@@ -411,11 +411,11 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-transparent to-transparent opacity-90" />
                   
                   <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-zinc-300">
-                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-full backdrop-blur-md text-[11px] font-semibold border border-white/10">
+                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-md backdrop-blur-md text-[11px] font-semibold border border-white/10">
                       <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
                       {formatDate(event.event_date)}
                     </span>
-                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-full backdrop-blur-md text-[11px] font-semibold border border-white/10">
+                    <span className="flex items-center gap-1.5 bg-black/80 px-3 py-1 rounded-md backdrop-blur-md text-[11px] font-semibold border border-white/10">
                       <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
                       {event.location.split(',')[0]}
                     </span>
@@ -465,7 +465,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* PHOTO ARCHIVE REEL — Masonry-style                            */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -488,7 +488,7 @@ export default function HomePage() {
 
           <Link
             href="/gallery"
-            className="px-6 py-3 rounded-full bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40 hover:bg-[#d4af37] hover:text-black text-xs font-bold flex items-center gap-2 transition-all uppercase tracking-wider group"
+            className="px-6 py-3 rounded-xl bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40 hover:bg-[#d4af37] hover:text-black text-xs font-bold flex items-center gap-2 transition-all uppercase tracking-wider group"
           >
             <span>Open Full Gallery</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -524,7 +524,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
-                  <span className="self-end p-1.5 rounded-full bg-black/60 text-white backdrop-blur-md">
+                  <span className="self-end p-1.5 rounded-md bg-black/60 text-white backdrop-blur-md">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </span>
                   <p className="text-[11px] text-zinc-200 line-clamp-2 font-medium">
@@ -549,11 +549,11 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={sectionVariants}
-            className="modern-card p-8 sm:p-14 relative overflow-hidden"
+            className="modern-card p-6 sm:p-10 relative overflow-hidden"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
               <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-bold uppercase tracking-wider">
                   <FileText className="w-4 h-4" />
                   <span>EDITORIAL & NEWSLETTER ARCHIVE</span>
                 </div>
@@ -625,7 +625,7 @@ export default function HomePage() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={sectionVariants}
-          className="modern-card-gold p-10 sm:p-20 text-center space-y-8 relative overflow-hidden"
+          className="modern-card-gold p-8 sm:p-12 text-center space-y-6 relative overflow-hidden"
         >
           {/* Background particles */}
           <ParticleField count={25} />

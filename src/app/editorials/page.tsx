@@ -48,7 +48,7 @@ export default function EditorialsPage() {
         transition={{ duration: 0.6 }}
         className="text-center space-y-4 max-w-3xl mx-auto page-hero-glow"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
           <Sparkles className="w-3.5 h-3.5" />
           <span>DIGITAL PUBLICATION & MAGAZINE ARCHIVE</span>
         </div>
@@ -79,14 +79,14 @@ export default function EditorialsPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#121215] hidden lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#121215] to-transparent lg:hidden" />
-              <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
+              <div className="absolute top-4 left-4 px-3.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
                 {heroEditorial.category}
               </div>
             </div>
 
             {/* Content Side */}
             <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 text-[#d4af37] text-[10px] font-bold uppercase tracking-wider w-fit">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#d4af37]/10 border border-[#d4af37]/30 text-[#d4af37] text-[10px] font-bold uppercase tracking-wider w-fit">
                 <Sparkles className="w-3 h-3" />
                 LATEST PUBLICATION
               </div>
@@ -157,7 +157,7 @@ export default function EditorialsPage() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121215] via-transparent to-transparent" />
-                <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-xs font-semibold text-[#d4af37] border border-[#d4af37]/40">
+                <div className="absolute top-4 left-4 px-3.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-semibold text-[#d4af37] border border-[#d4af37]/40">
                   {item.category}
                 </div>
               </div>
@@ -194,7 +194,7 @@ export default function EditorialsPage() {
                   {item.pdf_url && (
                     <button
                       onClick={() => handleOpenPdf(item.title, item.pdf_url)}
-                      className="px-4 py-2 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#d4af37] hover:text-black font-semibold text-xs transition-all duration-300 flex items-center gap-1.5"
+                      className="px-4 py-2 rounded-xl bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#d4af37] hover:text-black font-semibold text-xs transition-all duration-300 flex items-center gap-1.5"
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>View PDF</span>

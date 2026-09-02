@@ -81,7 +81,7 @@ export default function Header() {
         </Link>
 
         {/* Navigation Dock */}
-        <nav className="hidden lg:flex items-center gap-1 bg-[#0f0f15]/90 backdrop-blur-2xl px-5 py-2 rounded-full border border-white/10 shadow-2xl shadow-black/50 relative">
+        <nav className="hidden lg:flex items-center gap-1.5 bg-[#0f0f15]/90 backdrop-blur-2xl px-5 py-2.5 rounded-2xl border border-white/10 shadow-2xl shadow-black/50 relative">
           {navItems.map(item => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
             return (
@@ -89,7 +89,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 tracking-wide relative z-10',
+                  'px-4 py-2.5 text-xs font-semibold rounded-xl transition-all duration-300 tracking-wide relative z-10',
                   isActive
                     ? 'text-black font-extrabold'
                     : 'text-zinc-300 hover:text-white hover:bg-white/10'
@@ -99,7 +99,7 @@ export default function Header() {
                 {isActive && (
                   <motion.div
                     layoutId="activeNavPill"
-                    className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#fde047] to-[#d4af37] rounded-full shadow-md shadow-[#d4af37]/30"
+                    className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#fde047] to-[#d4af37] rounded-xl shadow-md shadow-[#d4af37]/30"
                     transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                   />
                 )}
@@ -121,7 +121,7 @@ export default function Header() {
           <Link
             href="/admin"
             title="Admin CMS Portal"
-            className="p-2.5 rounded-full text-zinc-400 hover:text-[#d4af37] hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-[#d4af37]/40"
+            className="p-2.5 rounded-xl text-zinc-400 hover:text-[#d4af37] hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-[#d4af37]/40"
           >
             <ShieldCheck className="w-4 h-4" />
           </Link>

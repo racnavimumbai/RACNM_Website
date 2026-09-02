@@ -44,7 +44,7 @@ export default function AdminEventsPage() {
       slug: '',
       rotaract_year: '2024-25',
       event_date: new Date().toISOString().split('T')[0],
-      location: 'Vashi, Navi Mumbai',
+      location: 'Navi Mumbai',
       summary: '',
       description: '',
       impact_metrics: [

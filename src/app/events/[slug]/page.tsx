@@ -102,7 +102,7 @@ export default function EventDetailPage() {
         className="space-y-4"
       >
         <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3 py-1 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
+          <span className="px-3 py-1 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
             Rotaract Year {event.rotaract_year}
           </span>
           <span className="flex items-center gap-1 text-xs text-zinc-400">

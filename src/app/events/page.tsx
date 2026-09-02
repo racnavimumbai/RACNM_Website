@@ -77,7 +77,7 @@ export default function EventsPage() {
             <button
               key={year}
               onClick={() => setFilter(year)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+              className={`px-4 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 ${
                 filter === year
                   ? 'bg-[#d4af37] text-black font-bold shadow-md shadow-[#d4af37]/20'
                   : 'bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'
@@ -120,11 +120,11 @@ export default function EventsPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-90" />
               
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-zinc-300">
-                <span className="flex items-center gap-1.5 bg-[#0a0a0c]/80 px-2.5 py-1 rounded-full border border-zinc-700/50 backdrop-blur-md">
+                <span className="flex items-center gap-1.5 bg-[#0a0a0c]/80 px-2.5 py-1 rounded-md border border-zinc-700/50 backdrop-blur-md">
                   <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
                   {formatDate(event.event_date)}
                 </span>
-                <span className="flex items-center gap-1.5 bg-[#0a0a0c]/80 px-2.5 py-1 rounded-full border border-zinc-700/50 backdrop-blur-md">
+                <span className="flex items-center gap-1.5 bg-[#0a0a0c]/80 px-2.5 py-1 rounded-md border border-zinc-700/50 backdrop-blur-md">
                   <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
                   {event.location.split(',')[0]}
                 </span>

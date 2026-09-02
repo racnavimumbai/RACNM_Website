@@ -84,7 +84,7 @@ export default function TeamPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#d4af37]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Role badge */}
-              <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[9px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
+              <div className="absolute top-4 left-4 px-3 py-1 rounded-md bg-black/80 backdrop-blur-md text-[9px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
                 {member.role}
               </div>
             </div>

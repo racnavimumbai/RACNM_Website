@@ -109,7 +109,7 @@ export default function Footer() {
               </div>
 
               <p className="text-xs text-zinc-400 leading-relaxed max-w-sm">
-                Rotaract Club of Navi Mumbai is a premier community-based youth leadership organization based in Vashi. Founded in 1982, it is the oldest club in Zone 1, Rotary District 3142, dedicated to youth empowerment under our 45th Year theme — <strong className="text-white">MAGNUM OPUS</strong>.
+                <strong className="text-white">Rotaract Club of Navi Mumbai</strong> (RID 3142, Zone 1) is a premier youth leadership organization established in 1982. Celebrating 45 years of service, fellowship, and social impact under our annual theme — <strong className="text-white">MAGNUM OPUS</strong>.
               </p>
 
               {/* Social Links with hover effects */}
@@ -120,7 +120,7 @@ export default function Footer() {
                     href={social.href}
                     target={social.href.startsWith('mailto') ? undefined : '_blank'}
                     rel={social.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-[#d4af37] hover:border-[#d4af37]/60 hover:bg-[#d4af37]/10 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                    className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-[#d4af37] hover:border-[#d4af37]/60 hover:bg-[#d4af37]/10 transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4" />
@@ -172,7 +172,7 @@ export default function Footer() {
               </ul>
             </motion.div>
 
-            {/* Location & Sponsoring Details */}
+            {/* Location Details */}
             <motion.div variants={itemVariants} className="space-y-4">
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">
                 Contact & Base
@@ -180,21 +180,13 @@ export default function Footer() {
               <div className="space-y-3 text-xs">
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
-                  <span>Centre in Vashi, Navi Mumbai, Zone 1, Rotary District 3142, Maharashtra, India.</span>
+                  <span>Centre in Navi Mumbai, Zone 1, Rotary District 3142, Maharashtra, India.</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-[#d4af37] shrink-0" />
                   <a href="mailto:rotaractclubofnavimumbai@gmail.com" className="hover:underline text-zinc-300 hover:text-[#d4af37] transition-colors">
                     rotaractclubofnavimumbai@gmail.com
                   </a>
-                </div>
-              </div>
-
-              <div className="pt-3">
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-[11px] space-y-1 hover:border-[#d4af37]/30 transition-colors">
-                  <span className="font-bold text-white block">Sponsored by:</span>
-                  <span className="text-zinc-300">Rotary Club of Navi Mumbai</span>
-                  <span className="block text-[10px] text-[#d4af37] font-semibold">Rotary International District 3142</span>
                 </div>
               </div>
             </motion.div>

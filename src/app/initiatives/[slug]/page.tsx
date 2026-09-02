@@ -88,7 +88,7 @@ export default function InitiativeDetailPage() {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="space-y-4"
       >
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
           <span>{initiative.category}</span>
         </div>

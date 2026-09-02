@@ -25,15 +25,14 @@ export const metadata: Metadata = {
     default: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
     template: '%s | Rotaract Club of Navi Mumbai'
   },
-  description: 'Rotaract Club of Navi Mumbai is a premier community-based youth organization in Vashi, Navi Mumbai (Est. 1982, Zone 1, District 3142). Celebrating 45 years of leadership, service & youth impact under MAGNUM OPUS.',
+  description: 'Rotaract Club of Navi Mumbai is a premier community-based youth organization in Navi Mumbai (Est. 1982, Zone 1, District 3142). Celebrating 45 years of leadership, service & youth impact under MAGNUM OPUS.',
   keywords: [
     'Rotaract Club of Navi Mumbai',
     'RCNM',
     'Rotaract District 3142',
-    'Rotaract Vashi',
     'Rotaract Navi Mumbai',
     'Youth NGO Navi Mumbai',
-    'Community Service Vashi',
+    'Community Service Navi Mumbai',
     'Magnum Opus Rotaract'
   ],
   authors: [{ name: 'Rotaract Club of Navi Mumbai' }],
@@ -43,7 +42,7 @@ export const metadata: Metadata = {
     url: 'https://rotaractclubofnavimumbai.org',
     siteName: 'Rotaract Club of Navi Mumbai',
     title: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
-    description: 'Premier community-based youth leadership & social impact organization in Vashi, Navi Mumbai. Est. 1982 • District 3142.',
+    description: 'Premier community-based youth leadership & social impact organization in Navi Mumbai. Est. 1982 • District 3142.',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200&auto=format&fit=crop',
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
-    description: 'Premier youth leadership & community impact organization in Vashi, Navi Mumbai. Est. 1982.'
+    description: 'Premier youth leadership & community impact organization in Navi Mumbai. Est. 1982.'
   },
   robots: {
     index: true,
@@ -79,7 +78,7 @@ export default function RootLayout({
     foundingDate: '1982',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Vashi, Navi Mumbai',
+      addressLocality: 'Navi Mumbai',
       addressRegion: 'Maharashtra',
       addressCountry: 'IN'
     },

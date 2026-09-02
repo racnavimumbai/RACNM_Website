@@ -89,7 +89,7 @@ export default function InitiativesPage() {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute top-4 left-4 px-3 py-1 bg-[#0a0a0c]/80 backdrop-blur-md rounded-full text-[10px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
+              <div className="absolute top-4 left-4 px-3 py-1 bg-[#0a0a0c]/80 backdrop-blur-md rounded-lg text-[10px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
                 {item.category}
               </div>
             </motion.div>

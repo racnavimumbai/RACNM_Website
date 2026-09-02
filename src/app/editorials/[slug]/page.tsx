@@ -59,7 +59,7 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
       {/* Title & Header */}
       <div className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3.5 py-1 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
+          <span className="px-3.5 py-1 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
             {editorial.category}
           </span>
           <span className="flex items-center gap-1 text-xs text-zinc-400">
@@ -105,7 +105,7 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
             href={editorial.pdf_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-2.5 rounded-full bg-[#d4af37] text-black font-bold text-xs hover:bg-[#f3e5ab] transition-colors shrink-0 flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl bg-[#d4af37] text-black font-bold text-xs hover:bg-[#f3e5ab] transition-colors shrink-0 flex items-center gap-2"
           >
             <BookOpen className="w-4 h-4" />
             <span>Open PDF Document</span>

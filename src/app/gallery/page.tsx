@@ -56,7 +56,7 @@ export default function GalleryPage() {
         transition={{ duration: 0.6 }}
         className="text-center space-y-4 max-w-3xl mx-auto page-hero-glow"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
           <Sparkles className="w-3.5 h-3.5" />
           <span>VISUAL ARCHIVE & MEMORIES</span>
         </div>
@@ -88,7 +88,7 @@ export default function GalleryPage() {
             <button
               key={album}
               onClick={() => setSelectedAlbum(album)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 ${
                 selectedAlbum === album
                   ? 'bg-[#d4af37] text-black font-bold shadow-md shadow-[#d4af37]/20'
                   : 'bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'

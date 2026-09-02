@@ -163,7 +163,7 @@ export async function saveEvent(item: Partial<EventItem>): Promise<EventItem> {
     slug: item.slug || (item.title || 'event').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
     rotaract_year: item.rotaract_year || '2024-25',
     event_date: item.event_date || new Date().toISOString().split('T')[0],
-    location: item.location || 'Vashi, Navi Mumbai',
+    location: item.location || 'Navi Mumbai',
     summary: item.summary || '',
     description: item.description || '',
     impact_metrics: item.impact_metrics || [],

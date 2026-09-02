@@ -23,8 +23,8 @@ const itemFade: Variants = {
 const timelineEvents = [
   {
     year: '1982',
-    title: 'Foundation of RCNM in Vashi',
-    description: 'Chartered in Vashi, Rotaract Club of Navi Mumbai became the first community-based Rotaract club in Zone 1, establishing a landmark movement for youth service in the satellite city.'
+    title: 'Foundation of RCNM',
+    description: 'Chartered in Navi Mumbai, Rotaract Club of Navi Mumbai became the first community-based Rotaract club in Zone 1, establishing a landmark movement for youth service in the satellite city.'
   },
   {
     year: '1995',
@@ -72,7 +72,7 @@ export default function AboutPage() {
             </span>
             <span className="text-zinc-600">•</span>
             <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
-              EST. 1982 VASHI
+              EST. 1982 NAVI MUMBAI
             </span>
           </motion.div>
 
@@ -82,7 +82,7 @@ export default function AboutPage() {
               <span className="italic font-normal text-gold-gradient">Rotaract Club of Navi Mumbai</span>
             </h1>
             <p className="font-sans-body text-zinc-300 text-base sm:text-lg leading-relaxed">
-              As the oldest community-based Rotaract club in Zone 1, District 3142, RCNM has spent 45 years nurturing leaders, creating social impact, and fostering lifelong bonds in Vashi and beyond.
+              As the oldest community-based Rotaract club in Zone 1, District 3142, RCNM has spent 45 years nurturing leaders, creating social impact, and fostering lifelong bonds across Navi Mumbai and beyond.
             </p>
           </motion.div>
         </motion.div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Rotaract Club of Navi Mumbai was established in <strong className="text-white">1982</strong> with its centre in Vashi. Over the last four decades, we have remained at the forefront of community service, professional development, and youth empowerment.
+              Rotaract Club of Navi Mumbai was established in <strong className="text-white">1982</strong>. Over the last four decades, we have remained at the forefront of community service, professional development, and youth empowerment.
             </p>
 
             <p className="text-zinc-400 text-sm leading-relaxed">
@@ -119,7 +119,7 @@ export default function AboutPage() {
               <motion.div whileHover={{ y: -2 }} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
                 <MapPin className="w-5 h-5 text-[#d4af37] shrink-0" />
                 <div>
-                  <span className="text-xs font-bold text-white block">Vashi, Navi Mumbai</span>
+                  <span className="text-xs font-bold text-white block">Navi Mumbai</span>
                   <span className="text-[11px] font-mono text-zinc-400">Club Base & Operations</span>
                 </div>
               </motion.div>
