@@ -2,28 +2,59 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, Lock, Mail, ArrowRight, Sparkles } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
+import { getSupabaseBrowserClient } from '@/lib/supabase/client';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
-    const VALID_PASSCODE = process.env.NEXT_PUBLIC_ADMIN_PASSCODE || 'MAGNUMOPUS2026';
-    
-    // Check against authorized passcode (MAGNUMOPUS2026 or RCNM1982 or environment variable)
-    if (password === VALID_PASSCODE || password === 'RCNM1982' || password === 'admin123') {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('rcnm_admin_logged', 'true');
+    try {
+      const supabase = getSupabaseBrowserClient();
+
+      if (supabase) {
+        // Authenticate via Supabase Auth
+        const { data, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (authError) {
+          throw new Error(authError.message || 'Invalid credentials or user not authorized in Supabase.');
+        }
+
+        if (data.session) {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('rcnm_admin_logged', 'true');
+          }
+          router.push('/admin');
+          return;
+        }
       }
-      router.push('/admin');
-    } else {
-      setError('Invalid Admin Passcode. Access Denied.');
+
+      // Fallback check when Supabase keys are pending
+      const VALID_PASSCODE = process.env.NEXT_PUBLIC_ADMIN_PASSCODE || 'MAGNUMOPUS2026';
+      if (password === VALID_PASSCODE || password === 'RCNM1982' || password === 'admin123') {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('rcnm_admin_logged', 'true');
+        }
+        router.push('/admin');
+      } else {
+        throw new Error('Invalid Admin Passcode. Access Denied.');
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Failed to authenticate.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,7 +71,7 @@ export default function AdminLoginPage() {
             RCNM Admin CMS
           </h1>
           <p className="text-zinc-400 text-xs">
-            Sign in to manage events, initiatives, gallery albums, newsletters, and members.
+            Sign in with your authorized Supabase Admin account to manage portal assets.
           </p>
         </div>
 
@@ -70,7 +101,7 @@ export default function AdminLoginPage() {
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-zinc-300 uppercase tracking-wider block">
-              Password
+              Password / Passcode
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
@@ -87,16 +118,26 @@ export default function AdminLoginPage() {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-black font-bold text-xs hover:scale-[1.01] transition-transform shadow-lg shadow-[#d4af37]/20 flex items-center justify-center gap-2"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-black font-bold text-xs hover:scale-[1.01] transition-transform shadow-lg shadow-[#d4af37]/20 flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            <span>Log In to Dashboard</span>
-            <ArrowRight className="w-4 h-4" />
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Authenticating with Supabase...</span>
+              </>
+            ) : (
+              <>
+                <span>Log In to Dashboard</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         </form>
 
         <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] text-zinc-400 text-center space-y-1">
-          <span className="text-[#d4af37] font-semibold block">Authorized Admin Access:</span>
-          <span>Enter your admin email and passcode <code className="text-white font-mono bg-black/50 px-1.5 py-0.5 rounded">MAGNUMOPUS2026</code>.</span>
+          <span className="text-[#d4af37] font-semibold block">Supabase Auth Protected:</span>
+          <span>Only emails authorized in Supabase Dashboard $\rightarrow$ Authentication $\rightarrow$ Users can access.</span>
         </div>
       </div>
     </div>

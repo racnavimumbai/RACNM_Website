@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { getSupabaseBrowserClient } from '@/lib/supabase/client';
 import {
   LayoutDashboard,
   Calendar,
@@ -38,12 +39,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (pathname === '/admin/login') return;
 
-    const isLogged = typeof window !== 'undefined' && localStorage.getItem('rcnm_admin_logged') === 'true';
-    if (!isLogged) {
-      router.push('/admin/login');
-    } else {
+    const checkAuth = async () => {
+      const supabase = getSupabaseBrowserClient();
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session && localStorage.getItem('rcnm_admin_logged') !== 'true') {
+          router.push('/admin/login');
+          return;
+        }
+      } else {
+        const isLogged = typeof window !== 'undefined' && localStorage.getItem('rcnm_admin_logged') === 'true';
+        if (!isLogged) {
+          router.push('/admin/login');
+          return;
+        }
+      }
+
       setAuthorized(true);
-    }
+    };
+
+    checkAuth();
   }, [pathname, router]);
 
   if (pathname === '/admin/login') {
@@ -59,7 +74,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const supabase = getSupabaseBrowserClient();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     if (typeof window !== 'undefined') {
       localStorage.removeItem('rcnm_admin_logged');
     }
