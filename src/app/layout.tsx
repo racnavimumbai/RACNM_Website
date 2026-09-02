@@ -4,6 +4,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import ParticleField from '@/components/ParticleField';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const cormorant = Cormorant_Garamond({
@@ -114,6 +116,10 @@ export default function RootLayout({
         <Header />
         <main className="flex-1 pt-[72px] page-enter relative z-10">{children}</main>
         <Footer />
+        
+        {/* Vercel Web Analytics & Real User Speed Insights */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
