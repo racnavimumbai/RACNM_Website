@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getEditorials, saveEditorial, deleteEditorial, Editorial } from '@/lib/data/api';
+import ImageUploader from '@/components/admin/ImageUploader';
 import { FileText, Plus, Edit, Trash2, Search, X, BookOpen } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
@@ -231,22 +232,12 @@ export default function AdminEditorialsPage() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-zinc-400 block">Cover Image URL *</label>
-                <input
-                  type="url"
-                  required
-                  value={editingEditorial.cover_image || ''}
-                  onChange={e => setEditingEditorial({ ...editingEditorial, cover_image: e.target.value })}
-                  className="w-full bg-[#0a0a0c] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
-                />
-                {editingEditorial.cover_image && (
-                  <div className="mt-2 h-28 rounded overflow-hidden border border-zinc-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={editingEditorial.cover_image} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                )}
-              </div>
+              <ImageUploader
+                label="Cover Image (Uploads to GitHub Repo)"
+                required
+                value={editingEditorial.cover_image || ''}
+                onChange={url => setEditingEditorial({ ...editingEditorial, cover_image: url })}
+              />
 
               <div className="space-y-1">
                 <label className="text-zinc-400 block">Article Summary</label>

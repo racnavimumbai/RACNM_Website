@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getInitiatives, saveInitiative, deleteInitiative, Initiative } from '@/lib/data/api';
+import ImageUploader from '@/components/admin/ImageUploader';
 import { Plus, Edit2, Trash2, Sparkles, Check, X } from 'lucide-react';
 
 export default function AdminInitiativesPage() {
@@ -158,16 +159,11 @@ export default function AdminInitiativesPage() {
                 </select>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-300 uppercase">Cover Image URL</label>
-                <input
-                  type="url"
-                  value={editingItem.cover_image || ''}
-                  onChange={e => setEditingItem({ ...editingItem, cover_image: e.target.value })}
-                  placeholder="https://..."
-                  className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
-                />
-              </div>
+              <ImageUploader
+                label="Cover Image (Uploads to GitHub Repo)"
+                value={editingItem.cover_image || ''}
+                onChange={url => setEditingItem({ ...editingItem, cover_image: url })}
+              />
 
               <div className="space-y-1">
                 <label className="text-xs font-bold text-zinc-300 uppercase">Summary</label>

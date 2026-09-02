@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getAllBoardMembers, saveBoardMember, deleteBoardMember, BoardMember } from '@/lib/data/api';
+import ImageUploader from '@/components/admin/ImageUploader';
 import { Plus, Edit2, Trash2, Users, Check, X } from 'lucide-react';
 
 export default function AdminTeamPage() {
@@ -181,16 +182,11 @@ export default function AdminTeamPage() {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-300 uppercase">Photo Image URL</label>
-                <input
-                  type="url"
-                  value={editingMember.image_url || ''}
-                  onChange={e => setEditingMember({ ...editingMember, image_url: e.target.value })}
-                  placeholder="https://..."
-                  className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
-                />
-              </div>
+              <ImageUploader
+                label="Photo Image (Uploads to GitHub Repo)"
+                value={editingMember.image_url || ''}
+                onChange={url => setEditingMember({ ...editingMember, image_url: url })}
+              />
 
               <div className="space-y-1">
                 <label className="text-xs font-bold text-zinc-300 uppercase">Short Bio</label>

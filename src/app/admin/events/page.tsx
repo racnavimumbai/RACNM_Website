@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getEvents, saveEvent, deleteEvent, EventItem } from '@/lib/data/api';
+import ImageUploader from '@/components/admin/ImageUploader';
 import {
   Calendar,
   Plus,
@@ -313,22 +314,12 @@ export default function AdminEventsPage() {
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-zinc-400 block">Cover Image URL *</label>
-                  <input
-                    type="url"
-                    required
-                    value={editingEvent.cover_image || ''}
-                    onChange={e => setEditingEvent({ ...editingEvent, cover_image: e.target.value })}
-                    className="w-full bg-[#08080b] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
-                  />
-                  {editingEvent.cover_image && (
-                    <div className="mt-2 h-28 rounded overflow-hidden border border-zinc-800">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={editingEvent.cover_image} alt="Preview" className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                </div>
+                <ImageUploader
+                  label="Cover Image (Uploads to GitHub Repo)"
+                  required
+                  value={editingEvent.cover_image || ''}
+                  onChange={url => setEditingEvent({ ...editingEvent, cover_image: url })}
+                />
 
                 <div className="space-y-1">
                   <label className="text-zinc-400 block">Event Short Summary</label>

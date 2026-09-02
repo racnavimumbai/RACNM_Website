@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getGalleryPhotos, saveGalleryPhoto, deleteGalleryPhoto, GalleryPhoto } from '@/lib/data/api';
+import ImageUploader from '@/components/admin/ImageUploader';
 import { Image as ImageIcon, Plus, Edit, Trash2, Search, X } from 'lucide-react';
 
 export default function AdminGalleryPage() {
@@ -182,22 +183,12 @@ export default function AdminGalleryPage() {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs font-mono">
-              <div className="space-y-1">
-                <label className="text-zinc-400 block">Photo Image URL *</label>
-                <input
-                  type="url"
-                  required
-                  value={editingPhoto.image_url || ''}
-                  onChange={e => setEditingPhoto({ ...editingPhoto, image_url: e.target.value })}
-                  className="w-full bg-[#0a0a0c] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
-                />
-                {editingPhoto.image_url && (
-                  <div className="mt-2 h-32 rounded overflow-hidden border border-zinc-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={editingPhoto.image_url} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                )}
-              </div>
+              <ImageUploader
+                label="Photo Image (Uploads to GitHub Repo)"
+                required
+                value={editingPhoto.image_url || ''}
+                onChange={url => setEditingPhoto({ ...editingPhoto, image_url: url })}
+              />
 
               <div className="space-y-1">
                 <label className="text-zinc-400 block">Album Name *</label>
