@@ -24,13 +24,14 @@ const DEFAULT_FILM_IMAGES = [
 export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmReelBackgroundProps) {
   // Combine user uploaded photos with fallback images into valid GalleryPhoto array
   const fullPhotoList = useMemo<GalleryPhoto[]>(() => {
-    const validPhotos = photos ? photos.filter(p => p && p.image_url && p.image_url.trim() !== '') : [];
-    if (validPhotos.length > 0) {
-      return validPhotos;
-    }
-    return DEFAULT_FILM_IMAGES.map((url, idx) => ({
-      id: `reel-${idx}`,
-      event_id: `evt-${idx}`,
+    // Filter out any broken/zerodha demo placeholder URLs from DB
+    const validUserPhotos = (photos || []).filter(
+      p => p && p.image_url && p.image_url.trim() !== '' && !p.image_url.toLowerCase().includes('zerodha')
+    );
+
+    const defaultItems = DEFAULT_FILM_IMAGES.map((url, idx) => ({
+      id: `reel-default-${idx}`,
+      event_id: null,
       album_name: 'RACNM Archive',
       image_url: url,
       caption: 'Rotaract Club of Navi Mumbai Heritage Moment',
@@ -38,13 +39,17 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
       sort_order: idx + 1,
       created_at: new Date().toISOString()
     }));
+
+    // Always guarantee at least 10-12 photos so BOTH tracks have multiple moving photos across screen
+    const combined = [...validUserPhotos, ...defaultItems];
+    return combined.slice(0, 12);
   }, [photos]);
 
-  // Split into two tracks
-  const track1 = useMemo(() => fullPhotoList.slice(0, Math.ceil(fullPhotoList.length / 2)), [fullPhotoList]);
-  const track2 = useMemo(() => fullPhotoList.slice(Math.ceil(fullPhotoList.length / 2)), [fullPhotoList]);
+  // Split into two tracks (6 photos each track)
+  const track1 = useMemo(() => fullPhotoList.slice(0, 6), [fullPhotoList]);
+  const track2 = useMemo(() => fullPhotoList.slice(6, 12), [fullPhotoList]);
 
-  // Double tracks for infinite marquee loop
+  // Double tracks for seamless continuous infinite marquee loop
   const loopTrack1 = useMemo(() => [...track1, ...track1, ...track1], [track1]);
   const loopTrack2 = useMemo(() => [...track2, ...track2, ...track2], [track2]);
 
@@ -92,7 +97,7 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
       </div>
 
       {/* Film Strip Row 2 — Lower Track */}
-      <div className="absolute top-[350px] sm:top-[400px] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
+      <div className="absolute top-[290px] sm:top-[330px] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
         <div className="film-track animate-film-right flex items-center gap-6 px-4 pointer-events-auto">
           {loopTrack2.map((item, idx) => (
             <div
