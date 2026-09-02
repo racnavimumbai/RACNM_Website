@@ -120,7 +120,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION                                                  */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative py-8 sm:py-12 flex flex-col justify-center items-center overflow-hidden pt-12 hero-backlight">
+      <section className="relative min-h-[750px] sm:min-h-[820px] py-12 sm:py-16 flex flex-col justify-center items-center overflow-hidden pt-20 hero-backlight">
         
         {/* Moving Film Reel Photo Background */}
         <FilmReelBackground photos={photos} onPhotoClick={handleOpenPhoto} />

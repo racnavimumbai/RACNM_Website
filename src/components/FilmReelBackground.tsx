@@ -9,16 +9,16 @@ interface FilmReelBackgroundProps {
 }
 
 const DEFAULT_FILM_IMAGES = [
-  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1526976668912-1a811878dd37?q=80&w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1526976668912-1a811878dd37?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=800&q=80',
 ];
 
 export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmReelBackgroundProps) {
@@ -56,8 +56,8 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
       <div className="absolute inset-0 bg-gradient-to-b from-[#08080b]/80 via-transparent to-[#08080b]/90 pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,8,11,0.85)_85%)] pointer-events-none z-0" />
 
-      {/* Film Strip Row 1 */}
-      <div className="absolute top-20 sm:top-24 inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
+      {/* Film Strip Row 1 — Upper Track */}
+      <div className="absolute top-12 sm:top-16 inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
         <div className="film-track animate-film-left flex items-center gap-6 px-4 pointer-events-auto">
           {loopTrack1.map((item, idx) => (
             <div
@@ -91,8 +91,8 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
         </div>
       </div>
 
-      {/* Film Strip Row 2 */}
-      <div className="absolute top-[48%] sm:top-[50%] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
+      {/* Film Strip Row 2 — Lower Track */}
+      <div className="absolute top-[350px] sm:top-[400px] inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">
         <div className="film-track animate-film-right flex items-center gap-6 px-4 pointer-events-auto">
           {loopTrack2.map((item, idx) => (
             <div

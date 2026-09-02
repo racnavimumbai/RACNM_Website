@@ -664,11 +664,11 @@
 }
 
 .animate-film-left {
-  animation: filmScrollLeft 55s linear infinite;
+  animation: filmScrollLeft 26s linear infinite;
 }
 
 .animate-film-right {
-  animation: filmScrollRight 65s linear infinite;
+  animation: filmScrollRight 30s linear infinite;
 }
 
 .film-track {
