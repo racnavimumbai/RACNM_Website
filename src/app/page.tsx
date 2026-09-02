@@ -95,7 +95,16 @@ export default function HomePage() {
   const latestEditorial = editorials[0];
   const activeInitiative = initiatives[activeInitiativeIdx] || initiatives[0];
 
-  const handleOpenPhoto = (idx: number) => {
+  const DEFAULT_FALLBACK_PHOTOS: GalleryPhoto[] = [
+    { id: 'rel-1', event_id: 'e1', album_name: 'RACNM Archive', image_url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop', caption: 'RACNM Youth Leadership Conclave', rotaract_year: '2024-25', sort_order: 1, created_at: '' },
+    { id: 'rel-2', event_id: 'e2', album_name: 'RACNM Archive', image_url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop', caption: 'Community Fellowship Drive', rotaract_year: '2024-25', sort_order: 2, created_at: '' },
+    { id: 'rel-3', event_id: 'e3', album_name: 'RACNM Archive', image_url: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop', caption: 'Youth Empowerment Summit', rotaract_year: '2024-25', sort_order: 3, created_at: '' },
+    { id: 'rel-4', event_id: 'e4', album_name: 'RACNM Archive', image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop', caption: 'Environmental Action Drive', rotaract_year: '2024-25', sort_order: 4, created_at: '' },
+  ];
+
+  const activeReelPhotos = photos.length > 0 ? photos : DEFAULT_FALLBACK_PHOTOS;
+
+  const handleOpenPhoto = (_photo: GalleryPhoto, idx: number) => {
     setCurrentPhotoIdx(idx);
     setLightboxOpen(true);
   };
@@ -558,7 +567,7 @@ export default function HomePage() {
                 key={photo.id}
                 variants={itemVariants}
                 whileHover={{ scale: 1.03 }}
-                onClick={() => handleOpenPhoto(idx)}
+                onClick={() => handleOpenPhoto(photo, idx)}
                 className={`relative rounded-2xl overflow-hidden group cursor-pointer border border-white/10 hover:border-[#d4af37]/60 transition-all shadow-xl hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] ${
                   isTall ? 'row-span-2' : ''
                 } ${isWide ? 'col-span-2' : ''}`}
@@ -691,7 +700,7 @@ export default function HomePage() {
                 href="/join"
                 className="px-10 py-4.5 btn-gold-action text-black font-extrabold text-base uppercase tracking-wider flex items-center gap-2 shadow-2xl"
               >
-                <span>Apply to Join RCNM</span>
+                <span>Apply to Join RACNM</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -703,7 +712,7 @@ export default function HomePage() {
       <LightboxModal
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        photos={photos}
+        photos={activeReelPhotos}
         currentIndex={currentPhotoIdx}
         onNavigate={idx => setCurrentPhotoIdx(idx)}
       />
