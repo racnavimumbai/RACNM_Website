@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Upload, Image as ImageIcon, Check, Loader2, Link as LinkIcon } from 'lucide-react';
+import { Upload, Image as ImageIcon, Check, Loader2, Link as LinkIcon, AlertCircle } from 'lucide-react';
 
 interface ImageUploaderProps {
   value: string;
@@ -17,6 +17,8 @@ export default function ImageUploader({
   required = false
 }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [imgError, setImgError] = useState(false);
   const [error, setError] = useState('');
   const [mode, setMode] = useState<'upload' | 'url'>('upload');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -27,6 +29,16 @@ export default function ImageUploader({
 
     setUploading(true);
     setError('');
+    setImgError(false);
+
+    // Instant local preview via FileReader
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        setPreviewUrl(event.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
 
     try {
       const formData = new FormData();
@@ -42,7 +54,10 @@ export default function ImageUploader({
         throw new Error(data.error || 'Failed to upload image.');
       }
 
-      onChange(data.url);
+      // Use returned URL (Raw GitHub URL or public URL)
+      const finalUrl = data.url || data.dataUrl;
+      onChange(finalUrl);
+      setPreviewUrl(finalUrl);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Image upload failed. Please try again.');
@@ -50,6 +65,8 @@ export default function ImageUploader({
       setUploading(false);
     }
   };
+
+  const displayImage = previewUrl || value;
 
   return (
     <div className="space-y-2">
@@ -100,7 +117,7 @@ export default function ImageUploader({
             {uploading ? (
               <div className="flex items-center justify-center gap-2 text-xs text-[#d4af37] font-semibold py-2">
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Uploading to GitHub repository...</span>
+                <span>Committing to GitHub repository...</span>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-1.5 py-1">
@@ -121,7 +138,11 @@ export default function ImageUploader({
             type="url"
             required={required}
             value={value}
-            onChange={e => onChange(e.target.value)}
+            onChange={e => {
+              onChange(e.target.value);
+              setPreviewUrl(e.target.value);
+              setImgError(false);
+            }}
             placeholder="https://..."
             className="w-full bg-[#08080b] border border-zinc-800 rounded p-2.5 text-xs text-white focus:outline-none focus:border-[#d4af37] pl-8"
           />
@@ -130,14 +151,29 @@ export default function ImageUploader({
       )}
 
       {error && (
-        <p className="text-red-400 text-[11px] mt-1">{error}</p>
+        <p className="text-red-400 text-[11px] mt-1 flex items-center gap-1">
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span>{error}</span>
+        </p>
       )}
 
       {/* Image Preview Thumbnail */}
-      {value && (
-        <div className="relative mt-2 h-28 rounded-xl overflow-hidden border border-zinc-800 group bg-black/40">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="Preview" className="w-full h-full object-cover" />
+      {displayImage && (
+        <div className="relative mt-2 h-32 rounded-xl overflow-hidden border border-zinc-800 group bg-black/60">
+          {!imgError ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={displayImage}
+              alt="Preview"
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 text-xs p-2 text-center">
+              <ImageIcon className="w-6 h-6 mb-1 text-zinc-600" />
+              <span>Image loading preview...</span>
+            </div>
+          )}
           <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-[#d4af37]/40 text-[#d4af37] text-[10px] font-bold flex items-center gap-1">
             <Check className="w-3 h-3 text-[#d4af37]" />
             <span>Image Attached</span>

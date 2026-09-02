@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getEvents, saveEvent, deleteEvent, EventItem } from '@/lib/data/api';
+import { getEvents, saveEvent, deleteEvent, getInitiatives, EventItem, Initiative } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
 import {
   Calendar,
@@ -17,6 +17,7 @@ import { formatDate } from '@/lib/utils';
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
+  const [initiatives, setInitiatives] = useState<Initiative[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,11 +26,17 @@ export default function AdminEventsPage() {
 
   useEffect(() => {
     loadEvents();
+    loadInitiatives();
   }, []);
 
   async function loadEvents() {
     const list = await getEvents();
     setEvents(list);
+  }
+
+  async function loadInitiatives() {
+    const list = await getInitiatives();
+    setInitiatives(list);
   }
 
   const filteredEvents = events.filter(e => {
@@ -322,6 +329,20 @@ export default function AdminEventsPage() {
                 />
 
                 <div className="space-y-1">
+                  <label className="text-zinc-400 block">Thrust Category / Initiative</label>
+                  <select
+                    value={editingEvent.initiative_id || ''}
+                    onChange={e => setEditingEvent({ ...editingEvent, initiative_id: e.target.value })}
+                    className="w-full bg-[#08080b] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
+                  >
+                    <option value="">None / General Event</option>
+                    {initiatives.map(init => (
+                      <option key={init.id} value={init.id}>{init.title} ({init.category})</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1">
                   <label className="text-zinc-400 block">Event Short Summary</label>
                   <textarea
                     rows={2}
@@ -339,6 +360,65 @@ export default function AdminEventsPage() {
                     onChange={e => setEditingEvent({ ...editingEvent, description: e.target.value })}
                     className="w-full bg-[#08080b] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
                   />
+                </div>
+
+                {/* Impact Metrics Editor */}
+                <div className="space-y-2 pt-2 border-t border-zinc-800">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[#d4af37] font-semibold block uppercase tracking-wider text-[11px]">
+                      Event Impact Metrics (Number Boxes)
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = editingEvent.impact_metrics || [];
+                        setEditingEvent({
+                          ...editingEvent,
+                          impact_metrics: [...current, { label: 'New Metric', value: '100+' }]
+                        });
+                      }}
+                      className="px-2 py-1 rounded bg-[#d4af37]/20 text-[#d4af37] text-[10px] font-bold hover:bg-[#d4af37]/30"
+                    >
+                      + Add Metric Box
+                    </button>
+                  </div>
+
+                  {(editingEvent.impact_metrics || []).map((metric, mIdx) => (
+                    <div key={mIdx} className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="Label (e.g. Blood Units)"
+                        value={metric.label}
+                        onChange={e => {
+                          const list = [...(editingEvent.impact_metrics || [])];
+                          list[mIdx] = { ...list[mIdx], label: e.target.value };
+                          setEditingEvent({ ...editingEvent, impact_metrics: list });
+                        }}
+                        className="flex-1 bg-[#08080b] border border-zinc-800 rounded p-2 text-white text-xs"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Value (e.g. 210+)"
+                        value={metric.value}
+                        onChange={e => {
+                          const list = [...(editingEvent.impact_metrics || [])];
+                          list[mIdx] = { ...list[mIdx], value: e.target.value };
+                          setEditingEvent({ ...editingEvent, impact_metrics: list });
+                        }}
+                        className="w-28 bg-[#08080b] border border-zinc-800 rounded p-2 text-white text-xs"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const list = (editingEvent.impact_metrics || []).filter((_, idx) => idx !== mIdx);
+                          setEditingEvent({ ...editingEvent, impact_metrics: list });
+                        }}
+                        className="p-2 text-red-400 hover:text-red-300"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 pt-2">

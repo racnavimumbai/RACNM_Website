@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getBoardMembers, BoardMember } from '@/lib/data/api';
+import { getAllBoardMembers, BoardMember } from '@/lib/data/api';
 import { InstagramIcon, LinkedinIcon } from '@/components/SocialIcons';
 import { Mail, Sparkles } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
@@ -21,7 +21,7 @@ export default function TeamPage() {
 
   useEffect(() => {
     async function load() {
-      const data = await getBoardMembers();
+      const data = await getAllBoardMembers();
       setMembers(data);
     }
     load();

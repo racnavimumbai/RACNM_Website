@@ -171,12 +171,12 @@ export default function AdminTeamPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-zinc-300 uppercase">Rotaract Year</label>
+                  <label className="text-xs font-bold text-zinc-300 uppercase">Display Sort Order</label>
                   <input
-                    type="text"
-                    value={editingMember.rotaract_year || '2024-25'}
-                    onChange={e => setEditingMember({ ...editingMember, rotaract_year: e.target.value })}
-                    placeholder="2024-25"
+                    type="number"
+                    value={editingMember.sort_order || 1}
+                    onChange={e => setEditingMember({ ...editingMember, sort_order: parseInt(e.target.value, 10) || 1 })}
+                    placeholder="1"
                     className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
                   />
                 </div>
@@ -197,6 +197,57 @@ export default function AdminTeamPage() {
                   placeholder="Brief 1-2 sentence bio..."
                   className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
                 />
+              </div>
+
+              {/* Social Media Links Section */}
+              <div className="space-y-3 pt-2 border-t border-white/10">
+                <label className="text-xs font-bold text-[#d4af37] uppercase tracking-wider block">
+                  Social Media & Contact Links
+                </label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-zinc-400 uppercase">Instagram URL</label>
+                    <input
+                      type="url"
+                      value={editingMember.social_links?.instagram || ''}
+                      onChange={e => setEditingMember({
+                        ...editingMember,
+                        social_links: { ...editingMember.social_links, instagram: e.target.value }
+                      })}
+                      placeholder="https://instagram.com/..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-[#18181c] border border-white/10 text-white text-xs focus:border-[#d4af37]"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-zinc-400 uppercase">LinkedIn URL</label>
+                    <input
+                      type="url"
+                      value={editingMember.social_links?.linkedin || ''}
+                      onChange={e => setEditingMember({
+                        ...editingMember,
+                        social_links: { ...editingMember.social_links, linkedin: e.target.value }
+                      })}
+                      placeholder="https://linkedin.com/in/..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-[#18181c] border border-white/10 text-white text-xs focus:border-[#d4af37]"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-zinc-400 uppercase">Email Address</label>
+                    <input
+                      type="email"
+                      value={editingMember.social_links?.email || ''}
+                      onChange={e => setEditingMember({
+                        ...editingMember,
+                        social_links: { ...editingMember.social_links, email: e.target.value }
+                      })}
+                      placeholder="member@rotaract.org"
+                      className="w-full px-3 py-1.5 rounded-lg bg-[#18181c] border border-white/10 text-white text-xs focus:border-[#d4af37]"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="pt-4 flex items-center justify-end gap-3">

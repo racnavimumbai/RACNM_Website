@@ -198,7 +198,7 @@ export default function AdminEditorialsPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-1">
                   <label className="text-zinc-400 block">Author *</label>
                   <input
@@ -216,6 +216,17 @@ export default function AdminEditorialsPage() {
                     type="text"
                     value={editingEditorial.category || 'Monthly Newsletter'}
                     onChange={e => setEditingEditorial({ ...editingEditorial, category: e.target.value })}
+                    className="w-full bg-[#0a0a0c] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-zinc-400 block">Publication Date *</label>
+                  <input
+                    type="date"
+                    required
+                    value={editingEditorial.published_at ? editingEditorial.published_at.split('T')[0] : ''}
+                    onChange={e => setEditingEditorial({ ...editingEditorial, published_at: e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString() })}
                     className="w-full bg-[#0a0a0c] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
                   />
                 </div>

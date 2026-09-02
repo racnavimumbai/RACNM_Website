@@ -15,18 +15,21 @@ export async function POST(request: Request) {
     const sanitizeName = file.name.toLowerCase().replace(/[^a-z0-9.-]/g, '_');
     const filename = `${Date.now()}_${sanitizeName}`;
     const relativePath = `public/uploads/${filename}`;
-    const publicUrl = `/uploads/${filename}`;
+    const relativeUrl = `/uploads/${filename}`;
 
     const githubToken = process.env.GITHUB_TOKEN;
     const githubRepo = process.env.GITHUB_REPO || 'racnavimumbai/RACNM_Website';
     const githubBranch = process.env.GITHUB_BRANCH || 'main';
 
     let githubCommitted = false;
+    let finalUrl = relativeUrl;
+
+    const base64Content = buffer.toString('base64');
+    const dataUrl = `data:${file.type || 'image/jpeg'};base64,${base64Content}`;
 
     // 1. If GITHUB_TOKEN is configured, commit file directly to GitHub repository via REST API
     if (githubToken) {
       try {
-        const contentBase64 = buffer.toString('base64');
         const ghUrl = `https://api.github.com/repos/${githubRepo}/contents/${relativePath}`;
 
         const ghRes = await fetch(ghUrl, {
@@ -39,13 +42,15 @@ export async function POST(request: Request) {
           },
           body: JSON.stringify({
             message: `Upload image: ${filename} via Admin CMS`,
-            content: contentBase64,
+            content: base64Content,
             branch: githubBranch
           })
         });
 
         if (ghRes.ok) {
           githubCommitted = true;
+          // Construct direct raw GitHub URL for instant global CDN accessibility
+          finalUrl = `https://raw.githubusercontent.com/${githubRepo}/${githubBranch}/public/uploads/${filename}`;
           console.log(`[GitHub Upload] Successfully committed ${relativePath} to ${githubRepo}`);
         } else {
           const ghErr = await ghRes.json();
@@ -69,7 +74,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: finalUrl,
+      dataUrl,
       filename,
       githubCommitted
     });
