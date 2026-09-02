@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
+import ParticleField from '@/components/ParticleField';
 import './globals.css';
 
 const cormorant = Cormorant_Garamond({
@@ -98,7 +99,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#08080b] text-[#f8fafc] font-sans antialiased flex flex-col min-h-screen">
+      <body className="bg-[#08080b] text-[#f8fafc] font-sans antialiased flex flex-col min-h-screen relative">
+        {/* Global Subtle Golden Sparkles Overlay */}
+        <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden" aria-hidden="true">
+          <ParticleField count={75} />
+        </div>
+
         {/* Noise Texture Overlay */}
         <div className="noise-overlay" aria-hidden="true" />
         

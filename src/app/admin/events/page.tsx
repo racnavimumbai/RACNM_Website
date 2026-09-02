@@ -54,7 +54,8 @@ export default function AdminEventsPage() {
       cover_image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1200&auto=format&fit=crop',
       gallery_images: [],
       status: 'published',
-      is_featured: false
+      is_featured: false,
+      is_upcoming: false
     });
     setIsModalOpen(true);
   };
@@ -171,9 +172,16 @@ export default function AdminEventsPage() {
                         <img src={event.cover_image} alt={event.title} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <span className="font-serif-heading text-base font-normal text-white block">
-                          {event.title}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-serif-heading text-base font-normal text-white block">
+                            {event.title}
+                          </span>
+                          {event.is_upcoming && (
+                            <span className="px-2 py-0.5 rounded bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-[10px] font-bold uppercase tracking-wider">
+                              UPCOMING
+                            </span>
+                          )}
+                        </div>
                         <span className="text-[10px] font-mono text-zinc-500 block">
                           /{event.slug}
                         </span>
@@ -355,17 +363,26 @@ export default function AdminEventsPage() {
                     </select>
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-zinc-400 block">Featured Status</label>
-                    <div className="pt-2">
-                      <label className="inline-flex items-center gap-2 cursor-pointer text-white">
+                  <div className="space-y-2">
+                    <label className="text-zinc-400 block">Homepage Displays</label>
+                    <div className="space-y-2 pt-1">
+                      <label className="inline-flex items-center gap-2 cursor-pointer text-white text-xs block">
+                        <input
+                          type="checkbox"
+                          checked={editingEvent.is_upcoming || false}
+                          onChange={e => setEditingEvent({ ...editingEvent, is_upcoming: e.target.checked })}
+                          className="rounded border-zinc-800 bg-[#08080b]"
+                        />
+                        <span>Mark as <strong>Upcoming Event</strong> (Homepage Hero)</span>
+                      </label>
+                      <label className="inline-flex items-center gap-2 cursor-pointer text-white text-xs block">
                         <input
                           type="checkbox"
                           checked={editingEvent.is_featured || false}
                           onChange={e => setEditingEvent({ ...editingEvent, is_featured: e.target.checked })}
                           className="rounded border-zinc-800 bg-[#08080b]"
                         />
-                        <span>Feature on Homepage Story Reel</span>
+                        <span>Feature on Story Reel</span>
                       </label>
                     </div>
                   </div>

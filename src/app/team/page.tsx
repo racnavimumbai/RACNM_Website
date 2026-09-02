@@ -77,7 +77,7 @@ export default function TeamPage() {
               <img
                 src={member.image_url}
                 alt={member.name}
-                className="w-full h-full object-cover filter grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
               />
               {/* Gold overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-60" />

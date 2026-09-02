@@ -171,6 +171,7 @@ export async function saveEvent(item: Partial<EventItem>): Promise<EventItem> {
     gallery_images: item.gallery_images || [],
     status: item.status || 'published',
     is_featured: item.is_featured ?? false,
+    is_upcoming: item.is_upcoming ?? false,
     created_at: new Date().toISOString()
   };
   list.unshift(created);

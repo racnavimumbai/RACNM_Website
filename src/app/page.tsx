@@ -11,7 +11,6 @@ import {
   FileText,
   Users,
   ChevronRight,
-  Quote,
   Maximize2
 } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
@@ -179,17 +178,64 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-          {/* Thoreau Quote Card */}
-          <motion.div variants={itemVariants} className="pt-3 max-w-2xl mx-auto pointer-events-auto">
-            <div className="p-6 rounded-2xl modern-card text-left relative">
-              <Quote className="w-8 h-8 text-[#d4af37]/30 absolute top-4 right-4" />
-              <p className="font-serif-heading italic text-zinc-200 text-base sm:text-lg">
-                &ldquo;How vain it is to sit down to write when you have not stood up to live.&rdquo;
-              </p>
-              <span className="block mt-2 text-xs font-semibold text-[#d4af37] text-right font-sans">
-                — Henry David Thoreau (RCNM Philosophical Anchor)
-              </span>
-            </div>
+          {/* Upcoming Events Spotlight Card */}
+          <motion.div variants={itemVariants} className="pt-3 max-w-3xl mx-auto pointer-events-auto">
+            {events.find(e => e.is_upcoming) ? (
+              (() => {
+                const upcoming = events.find(e => e.is_upcoming)!;
+                return (
+                  <div className="p-5 sm:p-6 rounded-2xl modern-card-gold text-left relative overflow-hidden border border-[#d4af37]/40 shadow-2xl">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#d4af37]"></span>
+                          </span>
+                          <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#d4af37] flex items-center gap-1">
+                            <Calendar className="w-3.5 h-3.5" />
+                            <span>UPCOMING EVENT SPOTLIGHT</span>
+                          </span>
+                        </div>
+
+                        <h3 className="font-serif-heading text-xl sm:text-2xl font-bold text-white leading-snug">
+                          {upcoming.title}
+                        </h3>
+
+                        <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-300 pt-0.5">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
+                            {formatDate(upcoming.event_date)}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
+                            {upcoming.location}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Link
+                        href={`/events/${upcoming.slug}`}
+                        className="px-5 py-2.5 rounded-xl bg-[#d4af37] text-black font-extrabold text-xs uppercase tracking-wider hover:bg-[#fef08a] transition-all shrink-0 shadow-lg flex items-center gap-1.5"
+                      >
+                        <span>View Event Details</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })()
+            ) : (
+              <div className="p-5 rounded-2xl modern-card text-center relative">
+                <p className="text-xs font-bold text-[#d4af37] uppercase tracking-widest flex items-center justify-center gap-2">
+                  <Calendar className="w-4 h-4 text-[#d4af37]" />
+                  <span>UPCOMING PROJECTS & COMMUNITY ACTION</span>
+                </p>
+                <p className="text-xs text-zinc-300 mt-1 font-sans">
+                  Stay tuned for our upcoming fellowship drives, health camps, and eco-initiatives across Navi Mumbai.
+                </p>
+              </div>
+            )}
           </motion.div>
 
         </motion.div>

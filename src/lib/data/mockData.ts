@@ -30,6 +30,7 @@ export interface EventItem {
   gallery_images: string[];
   status: 'draft' | 'published';
   is_featured: boolean;
+  is_upcoming?: boolean;
   created_at: string;
 }
 
@@ -133,6 +134,29 @@ export const initialInitiatives: Initiative[] = [
 ];
 
 export const initialEvents: EventItem[] = [
+  {
+    id: "evt-upcoming-1",
+    initiative_id: "init-3",
+    title: "Navi Mumbai Youth Leadership Summit 2026",
+    slug: "navi-mumbai-youth-leadership-summit-2026",
+    rotaract_year: "2026-27",
+    event_date: "2026-09-25",
+    location: "CIDCO Exhibition Centre Auditorium, Navi Mumbai",
+    summary: "Annual youth leadership summit featuring keynote masterclasses, interactive panel debates, and District 3142 networking.",
+    description: "Join us for RCNM's flagship 45th Year Youth Leadership Summit bringing together 400+ delegates across District 3142.",
+    impact_metrics: [
+      { label: "Expected Delegates", value: "400+" },
+      { label: "Keynote Speakers", value: "8" }
+    ],
+    cover_image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200&auto=format&fit=crop",
+    gallery_images: [
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200&auto=format&fit=crop"
+    ],
+    status: "published",
+    is_featured: true,
+    is_upcoming: true,
+    created_at: "2026-09-01T10:00:00Z"
+  },
   {
     id: "evt-1",
     initiative_id: "init-1",
