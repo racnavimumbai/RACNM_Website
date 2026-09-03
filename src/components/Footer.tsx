@@ -194,8 +194,17 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-center text-center gap-4 text-xs text-zinc-500">
-            <p>© {new Date().getFullYear()} Rotaract Club of Navi Mumbai. 45 Years of Excellence (1982–2027). All rights reserved.</p>
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-4 text-xs">
+            <p className="text-zinc-300">© {new Date().getFullYear()} Rotaract Club of Navi Mumbai. All rights reserved.</p>
+            <p className="text-zinc-500 text-xs">
+              Website built &amp; managed by{' '}
+              <a
+                href="mailto:yashsarawgi.wrk@gmail.com"
+                className="text-zinc-400 hover:text-zinc-200 transition-colors font-normal no-underline"
+              >
+                Rtr. Yash Sarawgi
+              </a>
+            </p>
           </div>
         </motion.div>
       </footer>

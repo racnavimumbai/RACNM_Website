@@ -63,6 +63,16 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true
+  },
+  icons: {
+    icon: [
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    shortcut: '/favicon.ico'
   }
 };
 
@@ -77,7 +87,7 @@ export default function RootLayout({
     name: 'Rotaract Club of Navi Mumbai',
     alternateName: 'RACNM',
     url: 'https://rotaractclubofnavimumbai.org',
-    logo: 'https://rotaractclubofnavimumbai.org/images/logo-full.png',
+    logo: 'https://rotaractclubofnavimumbai.org/icon.png',
     foundingDate: '1982',
     address: {
       '@type': 'PostalAddress',
