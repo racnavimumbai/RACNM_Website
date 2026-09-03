@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getEditorialBySlug } from '@/lib/data/api';
 import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -114,8 +115,8 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
       )}
 
       {/* Content Text */}
-      <div className="bg-[#121215] border border-white/10 rounded-3xl p-8 sm:p-12 text-zinc-200 text-base leading-relaxed space-y-6 whitespace-pre-line font-sans">
-        {editorial.content}
+      <div className="bg-[#121215] border border-white/10 rounded-3xl p-8 sm:p-12 font-sans">
+        <MarkdownRenderer content={editorial.content} />
       </div>
     </div>
   );

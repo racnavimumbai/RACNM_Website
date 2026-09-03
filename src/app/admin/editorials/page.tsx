@@ -278,6 +278,9 @@ export default function AdminEditorialsPage() {
                   onChange={e => setEditingEditorial({ ...editingEditorial, content: e.target.value })}
                   className="w-full bg-[#0a0a0c] border border-zinc-800 rounded p-2.5 text-white focus:outline-none focus:border-[#d4af37]"
                 />
+                <span className="text-[10px] text-zinc-500 block">
+                  Supports Markdown formatting (<strong className="text-zinc-400">**bold**</strong>, <em className="text-zinc-400">*italics*</em>, # Headings, - lists, [links](url))
+                </span>
               </div>
 
               <div className="pt-4 border-t border-zinc-800 flex justify-end gap-3 font-sans">

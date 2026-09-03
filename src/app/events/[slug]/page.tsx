@@ -9,6 +9,7 @@ import { motion, Variants } from 'framer-motion';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import SectionDivider from '@/components/SectionDivider';
 import LightboxModal from '@/components/LightboxModal';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { formatDate } from '@/lib/utils';
 
 const sectionVariants: Variants = {
@@ -192,9 +193,7 @@ export default function EventDetailPage() {
         <h2 className="font-serif-heading text-2xl font-bold text-[#d4af37]">
           The Full Story
         </h2>
-        <div className="text-zinc-300 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
-          {event.description}
-        </div>
+        <MarkdownRenderer content={event.description} />
       </motion.div>
 
       {/* Event Photo Gallery */}

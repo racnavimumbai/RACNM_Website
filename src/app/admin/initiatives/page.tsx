@@ -223,6 +223,9 @@ export default function AdminInitiativesPage() {
                   placeholder="Detailed initiative description..."
                   className="w-full px-4 py-2 rounded-xl bg-[#18181c] border border-white/10 text-white text-sm focus:border-[#d4af37]"
                 />
+                <span className="text-[10px] text-zinc-500 block">
+                  Supports Markdown formatting (<strong className="text-zinc-400">**bold**</strong>, <em className="text-zinc-400">*italics*</em>, # Headings, - lists, [links](url))
+                </span>
               </div>
 
               <div className="pt-4 flex items-center justify-end gap-3">

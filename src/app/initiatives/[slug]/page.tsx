@@ -7,6 +7,7 @@ import { getInitiativeBySlug, getEvents, Initiative, EventItem } from '@/lib/dat
 import { ArrowLeft, Calendar, Sparkles, ArrowRight } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 import SectionDivider from '@/components/SectionDivider';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { formatDate } from '@/lib/utils';
 
 const sectionVariants: Variants = {
@@ -127,9 +128,7 @@ export default function InitiativeDetailPage() {
         <h2 className="font-serif-heading text-2xl font-bold text-[#d4af37]">
           About This Initiative
         </h2>
-        <div className="text-zinc-300 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
-          {initiative.description}
-        </div>
+        <MarkdownRenderer content={initiative.description} />
       </motion.div>
 
       <SectionDivider />
