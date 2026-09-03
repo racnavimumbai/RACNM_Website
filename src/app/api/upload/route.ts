@@ -1,9 +1,47 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminSession } from '@/lib/auth/server';
+import { rateLimit, getClientIp } from '@/lib/rateLimit';
+
+const MAX_FILE_SIZE_BYTES = 15 * 1024 * 1024; // 15 Megabytes for DSLR and iPhone photos
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+  'image/heic',
+  'image/heif'
+]);
+const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.heic', '.heif']);
 
 export async function POST(request: Request) {
   try {
+    // 1. Enforce admin authentication
+    const isAuthorized = await verifyAdminSession(request);
+    if (!isAuthorized) {
+      return NextResponse.json(
+        { error: 'Unauthorized: Admin privileges required.' },
+        { status: 401 }
+      );
+    }
+
+    // 2. Upload Rate Limiting (Allows up to 25 photo uploads per 10 minutes)
+    const clientIp = getClientIp(request);
+    const rl = rateLimit(`upload_${clientIp}`, 25, 10 * 60 * 1000);
+    if (!rl.success) {
+      return NextResponse.json(
+        {
+          error: `Upload rate limit reached (${rl.limit} photos per 10 minutes). Please wait ${rl.resetSeconds} seconds before uploading more.`
+        },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rl.resetSeconds) }
+        }
+      );
+    }
+
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
 
@@ -11,11 +49,41 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const sanitizeName = file.name.toLowerCase().replace(/[^a-z0-9.-]/g, '_');
-    const filename = `${Date.now()}_${sanitizeName}`;
+    // 3. Strict file size validation prior to buffer allocation
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { error: 'File size exceeds maximum allowed limit of 15MB.' },
+        { status: 400 }
+      );
+    }
+
+    // 3. Strict MIME type validation
+    if (!ALLOWED_MIME_TYPES.has(file.type)) {
+      return NextResponse.json(
+        { error: 'Invalid file format. Allowed types: JPEG, PNG, WEBP, GIF, SVG.' },
+        { status: 400 }
+      );
+    }
+
+    // 4. Strict extension validation
+    const ext = path.extname(file.name).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.has(ext)) {
+      return NextResponse.json(
+        { error: 'Invalid file extension. Only standard image extensions are allowed.' },
+        { status: 400 }
+      );
+    }
+
+    // 5. Sanitize filename and prevent directory traversal
+    const baseName = path.basename(file.name, ext);
+    const sanitizedBase = baseName.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 50);
+    const filename = `${Date.now()}_${sanitizedBase || 'upload'}${ext}`;
     const relativePath = `public/uploads/${filename}`;
     const relativeUrl = `/uploads/${filename}`;
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const base64Content = buffer.toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64Content}`;
 
     const githubToken = process.env.GITHUB_TOKEN;
     const githubRepo = process.env.GITHUB_REPO || 'racnavimumbai/RACNM_Website';
@@ -24,10 +92,7 @@ export async function POST(request: Request) {
     let githubCommitted = false;
     let finalUrl = relativeUrl;
 
-    const base64Content = buffer.toString('base64');
-    const dataUrl = `data:${file.type || 'image/jpeg'};base64,${base64Content}`;
-
-    // 1. If GITHUB_TOKEN is configured, commit file directly to GitHub repository via REST API
+    // 6. Direct GitHub Repository commit if GITHUB_TOKEN configured
     if (githubToken) {
       try {
         const ghUrl = `https://api.github.com/repos/${githubRepo}/contents/${relativePath}`;
@@ -49,7 +114,6 @@ export async function POST(request: Request) {
 
         if (ghRes.ok) {
           githubCommitted = true;
-          // Construct direct raw GitHub URL for instant global CDN accessibility
           finalUrl = `https://raw.githubusercontent.com/${githubRepo}/${githubBranch}/public/uploads/${filename}`;
           console.log(`[GitHub Upload] Successfully committed ${relativePath} to ${githubRepo}`);
         } else {
@@ -61,7 +125,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Local filesystem write fallback for development
+    // 7. Local filesystem write fallback for development
     try {
       const uploadDir = path.join(process.cwd(), 'public', 'uploads');
       if (!fs.existsSync(uploadDir)) {

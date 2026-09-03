@@ -10,6 +10,16 @@ export interface ApplicationEmailData {
   reason?: string;
 }
 
+function escapeHtml(str: string | undefined | null): string {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export async function sendJoinNotificationEmail(data: ApplicationEmailData): Promise<boolean> {
   const recipientEmail = process.env.NOTIFICATION_EMAIL || 'info@rotaractclubofnavimumbai.org, yashsarawgi20@gmail.com';
   const smtpHost = process.env.SMTP_HOST;
@@ -17,8 +27,13 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
 
-  const applicantMotivation = data.motivation || data.reason || 'No statement provided';
-  const applicantAge = data.age || 'Not specified';
+  const safeName = escapeHtml(data.full_name);
+  const safeEmail = escapeHtml(data.email);
+  const safePhone = escapeHtml(data.phone);
+  const safeOccupation = escapeHtml(data.occupation);
+  const safeAge = escapeHtml(String(data.age || 'Not specified'));
+  const safeMotivation = escapeHtml(data.motivation || data.reason || 'No statement provided');
+  const safeSubjectName = data.full_name.replace(/[\r\n]+/g, ' ').slice(0, 60);
 
   // Construct elegant HTML email body
   const htmlContent = `
@@ -29,7 +44,7 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
         <style>
           body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #08080b; color: #f8fafc; margin: 0; padding: 20px; }
           .container { max-width: 600px; margin: 0 auto; background: #0f0f15; border: 1px solid #d4af37; border-radius: 16px; padding: 30px; }
-          .header { text-align: center; border-b: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 20px; margin-bottom: 20px; }
+          .header { text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 20px; margin-bottom: 20px; }
           .title { color: #d4af37; font-size: 20px; font-weight: bold; letter-spacing: 1px; margin: 0; }
           .subtitle { color: #94a3b8; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; }
           .field { margin-bottom: 16px; }
@@ -48,33 +63,33 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
 
           <div class="field">
             <div class="label">Full Name</div>
-            <div class="value">${data.full_name}</div>
+            <div class="value">${safeName}</div>
           </div>
 
           <div class="field">
             <div class="label">Email Address</div>
-            <div class="value"><a href="mailto:${data.email}" style="color: #fde047; text-decoration: none;">${data.email}</a></div>
+            <div class="value"><a href="mailto:${safeEmail}" style="color: #fde047; text-decoration: none;">${safeEmail}</a></div>
           </div>
 
           <div class="field">
             <div class="label">Phone Number</div>
-            <div class="value"><a href="tel:${data.phone}" style="color: #fde047; text-decoration: none;">${data.phone}</a></div>
+            <div class="value"><a href="tel:${safePhone}" style="color: #fde047; text-decoration: none;">${safePhone}</a></div>
           </div>
 
           <div class="field">
             <div class="label">Age & Occupation</div>
-            <div class="value">${applicantAge} years old • ${data.occupation}</div>
+            <div class="value">${safeAge} years old • ${safeOccupation}</div>
           </div>
 
           <div class="field">
             <div class="label">Motivation & Statement</div>
-            <div class="value" style="white-space: pre-wrap; line-height: 1.6;">${applicantMotivation}</div>
+            <div class="value" style="white-space: pre-wrap; line-height: 1.6;">${safeMotivation}</div>
           </div>
 
           <a href="https://rotaractclubofnavimumbai.org/admin/applications" class="cta-btn">View in Admin CMS Dashboard</a>
 
           <div class="footer">
-            Submitted via Rotaract Club of Navi Mumbai Official Website (/join).
+            Submitted via Rotaract Club of Navi Mumbai Official Portal • Confidential Application Record
           </div>
         </div>
       </body>
@@ -97,8 +112,8 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
       await transporter.sendMail({
         from: `"RACNM Web Portal" <${smtpUser}>`,
         to: recipientEmail,
-        replyTo: data.email,
-        subject: `[NEW MEMBER APPLICATION] ${data.full_name} - Rotaract Club of Navi Mumbai`,
+        replyTo: safeEmail,
+        subject: `[NEW MEMBER APPLICATION] ${safeSubjectName} - Rotaract Club of Navi Mumbai`,
         html: htmlContent
       });
 
@@ -106,11 +121,10 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
       return true;
     } catch (error) {
       console.error('[RACNM Email] SMTP dispatch error:', error);
-      // Fallback log
     }
   }
 
-  // Fallback log when SMTP credentials are pending configuration
+  // Fallback log when SMTP credentials are not configured or failed
   console.log(`[RACNM Email Log] Simulated email notification to ${recipientEmail}:`);
   console.log(`Applicant: ${data.full_name} (${data.email}, ${data.phone})`);
   return true;

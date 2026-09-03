@@ -27,9 +27,9 @@ export default function ImageUploader({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (< 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      setError('File is too large. Max allowed size is 10MB.');
+    // Validate size (< 15MB for high-res DSLR and iPhone shots)
+    if (file.size > 15 * 1024 * 1024) {
+      setError('File is too large. Max allowed size is 15MB.');
       return;
     }
 
@@ -123,7 +123,7 @@ export default function ImageUploader({
                   Click to select photo from phone / computer
                 </span>
                 <span className="text-[10px] text-zinc-500">
-                  Commits directly to repository at <code className="text-[#d4af37]">public/uploads/</code>
+                  Supports iPhone & DSLR high-res photos up to 15MB
                 </span>
               </div>
             )}

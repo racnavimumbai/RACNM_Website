@@ -40,22 +40,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (pathname === '/admin/login') return;
 
     const checkAuth = async () => {
-      const supabase = getSupabaseBrowserClient();
-      if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session && localStorage.getItem('racnm_admin_logged') !== 'true') {
+      try {
+        const res = await fetch('/api/admin/verify');
+        if (!res.ok) {
           router.push('/admin/login');
           return;
         }
-      } else {
-        const isLogged = typeof window !== 'undefined' && localStorage.getItem('racnm_admin_logged') === 'true';
-        if (!isLogged) {
-          router.push('/admin/login');
-          return;
-        }
+        setAuthorized(true);
+      } catch {
+        router.push('/admin/login');
       }
-
-      setAuthorized(true);
     };
 
     checkAuth();
@@ -75,14 +69,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   const handleLogout = async () => {
-    const supabase = getSupabaseBrowserClient();
-    if (supabase) {
-      await supabase.auth.signOut();
+    try {
+      const supabase = getSupabaseBrowserClient();
+      if (supabase) {
+        await supabase.auth.signOut();
+      }
+    } catch {
+      // Ignore
     }
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('racnm_admin_logged');
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch {
+      // Ignore
     }
     router.push('/admin/login');
+    router.refresh();
   };
 
   return (

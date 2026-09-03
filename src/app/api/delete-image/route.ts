@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminSession } from '@/lib/auth/server';
 
 export async function POST(request: Request) {
   try {
+    // 1. Enforce admin authentication
+    const isAuthorized = await verifyAdminSession(request);
+    if (!isAuthorized) {
+      return NextResponse.json(
+        { error: 'Unauthorized: Admin privileges required.' },
+        { status: 401 }
+      );
+    }
+
     const { imageUrl } = await request.json();
 
     if (!imageUrl || typeof imageUrl !== 'string') {
@@ -16,9 +26,16 @@ export async function POST(request: Request) {
       filename = imageUrl.split('/uploads/').pop()?.split('?')[0] || '';
     }
 
-    if (!filename || filename.includes('..') || filename.includes('/')) {
-      // Not a repository uploaded file or external image (e.g. Unsplash) — safe ignore
-      return NextResponse.json({ success: true, message: 'External image skipped.' });
+    // Strict path traversal and filename validation
+    if (
+      !filename ||
+      filename.includes('..') ||
+      filename.includes('/') ||
+      filename.includes('\\') ||
+      !/^[\w.-]+$/.test(filename)
+    ) {
+      // External image (e.g. Unsplash) or invalid filename — safe ignore
+      return NextResponse.json({ success: true, message: 'External or non-local image skipped.' });
     }
 
     const relativePath = `public/uploads/${filename}`;
@@ -28,7 +45,7 @@ export async function POST(request: Request) {
 
     let githubDeleted = false;
 
-    // 1. Delete from GitHub repository via REST API if GITHUB_TOKEN is present
+    // 2. Delete from GitHub repository via REST API if GITHUB_TOKEN is present
     if (githubToken) {
       try {
         const getUrl = `https://api.github.com/repos/${githubRepo}/contents/${relativePath}?ref=${githubBranch}`;
@@ -74,7 +91,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Local filesystem unlink fallback for development
+    // 3. Local filesystem unlink fallback for development
     try {
       const localPath = path.join(process.cwd(), 'public', 'uploads', filename);
       if (fs.existsSync(localPath)) {

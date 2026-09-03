@@ -18,38 +18,32 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), password })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Authentication failed. Access Denied.');
+      }
+
+      // Also authenticate the browser Supabase client for client-side queries
       const supabase = getSupabaseBrowserClient();
-
-      if (supabase) {
-        // Authenticate via Supabase Auth
-        const { data, error: authError } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        if (authError) {
-          throw new Error(authError.message || 'Invalid credentials or user not authorized in Supabase.');
-        }
-
-        if (data.session) {
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('rcnm_admin_logged', 'true');
-          }
-          router.push('/admin');
-          return;
+      if (supabase && email.trim()) {
+        try {
+          await supabase.auth.signInWithPassword({
+            email: email.trim(),
+            password
+          });
+        } catch (sbErr) {
+          console.warn('[Supabase Client Auth]', sbErr);
         }
       }
 
-      // Fallback check when Supabase keys are pending
-      const VALID_PASSCODE = process.env.NEXT_PUBLIC_ADMIN_PASSCODE || 'MAGNUMOPUS2026';
-      if (password === VALID_PASSCODE || password === 'RCNM1982' || password === 'admin123') {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('rcnm_admin_logged', 'true');
-        }
-        router.push('/admin');
-      } else {
-        throw new Error('Invalid Admin Passcode. Access Denied.');
-      }
+      router.push('/admin');
+      router.refresh();
     } catch (err: unknown) {
       console.error(err);
       setError(err instanceof Error ? err.message : 'Failed to authenticate.');

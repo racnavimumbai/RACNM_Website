@@ -42,7 +42,8 @@ export default function JoinPage() {
     email: '',
     phone: '',
     occupation: '',
-    reason: ''
+    reason: '',
+    website: ''
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -62,7 +63,8 @@ export default function JoinPage() {
           email: formData.email,
           phone: formData.phone,
           occupation: formData.occupation,
-          motivation: formData.reason
+          motivation: formData.reason,
+          website: formData.website
         })
       });
 
@@ -184,6 +186,24 @@ export default function JoinPage() {
                 {errorMessage}
               </motion.div>
             )}
+
+            {/* Invisible bot honeypot trap to silently drop spam scripts */}
+            <div
+              className="opacity-0 pointer-events-none absolute -left-[9999px]"
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                type="text"
+                name="website"
+                value={formData.website}
+                onChange={e => setFormData({ ...formData, website: e.target.value })}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
