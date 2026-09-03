@@ -21,9 +21,7 @@ import {
   FileText,
   Inbox,
   PlusCircle,
-  ArrowUpRight,
-  ShieldCheck,
-  Clock
+  ShieldCheck
 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 

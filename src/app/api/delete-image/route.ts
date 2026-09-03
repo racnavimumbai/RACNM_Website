@@ -89,10 +89,10 @@ export async function POST(request: Request) {
       filename,
       githubDeleted
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[API /api/delete-image error]', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to delete image.' },
+      { error: error instanceof Error ? error.message : 'Failed to delete image.' },
       { status: 500 }
     );
   }

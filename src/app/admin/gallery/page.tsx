@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getGalleryPhotos, saveGalleryPhoto, deleteGalleryPhoto, GalleryPhoto } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { Image as ImageIcon, Plus, Edit, Trash2, Search, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Search, X } from 'lucide-react';
 import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminGalleryPage() {

@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle2, Send, Sparkles, Users, Heart, Globe } from 'lucide-react';
+import { CheckCircle2, Send, Users, Heart, Globe } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
-import { submitJoinApplication } from '@/lib/data/api';
 import ParticleField from '@/components/ParticleField';
 
 const staggerContainer: Variants = {
@@ -74,8 +73,8 @@ export default function JoinPage() {
       }
 
       setSubmitted(true);
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to submit application. Please try again.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Failed to submit application. Please try again.');
     } finally {
       setSubmitting(false);
     }

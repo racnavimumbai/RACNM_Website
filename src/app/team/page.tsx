@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getAllBoardMembers, BoardMember } from '@/lib/data/api';
 import { InstagramIcon, LinkedinIcon } from '@/components/SocialIcons';
-import { Mail, Sparkles } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 
 const staggerContainer: Variants = {

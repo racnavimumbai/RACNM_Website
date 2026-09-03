@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getInitiatives, saveInitiative, deleteInitiative, Initiative } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { Plus, Edit2, Trash2, Sparkles, Check, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, Check, X } from 'lucide-react';
 import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminInitiativesPage() {

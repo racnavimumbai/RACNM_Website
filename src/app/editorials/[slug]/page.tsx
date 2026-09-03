@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getEditorialBySlug } from '@/lib/data/api';
-import { ArrowLeft, Calendar, FileText, Sparkles, BookOpen } from 'lucide-react';
+import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

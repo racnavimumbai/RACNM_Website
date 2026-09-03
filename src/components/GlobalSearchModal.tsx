@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Search,
@@ -69,21 +69,32 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
         }
       }
       loadAll();
-      setTimeout(() => inputRef.current?.focus(), 100);
-    } else {
-      setQuery('');
+      const timer = setTimeout(() => inputRef.current?.focus(), 100);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
-  // Lock scroll
+  const handleClose = useCallback(() => {
+    setQuery('');
+    onClose();
+  }, [onClose]);
+
+  // Lock scroll & handle Escape key
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') handleClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     } else {
       document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
   // Filtered results
   const q = query.trim().toLowerCase();
@@ -120,7 +131,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
   const totalResults = matchedInitiatives.length + matchedEvents.length + matchedEditorials.length + matchedMembers.length + matchedPhotos.length;
 
   const navigateTo = (href: string) => {
-    onClose();
+    handleClose();
     router.push(href);
   };
 
@@ -133,7 +144,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/80 backdrop-blur-md"
-          onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+          onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
         >
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.96 }}

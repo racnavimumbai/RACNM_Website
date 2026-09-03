@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getInitiatives, Initiative } from '@/lib/data/api';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 
 const staggerContainer: Variants = {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getEditorials, saveEditorial, deleteEditorial, Editorial } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { FileText, Plus, Edit, Trash2, Search, X, BookOpen } from 'lucide-react';
+import { Plus, Edit, Trash2, Search, X, BookOpen } from 'lucide-react';
 import { formatDate, deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminEditorialsPage() {

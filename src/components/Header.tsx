@@ -23,6 +23,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [prevPath, setPrevPath] = useState(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,10 +45,11 @@ export default function Header() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  // Close mobile menu on route change without cascading effect render
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     return null;

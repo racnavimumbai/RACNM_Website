@@ -436,7 +436,7 @@ export default function AdminEventsPage() {
                     <label className="text-zinc-400 block">Status</label>
                     <select
                       value={editingEvent.status || 'published'}
-                      onChange={e => setEditingEvent({ ...editingEvent, status: e.target.value as any })}
+                      onChange={e => setEditingEvent({ ...editingEvent, status: e.target.value as 'draft' | 'published' })}
                       className="w-full bg-[#08080b] border border-zinc-800 rounded p-2.5 text-white"
                     >
                       <option value="published">Published</option>

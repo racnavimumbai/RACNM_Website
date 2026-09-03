@@ -16,6 +16,30 @@ import {
 
 export type { Initiative, EventItem, GalleryPhoto, Editorial, BoardMember, JoinApplication };
 
+// Type-safe query builder adapter avoiding explicit `any` and Supabase generic constraint mismatches
+interface DbQueryPromise<T = unknown> extends Promise<{ data: T | null; error: unknown }> {
+  order(col: string, opts?: { ascending?: boolean }): DbQueryPromise<T>;
+  eq(col: string, val: unknown): DbQueryPromise<T>;
+  select(cols?: string): DbQueryPromise<T>;
+  single(): Promise<{ data: T | null; error: unknown }>;
+}
+
+interface DbTableOperations {
+  select(cols?: string): DbQueryPromise<unknown[]>;
+  insert(values: unknown): DbQueryPromise;
+  update(values: unknown): DbQueryPromise;
+  delete(): DbQueryPromise;
+}
+
+interface DbAdapter {
+  from(table: string): DbTableOperations;
+}
+
+function getDb(): DbAdapter | null {
+  const client = getSupabaseBrowserClient();
+  return client as unknown as DbAdapter | null;
+}
+
 // Helper for localStorage persistence in mock mode
 const STORAGE_KEYS = {
   INITIATIVES: 'racnm_initiatives',
@@ -40,17 +64,20 @@ function setLocal<T>(key: string, val: T) {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(key, JSON.stringify(val));
-  } catch (e) {
+  } catch (e: unknown) {
     console.error('LocalStorage write error', e);
   }
 }
 
 // INITIATIVES
 export async function getInitiatives(): Promise<Initiative[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('initiatives' as any) as any).select('*').order('created_at', { ascending: false });
-    if (!error && data) return data as Initiative[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('initiatives')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (!error && data) return data as unknown as Initiative[];
   }
   return getLocal<Initiative[]>(STORAGE_KEYS.INITIATIVES, initialInitiatives);
 }
@@ -61,19 +88,28 @@ export async function getInitiativeBySlug(slug: string): Promise<Initiative | nu
 }
 
 export async function saveInitiative(item: Partial<Initiative>): Promise<Initiative> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
+  const db = getDb();
+  if (db) {
     if (item.id) {
-      const { data, error } = await (supabase.from('initiatives' as any) as any).update(item).eq('id', item.id).select().single();
-      if (!error && data) return data as Initiative;
+      const { data, error } = await db
+        .from('initiatives')
+        .update(item)
+        .eq('id', item.id)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as Initiative;
     } else {
       const newItem = {
         ...item,
         slug: item.slug || item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'initiative',
         created_at: new Date().toISOString()
       };
-      const { data, error } = await (supabase.from('initiatives' as any) as any).insert(newItem).select().single();
-      if (!error && data) return data as Initiative;
+      const { data, error } = await db
+        .from('initiatives')
+        .insert(newItem)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as Initiative;
     }
   }
 
@@ -104,9 +140,9 @@ export async function saveInitiative(item: Partial<Initiative>): Promise<Initiat
 }
 
 export async function deleteInitiative(id: string): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('initiatives' as any) as any).delete().eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db.from('initiatives').delete().eq('id', id);
     if (!error) return true;
   }
   const list = getLocal<Initiative[]>(STORAGE_KEYS.INITIATIVES, initialInitiatives).filter(i => i.id !== id);
@@ -116,10 +152,13 @@ export async function deleteInitiative(id: string): Promise<boolean> {
 
 // EVENTS
 export async function getEvents(): Promise<EventItem[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('events' as any) as any).select('*').order('event_date', { ascending: false });
-    if (!error && data) return data as EventItem[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('events')
+      .select('*')
+      .order('event_date', { ascending: false });
+    if (!error && data) return data as unknown as EventItem[];
   }
   return getLocal<EventItem[]>(STORAGE_KEYS.EVENTS, initialEvents);
 }
@@ -130,20 +169,29 @@ export async function getEventBySlug(slug: string): Promise<EventItem | null> {
 }
 
 export async function saveEvent(item: Partial<EventItem>): Promise<EventItem> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
+  const db = getDb();
+  if (db) {
     if (item.id) {
-      const { data, error } = await (supabase.from('events' as any) as any).update(item).eq('id', item.id).select().single();
-      if (!error && data) return data as EventItem;
+      const { data, error } = await db
+        .from('events')
+        .update(item)
+        .eq('id', item.id)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as EventItem;
     } else {
-      const { data, error } = await (supabase.from('events' as any) as any).insert({
-        ...item,
-        slug: item.slug || item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'event',
-        status: item.status || 'published',
-        rotaract_year: item.rotaract_year || '2024-25',
-        created_at: new Date().toISOString()
-      }).select().single();
-      if (!error && data) return data as EventItem;
+      const { data, error } = await db
+        .from('events')
+        .insert({
+          ...item,
+          slug: item.slug || item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'event',
+          status: item.status || 'published',
+          rotaract_year: item.rotaract_year || '2024-25',
+          created_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+      if (!error && data) return data as unknown as EventItem;
     }
   }
 
@@ -180,9 +228,9 @@ export async function saveEvent(item: Partial<EventItem>): Promise<EventItem> {
 }
 
 export async function deleteEvent(id: string): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('events' as any) as any).delete().eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db.from('events').delete().eq('id', id);
     if (!error) return true;
   }
   const list = getLocal<EventItem[]>(STORAGE_KEYS.EVENTS, initialEvents).filter(e => e.id !== id);
@@ -192,28 +240,40 @@ export async function deleteEvent(id: string): Promise<boolean> {
 
 // GALLERY
 export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('gallery_photos' as any) as any).select('*').order('sort_order', { ascending: true });
-    if (!error && data) return data as GalleryPhoto[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('gallery_photos')
+      .select('*')
+      .order('sort_order', { ascending: true });
+    if (!error && data) return data as unknown as GalleryPhoto[];
   }
   return getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, initialGalleryPhotos);
 }
 
 export async function saveGalleryPhoto(photo: Partial<GalleryPhoto>): Promise<GalleryPhoto> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
+  const db = getDb();
+  if (db) {
     if (photo.id) {
-      const { data, error } = await (supabase.from('gallery_photos' as any) as any).update(photo).eq('id', photo.id).select().single();
-      if (!error && data) return data as GalleryPhoto;
+      const { data, error } = await db
+        .from('gallery_photos')
+        .update(photo)
+        .eq('id', photo.id)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as GalleryPhoto;
     } else {
-      const { data, error } = await (supabase.from('gallery_photos' as any) as any).insert({
-        ...photo,
-        album_name: photo.album_name || 'General Archive',
-        rotaract_year: photo.rotaract_year || '2024-25',
-        created_at: new Date().toISOString()
-      }).select().single();
-      if (!error && data) return data as GalleryPhoto;
+      const { data, error } = await db
+        .from('gallery_photos')
+        .insert({
+          ...photo,
+          album_name: photo.album_name || 'General Archive',
+          rotaract_year: photo.rotaract_year || '2024-25',
+          created_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+      if (!error && data) return data as unknown as GalleryPhoto;
     }
   }
 
@@ -242,9 +302,9 @@ export async function saveGalleryPhoto(photo: Partial<GalleryPhoto>): Promise<Ga
 }
 
 export async function deleteGalleryPhoto(id: string): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('gallery_photos' as any) as any).delete().eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db.from('gallery_photos').delete().eq('id', id);
     if (!error) return true;
   }
   const list = getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, initialGalleryPhotos).filter(p => p.id !== id);
@@ -254,10 +314,13 @@ export async function deleteGalleryPhoto(id: string): Promise<boolean> {
 
 // EDITORIALS
 export async function getEditorials(): Promise<Editorial[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('editorials' as any) as any).select('*').order('published_at', { ascending: false });
-    if (!error && data) return data as Editorial[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('editorials')
+      .select('*')
+      .order('published_at', { ascending: false });
+    if (!error && data) return data as unknown as Editorial[];
   }
   return getLocal<Editorial[]>(STORAGE_KEYS.EDITORIALS, initialEditorials);
 }
@@ -268,19 +331,28 @@ export async function getEditorialBySlug(slug: string): Promise<Editorial | null
 }
 
 export async function saveEditorial(item: Partial<Editorial>): Promise<Editorial> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
+  const db = getDb();
+  if (db) {
     if (item.id) {
-      const { data, error } = await (supabase.from('editorials' as any) as any).update(item).eq('id', item.id).select().single();
-      if (!error && data) return data as Editorial;
+      const { data, error } = await db
+        .from('editorials')
+        .update(item)
+        .eq('id', item.id)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as Editorial;
     } else {
-      const { data, error } = await (supabase.from('editorials' as any) as any).insert({
-        ...item,
-        slug: item.slug || item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'editorial',
-        status: item.status || 'published',
-        published_at: new Date().toISOString()
-      }).select().single();
-      if (!error && data) return data as Editorial;
+      const { data, error } = await db
+        .from('editorials')
+        .insert({
+          ...item,
+          slug: item.slug || item.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'editorial',
+          status: item.status || 'published',
+          published_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+      if (!error && data) return data as unknown as Editorial;
     }
   }
 
@@ -312,9 +384,9 @@ export async function saveEditorial(item: Partial<Editorial>): Promise<Editorial
 }
 
 export async function deleteEditorial(id: string): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('editorials' as any) as any).delete().eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db.from('editorials').delete().eq('id', id);
     if (!error) return true;
   }
   const list = getLocal<Editorial[]>(STORAGE_KEYS.EDITORIALS, initialEditorials).filter(e => e.id !== id);
@@ -324,33 +396,49 @@ export async function deleteEditorial(id: string): Promise<boolean> {
 
 // TEAM
 export async function getBoardMembers(year: string = '2024-25'): Promise<BoardMember[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('board_members' as any) as any).select('*').eq('rotaract_year', year).order('sort_order', { ascending: true });
-    if (!error && data && data.length > 0) return data as BoardMember[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('board_members')
+      .select('*')
+      .eq('rotaract_year', year)
+      .order('sort_order', { ascending: true });
+    if (!error && data && Array.isArray(data) && data.length > 0) return data as unknown as BoardMember[];
   }
   const list = getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
   return list.filter(m => m.rotaract_year === year).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllBoardMembers(): Promise<BoardMember[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('board_members' as any) as any).select('*').order('sort_order', { ascending: true });
-    if (!error && data) return data as BoardMember[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('board_members')
+      .select('*')
+      .order('sort_order', { ascending: true });
+    if (!error && data) return data as unknown as BoardMember[];
   }
   return getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
 }
 
 export async function saveBoardMember(member: Partial<BoardMember>): Promise<BoardMember> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
+  const db = getDb();
+  if (db) {
     if (member.id) {
-      const { data, error } = await (supabase.from('board_members' as any) as any).update(member).eq('id', member.id).select().single();
-      if (!error && data) return data as BoardMember;
+      const { data, error } = await db
+        .from('board_members')
+        .update(member)
+        .eq('id', member.id)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as BoardMember;
     } else {
-      const { data, error } = await (supabase.from('board_members' as any) as any).insert(member).select().single();
-      if (!error && data) return data as BoardMember;
+      const { data, error } = await db
+        .from('board_members')
+        .insert(member)
+        .select()
+        .single();
+      if (!error && data) return data as unknown as BoardMember;
     }
   }
 
@@ -379,9 +467,9 @@ export async function saveBoardMember(member: Partial<BoardMember>): Promise<Boa
 }
 
 export async function deleteBoardMember(id: string): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('board_members' as any) as any).delete().eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db.from('board_members').delete().eq('id', id);
     if (!error) return true;
   }
   const list = getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers).filter(m => m.id !== id);
@@ -391,23 +479,30 @@ export async function deleteBoardMember(id: string): Promise<boolean> {
 
 // JOIN APPLICATIONS
 export async function getApplications(): Promise<JoinApplication[]> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('join_applications' as any) as any).select('*').order('created_at', { ascending: false });
-    if (!error && data) return data as JoinApplication[];
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('join_applications')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (!error && data) return data as unknown as JoinApplication[];
   }
   return getLocal<JoinApplication[]>(STORAGE_KEYS.APPLICATIONS, initialApplications);
 }
 
 export async function submitJoinApplication(app: Omit<JoinApplication, 'id' | 'status' | 'created_at'>): Promise<JoinApplication> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { data, error } = await (supabase.from('join_applications' as any) as any).insert({
-      ...app,
-      status: 'pending',
-      created_at: new Date().toISOString()
-    }).select().single();
-    if (!error && data) return data as JoinApplication;
+  const db = getDb();
+  if (db) {
+    const { data, error } = await db
+      .from('join_applications')
+      .insert({
+        ...app,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+    if (!error && data) return data as unknown as JoinApplication;
   }
 
   const list = getLocal<JoinApplication[]>(STORAGE_KEYS.APPLICATIONS, initialApplications);
@@ -423,9 +518,12 @@ export async function submitJoinApplication(app: Omit<JoinApplication, 'id' | 's
 }
 
 export async function updateApplicationStatus(id: string, status: JoinApplication['status']): Promise<boolean> {
-  const supabase = getSupabaseBrowserClient();
-  if (supabase) {
-    const { error } = await (supabase.from('join_applications' as any) as any).update({ status }).eq('id', id);
+  const db = getDb();
+  if (db) {
+    const { error } = await db
+      .from('join_applications')
+      .update({ status })
+      .eq('id', id);
     if (!error) return true;
   }
 

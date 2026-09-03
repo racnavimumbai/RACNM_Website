@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getAllBoardMembers, saveBoardMember, deleteBoardMember, BoardMember } from '@/lib/data/api';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { Plus, Edit2, Trash2, Users, Check, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, Check, X } from 'lucide-react';
 import { deleteUploadedImage } from '@/lib/utils';
 
 export default function AdminTeamPage() {

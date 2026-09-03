@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Upload, Image as ImageIcon, Check, Loader2, Link as LinkIcon, AlertCircle } from 'lucide-react';
+import { Upload, Image as ImageIcon, Loader2, Link as LinkIcon, Check, AlertCircle } from 'lucide-react';
 
 interface ImageUploaderProps {
   value: string;
@@ -27,18 +27,15 @@ export default function ImageUploader({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Validate size (< 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      setError('File is too large. Max allowed size is 10MB.');
+      return;
+    }
+
     setUploading(true);
     setError('');
     setImgError(false);
-
-    // Instant local preview via FileReader
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setPreviewUrl(event.target.result as string);
-      }
-    };
-    reader.readAsDataURL(file);
 
     try {
       const formData = new FormData();
@@ -58,9 +55,9 @@ export default function ImageUploader({
       const finalUrl = data.url || data.dataUrl;
       onChange(finalUrl);
       setPreviewUrl(finalUrl);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || 'Image upload failed. Please try again.');
+      setError(err instanceof Error ? err.message : 'Image upload failed. Please try again.');
     } finally {
       setUploading(false);
     }

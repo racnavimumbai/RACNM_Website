@@ -47,10 +47,10 @@ export async function POST(request: Request) {
       message: 'Application submitted and email notification sent successfully.',
       data: savedApp
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[API /api/join error]', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to process application.' },
+      { error: error instanceof Error ? error.message : 'Failed to process application.' },
       { status: 500 }
     );
   }

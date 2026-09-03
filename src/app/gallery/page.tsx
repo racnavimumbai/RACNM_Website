@@ -19,7 +19,6 @@ const itemFade: Variants = {
 export default function GalleryPage() {
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [selectedAlbum, setSelectedAlbum] = useState<string>('All');
-  const [selectedYear, setSelectedYear] = useState<string>('All');
   
   // Lightbox modal state
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -34,12 +33,9 @@ export default function GalleryPage() {
   }, []);
 
   const albums = ['All', ...Array.from(new Set(photos.map(p => p.album_name)))];
-  const years = ['All', ...Array.from(new Set(photos.map(p => p.rotaract_year)))];
 
   const filteredPhotos = photos.filter(p => {
-    const matchesAlbum = selectedAlbum === 'All' || p.album_name === selectedAlbum;
-    const matchesYear = selectedYear === 'All' || p.rotaract_year === selectedYear;
-    return matchesAlbum && matchesYear;
+    return selectedAlbum === 'All' || p.album_name === selectedAlbum;
   });
 
   const handleOpenLightbox = (index: number) => {
@@ -104,7 +100,7 @@ export default function GalleryPage() {
       <AnimatePresence mode="wait">
         {filteredPhotos.length > 0 ? (
           <motion.div
-            key={selectedAlbum + selectedYear}
+            key={selectedAlbum}
             variants={staggerContainer}
             initial="hidden"
             animate="visible"

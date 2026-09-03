@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getApplications, updateApplicationStatus, JoinApplication } from '@/lib/data/api';
-import { Inbox, Mail, Phone, User, Search, CheckCircle, XCircle, Clock, Eye, X } from 'lucide-react';
+import { Mail, Phone, Search, Eye, X } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 
 export default function AdminApplicationsPage() {
@@ -139,7 +139,7 @@ export default function AdminApplicationsPage() {
                   <td className="p-4 font-mono">
                     <select
                       value={app.status}
-                      onChange={e => handleStatusChange(app.id, e.target.value as any)}
+                      onChange={e => handleStatusChange(app.id, e.target.value as JoinApplication['status'])}
                       className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-[#0a0a0c] border ${
                         app.status === 'pending' ? 'text-[#d4af37] border-[#d4af37]/40' :
                         app.status === 'contacted' ? 'text-sky-400 border-sky-800' :
@@ -217,7 +217,7 @@ export default function AdminApplicationsPage() {
                 <span className="text-zinc-500 text-[10px]">Submitted: {formatDate(selectedApp.created_at)}</span>
                 <select
                   value={selectedApp.status}
-                  onChange={e => handleStatusChange(selectedApp.id, e.target.value as any)}
+                  onChange={e => handleStatusChange(selectedApp.id, e.target.value as JoinApplication['status'])}
                   className="bg-[#0a0a0c] border border-zinc-800 rounded px-3 py-1.5 text-xs text-white"
                 >
                   <option value="pending">Mark as Pending</option>

@@ -79,10 +79,10 @@ export async function POST(request: Request) {
       filename,
       githubCommitted
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[API /api/upload error]', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to upload image.' },
+      { error: error instanceof Error ? error.message : 'Failed to upload image.' },
       { status: 500 }
     );
   }

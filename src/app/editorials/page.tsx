@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getEditorials, Editorial } from '@/lib/data/api';
 import PdfViewerModal from '@/components/PdfViewerModal';
-import { Sparkles, FileText, Calendar, ArrowRight, BookOpen } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight, BookOpen } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 import { formatDate } from '@/lib/utils';
 

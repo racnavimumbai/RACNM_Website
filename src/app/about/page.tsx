@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Award, MapPin, ArrowRight, Quote } from 'lucide-react';
+import { Award, MapPin, ArrowRight } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 import SectionDivider from '@/components/SectionDivider';
 

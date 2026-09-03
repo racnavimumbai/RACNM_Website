@@ -50,9 +50,9 @@ export default function AdminLoginPage() {
       } else {
         throw new Error('Invalid Admin Passcode. Access Denied.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || 'Failed to authenticate.');
+      setError(err instanceof Error ? err.message : 'Failed to authenticate.');
     } finally {
       setLoading(false);
     }
