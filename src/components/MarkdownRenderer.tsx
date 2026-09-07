@@ -13,11 +13,11 @@ export default function MarkdownRenderer({ content, className }: MarkdownRendere
   if (!content) return null;
 
   return (
-    <div className={cn('markdown-content space-y-4 text-zinc-300 leading-relaxed font-sans', className)}>
+    <div className={cn('markdown-content space-y-4 text-[var(--text-secondary)] leading-relaxed font-sans', className)}>
       <ReactMarkdown
         components={{
           h1: ({ children }) => (
-            <h1 className="font-serif-heading text-2xl sm:text-3xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2">
+            <h1 className="font-serif-heading text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mt-8 mb-4 border-b border-[var(--border-secondary)] pb-2">
               {children}
             </h1>
           ),
@@ -27,22 +27,22 @@ export default function MarkdownRenderer({ content, className }: MarkdownRendere
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="font-serif-heading text-lg sm:text-xl font-semibold text-zinc-100 mt-5 mb-2">
+            <h3 className="font-serif-heading text-lg sm:text-xl font-semibold text-[var(--text-primary)] mt-5 mb-2">
               {children}
             </h3>
           ),
           p: ({ children }) => (
-            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-4 last:mb-0">
+            <p className="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed mb-4 last:mb-0">
               {children}
             </p>
           ),
           ul: ({ children }) => (
-            <ul className="list-disc pl-5 space-y-2 my-4 text-zinc-300 text-sm sm:text-base">
+            <ul className="list-disc pl-5 space-y-2 my-4 text-[var(--text-secondary)] text-sm sm:text-base">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal pl-5 space-y-2 my-4 text-zinc-300 text-sm sm:text-base">
+            <ol className="list-decimal pl-5 space-y-2 my-4 text-[var(--text-secondary)] text-sm sm:text-base">
               {children}
             </ol>
           ),
@@ -52,17 +52,17 @@ export default function MarkdownRenderer({ content, className }: MarkdownRendere
             </li>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-[#d4af37] pl-4 py-2 my-5 italic text-zinc-400 bg-white/[0.02] rounded-r-xl">
+            <blockquote className="border-l-2 border-[#d4af37] pl-4 py-2 my-5 italic text-[var(--text-muted)] bg-[var(--gold-subtle)] rounded-r-xl">
               {children}
             </blockquote>
           ),
           strong: ({ children }) => (
-            <strong className="font-bold text-white">
+            <strong className="font-bold text-[var(--text-primary)]">
               {children}
             </strong>
           ),
           em: ({ children }) => (
-            <em className="italic text-zinc-200">
+            <em className="italic text-[var(--text-secondary)]">
               {children}
             </em>
           ),
@@ -77,15 +77,15 @@ export default function MarkdownRenderer({ content, className }: MarkdownRendere
             </a>
           ),
           hr: () => (
-            <hr className="border-t border-white/10 my-8" />
+            <hr className="border-t border-[var(--border-secondary)] my-8" />
           ),
           code: ({ children }) => (
-            <code className="px-1.5 py-0.5 rounded bg-zinc-800/80 border border-white/10 text-[#d4af37] font-mono text-xs">
+            <code className="px-1.5 py-0.5 rounded bg-[var(--bg-card)] border border-[var(--border-secondary)] text-[#d4af37] font-mono text-xs">
               {children}
             </code>
           ),
           pre: ({ children }) => (
-            <pre className="p-4 rounded-2xl bg-black/60 border border-white/10 overflow-x-auto text-xs font-mono my-4 text-zinc-300">
+            <pre className="p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-secondary)] overflow-x-auto text-xs font-mono my-4 text-[var(--text-primary)]">
               {children}
             </pre>
           )

@@ -57,7 +57,7 @@ const fourWayTests = [
 
 export default function AboutPage() {
   return (
-    <div className="space-y-28 py-12 pb-24 bg-transparent text-[#f8fafc]">
+    <div className="space-y-28 py-12 pb-24 bg-transparent text-[var(--text-primary)]">
       
       {/* EDITORIAL HERO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 page-hero-glow">
@@ -66,22 +66,22 @@ export default function AboutPage() {
           animate="visible"
           variants={staggerContainer}
         >
-          <motion.div variants={itemFade} className="flex items-center gap-3 border-b border-zinc-800 pb-4">
+          <motion.div variants={itemFade} className="flex items-center gap-3 border-b border-[var(--border-primary)] pb-4">
             <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
               ARCHIVE NO. 45
             </span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+            <span className="text-[var(--text-muted)]">•</span>
+            <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
               EST. 1982 NAVI MUMBAI
             </span>
           </motion.div>
 
           <motion.div variants={itemFade} className="max-w-4xl space-y-4 pt-6">
-            <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-white leading-tight">
+            <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)] leading-tight">
               The Story of <br />
               <span className="italic font-normal text-gold-gradient">Rotaract Club of Navi Mumbai</span>
             </h1>
-            <p className="font-sans-body text-zinc-300 text-base sm:text-lg leading-relaxed">
+            <p className="font-sans-body text-[var(--text-secondary)] text-base sm:text-lg leading-relaxed">
               As the oldest community-based Rotaract club in Zone 1, District 3142, RACNM has spent 45 years nurturing leaders, creating social impact, and fostering lifelong bonds across Navi Mumbai and beyond.
             </p>
           </motion.div>
@@ -103,37 +103,37 @@ export default function AboutPage() {
               HERITAGE & MISSION
             </span>
 
-            <h2 className="font-serif-heading text-3xl sm:text-5xl font-normal text-white leading-snug">
+            <h2 className="font-serif-heading text-3xl sm:text-5xl font-normal text-[var(--text-primary)] leading-snug">
               Pioneering Youth Leadership in Navi Mumbai
             </h2>
 
-            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Rotaract Club of Navi Mumbai was established in <strong className="text-white">1982</strong>. Over the last four decades, we have remained at the forefront of community service, professional development, and youth empowerment.
+            <p className="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">
+              Rotaract Club of Navi Mumbai was established in <strong className="text-[var(--text-primary)]">1982</strong>. Over the last four decades, we have remained at the forefront of community service, professional development, and youth empowerment.
             </p>
 
-            <p className="text-zinc-400 text-sm leading-relaxed">
-              Sponsored by the <strong className="text-white">Rotary Club of Navi Mumbai</strong> (District 3142), our club serves as an incubator for young adults aged 18 to 30. Here, passion meets structured action — whether it is conducting mega health camps, reforesting coastal mangroves, or mentoring school children.
+            <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+              Sponsored by the <strong className="text-[var(--text-primary)]">Rotary Club of Navi Mumbai</strong> (District 3142), our club serves as an incubator for young adults aged 18 to 30. Here, passion meets structured action — whether it is conducting mega health camps, reforesting coastal mangroves, or mentoring school children.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-zinc-800">
-              <motion.div whileHover={{ y: -2 }} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[var(--border-primary)]">
+              <motion.div whileHover={{ y: -2 }} className="flex items-center gap-3 p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)]">
                 <MapPin className="w-5 h-5 text-[#d4af37] shrink-0" />
                 <div>
-                  <span className="text-xs font-bold text-white block">Navi Mumbai</span>
-                  <span className="text-[11px] font-mono text-zinc-400">Club Base & Operations</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)] block">Navi Mumbai</span>
+                  <span className="text-[11px] font-mono text-[var(--text-muted)]">Club Base & Operations</span>
                 </div>
               </motion.div>
-              <motion.div whileHover={{ y: -2 }} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+              <motion.div whileHover={{ y: -2 }} className="flex items-center gap-3 p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)]">
                 <Award className="w-5 h-5 text-[#d4af37] shrink-0" />
                 <div>
-                  <span className="text-xs font-bold text-white block">Zone 1, RID 3142</span>
-                  <span className="text-[11px] font-mono text-zinc-400">Oldest Pioneer Club</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)] block">Zone 1, RID 3142</span>
+                  <span className="text-[11px] font-mono text-[var(--text-muted)]">Oldest Pioneer Club</span>
                 </div>
               </motion.div>
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative aspect-[4/5] rounded-xl overflow-hidden border border-zinc-800 group">
+          <div className="lg:col-span-5 relative aspect-[4/5] rounded-xl overflow-hidden border border-[var(--border-primary)] group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"
@@ -161,12 +161,12 @@ export default function AboutPage() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={sectionVariants}
-          className="border-b border-zinc-800 pb-6 space-y-2"
+          className="border-b border-[var(--border-primary)] pb-6 space-y-2"
         >
           <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
             HISTORICAL CHRONICLE
           </span>
-          <h2 className="font-serif-heading text-4xl sm:text-5xl font-normal text-white">
+          <h2 className="font-serif-heading text-4xl sm:text-5xl font-normal text-[var(--text-primary)]">
             45 Years in the Making
           </h2>
         </motion.div>
@@ -198,10 +198,10 @@ export default function AboutPage() {
                       {item.year}
                     </span>
                     <div className="space-y-2">
-                      <h3 className="font-serif-heading text-2xl text-white group-hover:text-[#d4af37] transition-colors">
+                      <h3 className="font-serif-heading text-2xl text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+                      <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -222,9 +222,9 @@ export default function AboutPage() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={sectionVariants}
-          className="border-b border-zinc-800 pb-4"
+          className="border-b border-[var(--border-primary)] pb-4"
         >
-          <h2 className="font-serif-heading text-3xl sm:text-4xl font-normal text-white">
+          <h2 className="font-serif-heading text-3xl sm:text-4xl font-normal text-[var(--text-primary)]">
             The Four-Way Test
           </h2>
         </motion.div>
@@ -245,8 +245,8 @@ export default function AboutPage() {
               className="p-6 elevated-card space-y-3"
             >
               <span className="text-xs font-mono text-[#d4af37] block font-bold">TEST {test.num}</span>
-              <h3 className="font-serif-heading font-normal text-white text-xl">{test.title}</h3>
-              <p className="text-zinc-400 text-xs leading-relaxed">
+              <h3 className="font-serif-heading font-normal text-[var(--text-primary)] text-xl">{test.title}</h3>
+              <p className="text-[var(--text-muted)] text-xs leading-relaxed">
                 {test.desc}
               </p>
             </motion.div>
@@ -269,10 +269,10 @@ export default function AboutPage() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-[#d4af37]/8 blur-[120px] rounded-full pointer-events-none" />
           
           <div className="relative z-10 space-y-4">
-            <h3 className="font-serif-heading text-3xl sm:text-4xl font-normal text-white">
+            <h3 className="font-serif-heading text-3xl sm:text-4xl font-normal text-[var(--text-primary)]">
               Meet the 45th Board of Directors
             </h3>
-            <p className="text-zinc-400 text-xs sm:text-sm max-w-xl mx-auto">
+            <p className="text-[var(--text-muted)] text-xs sm:text-sm max-w-xl mx-auto">
               Our leadership team brings together dedicated students, young professionals, and civic minds.
             </p>
             <div className="pt-2">

@@ -48,14 +48,14 @@ export default function EditorialsPage() {
         transition={{ duration: 0.6 }}
         className="text-center space-y-4 max-w-3xl mx-auto page-hero-glow"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[var(--bg-card)] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
           <Sparkles className="w-3.5 h-3.5" />
           <span>DIGITAL PUBLICATION & MAGAZINE ARCHIVE</span>
         </div>
-        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
           Editor&apos;s <span className="text-gold-gradient">Corner</span>
         </h1>
-        <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">
           Explore our official monthly bulletins, thought pieces, annual publications, and member-written stories.
         </p>
       </motion.div>
@@ -77,8 +77,8 @@ export default function EditorialsPage() {
                 alt={heroEditorial.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#121215] hidden lg:block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121215] to-transparent lg:hidden" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--bg-card)] hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] to-transparent lg:hidden" />
               <div className="absolute top-4 left-4 px-3.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-bold text-[#d4af37] border border-[#d4af37]/40">
                 {heroEditorial.category}
               </div>
@@ -92,20 +92,20 @@ export default function EditorialsPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-xs text-zinc-400">
+                <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
                     {formatDate(heroEditorial.published_at)}
                   </span>
                   <span>•</span>
-                  <span>By <strong className="text-white">{heroEditorial.author}</strong></span>
+                  <span>By <strong className="text-[var(--text-primary)]">{heroEditorial.author}</strong></span>
                 </div>
 
-                <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#d4af37] transition-colors leading-snug">
+                <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors leading-snug">
                   {heroEditorial.title}
                 </h2>
 
-                <p className="text-zinc-300 text-sm leading-relaxed line-clamp-4">
+                <p className="text-[var(--text-secondary)] text-sm leading-relaxed line-clamp-4">
                   {heroEditorial.summary}
                 </p>
               </div>
@@ -156,7 +156,7 @@ export default function EditorialsPage() {
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121215] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 px-3.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-xs font-semibold text-[#d4af37] border border-[#d4af37]/40">
                   {item.category}
                 </div>
@@ -164,25 +164,25 @@ export default function EditorialsPage() {
 
               <div className="p-8 space-y-5 flex-1 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-xs text-zinc-400">
+                  <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
                       {formatDate(item.published_at)}
                     </span>
                     <span>•</span>
-                    <span>By <strong className="text-white">{item.author}</strong></span>
+                    <span>By <strong className="text-[var(--text-primary)]">{item.author}</strong></span>
                   </div>
 
-                  <h2 className="font-serif-heading text-2xl sm:text-3xl font-bold text-white group-hover:text-[#d4af37] transition-colors duration-300 leading-snug">
+                  <h2 className="font-serif-heading text-2xl sm:text-3xl font-bold text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors duration-300 leading-snug">
                     {item.title}
                   </h2>
 
-                  <p className="text-zinc-300 text-sm leading-relaxed line-clamp-3">
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed line-clamp-3">
                     {item.summary}
                   </p>
                 </div>
 
-                <div className="pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <div className="pt-5 border-t border-[var(--border-secondary)] flex flex-wrap items-center justify-between gap-3">
                   <Link
                     href={`/editorials/${item.slug}`}
                     className="inline-flex items-center gap-2 text-xs font-bold text-[#d4af37] hover:underline group/link"

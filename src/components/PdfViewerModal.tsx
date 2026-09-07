@@ -38,21 +38,21 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 60, scale: 0.97 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-[#121215] border border-[#d4af37]/30 rounded-t-2xl sm:rounded-2xl w-full max-w-5xl h-[90vh] sm:h-[85vh] flex flex-col overflow-hidden shadow-2xl"
+            className="bg-[var(--bg-surface)] border border-[var(--border-gold)] rounded-t-2xl sm:rounded-2xl w-full max-w-5xl h-[90vh] sm:h-[85vh] flex flex-col overflow-hidden shadow-2xl"
           >
             {/* Header with gold accent bar */}
             <div className="relative">
               <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
-              <div className="px-6 py-4 bg-[#18181c] border-b border-white/10 flex items-center justify-between">
+              <div className="px-6 py-4 bg-[var(--bg-card)] border-b border-[var(--border-secondary)] flex items-center justify-between">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-8 h-8 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] shrink-0">
                     <FileText className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-serif-heading font-bold text-white text-base sm:text-lg line-clamp-1">
+                    <h3 className="font-serif-heading font-bold text-[var(--text-primary)] text-base sm:text-lg line-clamp-1">
                       {title}
                     </h3>
-                    <span className="text-[11px] text-zinc-400">RACNM Editorial Archive</span>
+                    <span className="text-[11px] text-[var(--text-muted)]">RACNM Editorial Archive</span>
                   </div>
                 </div>
 
@@ -73,7 +73,7 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
                         href={pdfUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-white/5 border border-white/10 text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
+                        className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-secondary)] text-[var(--text-secondary)] hover:text-[#d4af37] hover:bg-[var(--gold-subtle)] transition-colors"
                         title="Open in new tab"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -82,7 +82,7 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
                   )}
                   <button
                     onClick={onClose}
-                    className="p-2 rounded-lg bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-red-500/20 transition-colors"
+                    className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-secondary)] text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
                     aria-label="Close PDF Viewer"
                   >
                     <X className="w-5 h-5" />
@@ -92,7 +92,7 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
             </div>
 
             {/* Content Viewer */}
-            <div className="flex-1 bg-[#09090b] relative">
+            <div className="flex-1 bg-[var(--bg-dark)] relative">
               {pdfUrl ? (
                 <iframe
                   src={`${pdfUrl}#toolbar=0`}
@@ -101,9 +101,9 @@ export default function PdfViewerModal({ isOpen, onClose, title, pdfUrl }: PdfVi
                 />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center text-center p-8">
-                  <FileText className="w-12 h-12 text-zinc-600 mb-3" />
-                  <p className="text-zinc-300 font-medium">PDF File standard preview unavailable.</p>
-                  <p className="text-zinc-500 text-xs mt-1">You can read the article text directly on the editorial page.</p>
+                  <FileText className="w-12 h-12 text-[var(--text-muted)] mb-3" />
+                  <p className="text-[var(--text-primary)] font-medium">PDF File standard preview unavailable.</p>
+                  <p className="text-[var(--text-muted)] text-xs mt-1">You can read the article text directly on the editorial page.</p>
                 </div>
               )}
             </div>

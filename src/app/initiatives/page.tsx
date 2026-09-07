@@ -28,30 +28,30 @@ export default function InitiativesPage() {
   }, []);
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[#f8fafc]">
+    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[var(--text-primary)]">
       
       {/* Editorial Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="border-b border-zinc-800 pb-8 space-y-4 page-hero-glow"
+        className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
             DOSSIER NO. 03
           </span>
-          <span className="text-zinc-600">•</span>
-          <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+          <span className="text-[var(--text-muted)]">•</span>
+          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
             THRUST AREAS
           </span>
         </div>
 
-        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-white">
+        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Our Initiatives & Thrust Areas
         </h1>
 
-        <p className="text-zinc-300 text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
           Thrust Areas are the compass guiding us toward progress and innovation, propelling our club forward on the path of excellence across Navi Mumbai.
         </p>
       </motion.div>
@@ -67,11 +67,11 @@ export default function InitiativesPage() {
           <motion.div
             key={item.id}
             variants={itemFade}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pb-12 border-b border-zinc-800/80 group"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pb-12 border-b border-[var(--border-primary)]/80 group"
           >
             {/* Index */}
             <div className="lg:col-span-1">
-              <span className="font-serif-heading text-4xl sm:text-5xl text-zinc-700 group-hover:text-[#d4af37] transition-colors duration-500">
+              <span className="font-serif-heading text-4xl sm:text-5xl text-[var(--text-muted)] group-hover:text-[#d4af37] transition-colors duration-500">
                 0{idx + 1}
               </span>
             </div>
@@ -80,7 +80,7 @@ export default function InitiativesPage() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4 }}
-              className="lg:col-span-5 relative aspect-[16/10] rounded-2xl overflow-hidden border border-zinc-800 group-hover:border-[#d4af37]/30 transition-all shadow-xl"
+              className="lg:col-span-5 relative aspect-[16/10] rounded-2xl overflow-hidden border border-[var(--border-primary)] group-hover:border-[#d4af37]/30 transition-all shadow-xl"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -89,17 +89,17 @@ export default function InitiativesPage() {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute top-4 left-4 px-3 py-1 bg-[#0a0a0c]/80 backdrop-blur-md rounded-lg text-[10px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
+              <div className="absolute top-4 left-4 px-3 py-1 bg-black/80 backdrop-blur-md rounded-lg text-[10px] font-bold text-[#d4af37] uppercase tracking-widest border border-[#d4af37]/30">
                 {item.category}
               </div>
             </motion.div>
 
             {/* Title & Description */}
             <div className="lg:col-span-6 space-y-4">
-              <h2 className="font-serif-heading text-3xl sm:text-4xl text-white group-hover:text-[#d4af37] transition-colors duration-300">
+              <h2 className="font-serif-heading text-3xl sm:text-4xl text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors duration-300">
                 {item.title}
               </h2>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-[var(--text-muted)] text-sm leading-relaxed">
                 {item.description}
               </p>
 

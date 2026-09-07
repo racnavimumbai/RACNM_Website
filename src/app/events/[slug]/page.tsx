@@ -57,7 +57,7 @@ export default function EventDetailPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center text-center">
         <div className="space-y-4">
-          <h1 className="font-serif-heading text-4xl text-white">Event Not Found</h1>
+          <h1 className="font-serif-heading text-4xl text-[var(--text-primary)]">Event Not Found</h1>
           <Link href="/events" className="btn-editorial-primary">Back to Events</Link>
         </div>
       </div>
@@ -82,13 +82,13 @@ export default function EventDetailPage() {
   };
 
   return (
-    <div className="space-y-12 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="space-y-12 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-[var(--text-primary)]">
       
       {/* Back Link */}
       <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }}>
         <Link
           href="/events"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-[#d4af37] transition-colors group"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--text-muted)] hover:text-[#d4af37] transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Back to All Events</span>
@@ -106,21 +106,21 @@ export default function EventDetailPage() {
           <span className="px-3 py-1 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
             Rotaract Year {event.rotaract_year}
           </span>
-          <span className="flex items-center gap-1 text-xs text-zinc-400">
+          <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
             <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
             {formatDate(event.event_date)}
           </span>
-          <span className="flex items-center gap-1 text-xs text-zinc-400">
+          <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
             <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
             {event.location}
           </span>
         </div>
 
-        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
           {event.title}
         </h1>
 
-        <p className="text-zinc-300 text-base sm:text-lg leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-base sm:text-lg leading-relaxed">
           {event.summary}
         </p>
       </motion.div>
@@ -130,7 +130,7 @@ export default function EventDetailPage() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.7, delay: 0.2 }}
-        className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group"
+        className="relative aspect-video rounded-3xl overflow-hidden border border-[var(--border-secondary)] shadow-2xl group"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -207,10 +207,10 @@ export default function EventDetailPage() {
         >
           <div className="flex items-center gap-2">
             <ImageIcon className="w-5 h-5 text-[#d4af37]" />
-            <h2 className="font-serif-heading text-2xl font-bold text-white">
+            <h2 className="font-serif-heading text-2xl font-bold text-[var(--text-primary)]">
               Event Photographs
             </h2>
-            <span className="text-xs text-zinc-400 ml-2">({event.gallery_images.length} photos)</span>
+            <span className="text-xs text-[var(--text-muted)] ml-2">({event.gallery_images.length} photos)</span>
           </div>
 
           <motion.div
@@ -226,7 +226,7 @@ export default function EventDetailPage() {
                 variants={itemFade}
                 whileHover={{ scale: 1.03 }}
                 onClick={() => handleOpenGallery(idx)}
-                className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-md group cursor-pointer hover:border-[#d4af37]/40 transition-all"
+                className="relative aspect-square rounded-2xl overflow-hidden border border-[var(--border-secondary)] shadow-md group cursor-pointer hover:border-[#d4af37]/40 transition-all"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

@@ -83,30 +83,30 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[#f8fafc]">
+    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[var(--text-primary)]">
       
       {/* Editorial Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="border-b border-zinc-800 pb-8 space-y-4 page-hero-glow"
+        className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
             PROSPECTUS NO. 08
           </span>
-          <span className="text-zinc-600">•</span>
-          <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+          <span className="text-[var(--text-muted)]">•</span>
+          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
             MEMBERSHIP APPLICATION
           </span>
         </div>
 
-        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-white">
+        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Join Rotaract Club of Navi Mumbai
         </h1>
 
-        <p className="text-zinc-300 text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
           Be a part of a 45-year legacy of leadership, fellowship, and community service. Submit your membership prospectus application below.
         </p>
       </motion.div>
@@ -116,7 +116,7 @@ export default function JoinPage() {
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-zinc-800 pb-12"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-[var(--border-primary)] pb-12"
       >
         {benefits.map((benefit) => (
           <motion.div
@@ -131,8 +131,8 @@ export default function JoinPage() {
               </div>
               <span className="text-[#d4af37] font-bold text-xs tracking-wider">{benefit.num}</span>
             </div>
-            <h3 className="text-white font-bold text-xs tracking-wider">{benefit.title}</h3>
-            <p className="text-zinc-400 font-sans text-xs leading-relaxed">{benefit.desc}</p>
+            <h3 className="text-[var(--text-primary)] font-bold text-xs tracking-wider">{benefit.title}</h3>
+            <p className="text-[var(--text-muted)] font-sans text-xs leading-relaxed">{benefit.desc}</p>
           </motion.div>
         ))}
       </motion.div>
@@ -161,17 +161,17 @@ export default function JoinPage() {
             >
               <CheckCircle2 className="w-16 h-16 text-[#d4af37] mx-auto" />
             </motion.div>
-            <h2 className="font-serif-heading text-3xl sm:text-4xl font-normal text-white">
+            <h2 className="font-serif-heading text-3xl sm:text-4xl font-normal text-[var(--text-primary)]">
               Application Received
             </h2>
-            <p className="text-zinc-400 text-sm max-w-md mx-auto">
+            <p className="text-[var(--text-muted)] text-sm max-w-md mx-auto">
               Thank you for applying to join RACNM. Our membership team will review your application and contact you via phone/email shortly.
             </p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2">
-              <h2 className="font-serif-heading text-3xl font-normal text-white">
+              <h2 className="font-serif-heading text-3xl font-normal text-[var(--text-primary)]">
                 Membership Interest Prospectus
               </h2>
               <div className="h-px bg-gradient-to-r from-[#d4af37]/40 via-[#d4af37]/20 to-transparent" />

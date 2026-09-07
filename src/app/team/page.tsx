@@ -28,30 +28,30 @@ export default function TeamPage() {
   }, []);
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[#f8fafc]">
+    <div className="space-y-16 py-12 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-transparent text-[var(--text-primary)]">
       
       {/* Editorial Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="border-b border-zinc-800 pb-8 space-y-4 page-hero-glow"
+        className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
             MASTHEAD NO. 07
           </span>
-          <span className="text-zinc-600">•</span>
-          <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+          <span className="text-[var(--text-muted)]">•</span>
+          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
             BOARD OF DIRECTORS (2024-25)
           </span>
         </div>
 
-        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-white">
+        <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Leadership & Board
         </h1>
 
-        <p className="text-zinc-300 text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
           The 45th Board of Directors bringing together dedicated students, creative minds, and young professionals steering Rotaract Club of Navi Mumbai under MAGNUM OPUS.
         </p>
       </motion.div>
@@ -80,7 +80,7 @@ export default function TeamPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
               />
               {/* Gold overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#d4af37]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Role badge */}
@@ -91,18 +91,18 @@ export default function TeamPage() {
 
             <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
               <div className="space-y-1">
-                <h2 className="font-serif-heading text-2xl font-normal text-white group-hover:text-[#d4af37] transition-colors duration-300">
+                <h2 className="font-serif-heading text-2xl font-normal text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors duration-300">
                   {member.name}
                 </h2>
                 {member.bio && (
-                  <p className="text-zinc-400 text-xs leading-relaxed line-clamp-2 pt-1 font-sans">
+                  <p className="text-[var(--text-muted)] text-xs leading-relaxed line-clamp-2 pt-1 font-sans">
                     {member.bio}
                   </p>
                 )}
               </div>
 
               {/* Social links */}
-              <div className="flex items-center gap-3 pt-3 border-t border-white/10 text-zinc-400">
+              <div className="flex items-center gap-3 pt-3 border-t border-[var(--border-secondary)] text-[var(--text-muted)]">
                 {member.social_links?.instagram && (
                   <a href={member.social_links.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#d4af37] transition-colors duration-200" aria-label="Instagram">
                     <InstagramIcon className="w-4 h-4" />

@@ -143,7 +143,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/80 backdrop-blur-md"
+          className="search-modal-backdrop fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/80 backdrop-blur-md"
           onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
         >
           <motion.div
@@ -151,10 +151,10 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.96 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-3xl bg-[#0f0f14] border border-[#d4af37]/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+            className="search-modal-card w-full max-w-3xl bg-[var(--bg-surface)] border border-[var(--border-gold)] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
           >
             {/* Search Input Bar */}
-            <div className="relative flex items-center px-4 sm:px-6 py-4 border-b border-white/10 bg-[#14141a]">
+            <div className="relative flex items-center px-4 sm:px-6 py-4 border-b border-[var(--border-secondary)] bg-[var(--bg-card)]">
               <Search className="w-5 h-5 text-[#d4af37] shrink-0 mr-3" />
               <input
                 ref={inputRef}
@@ -162,11 +162,11 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search RACNM website (Initiatives, Events, Team, Bulletins, Photos...)"
-                className="w-full bg-transparent text-white placeholder-zinc-500 text-sm sm:text-base focus:outline-none"
+                className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm sm:text-base focus:outline-none"
               />
               {loading && <Loader2 className="w-4 h-4 text-[#d4af37] animate-spin shrink-0 ml-2" />}
               {query && (
-                <button onClick={() => setQuery('')} className="p-1 text-zinc-400 hover:text-white shrink-0 ml-2">
+                <button onClick={() => setQuery('')} className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] shrink-0 ml-2">
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -176,15 +176,15 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
               {!q ? (
                 <div className="text-center py-8 space-y-3">
-                  <Sparkles className="w-8 h-8 text-[#d4af37] mx-auto opacity-60" />
-                  <p className="text-zinc-400 text-sm">Type any keyword to search across the entire RACNM website.</p>
+                  <Sparkles className="w-8 h-8 text-[var(--gold-primary)] mx-auto opacity-60" />
+                  <p className="text-[var(--text-muted)] text-sm">Type any keyword to search across the entire RACNM website.</p>
                   <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs">
-                    <span className="text-zinc-600">Quick Searches:</span>
+                    <span className="text-[var(--text-muted)]">Quick Searches:</span>
                     {['Literacy', 'Blood Donation', 'Mangroves', 'Yash Sarawgi', 'Magnum Opus'].map(tag => (
                       <button
                         key={tag}
                         onClick={() => setQuery(tag)}
-                        className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 hover:text-[#d4af37] hover:border-[#d4af37]/40 transition-colors"
+                        className="px-2.5 py-1 rounded-lg bg-[var(--bg-card)] border border-[var(--border-secondary)] text-[var(--text-secondary)] hover:text-[var(--gold-primary)] hover:border-[var(--border-gold)] transition-colors"
                       >
                         {tag}
                       </button>
@@ -193,8 +193,8 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                 </div>
               ) : totalResults === 0 ? (
                 <div className="text-center py-12 space-y-2">
-                  <p className="text-zinc-300 font-serif-heading text-lg">No results found for &ldquo;{query}&rdquo;</p>
-                  <p className="text-zinc-500 text-xs">Try searching for keywords like &ldquo;Events&rdquo;, &ldquo;Team&rdquo;, or project titles.</p>
+                  <p className="text-[var(--text-primary)] font-serif-heading text-lg">No results found for &ldquo;{query}&rdquo;</p>
+                  <p className="text-[var(--text-muted)] text-xs">Try searching for keywords like &ldquo;Events&rdquo;, &ldquo;Team&rdquo;, or project titles.</p>
                 </div>
               ) : (
                 <div className="space-y-6">
@@ -202,7 +202,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {/* INITIATIVES */}
                   {matchedInitiatives.length > 0 && (
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
                         Thrust Initiatives ({matchedInitiatives.length})
                       </span>
                       <div className="space-y-1.5">
@@ -210,18 +210,18 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             key={item.id}
                             onClick={() => navigateTo(`/initiatives/${item.slug}`)}
-                            className="p-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/10 border border-white/5 hover:border-[#d4af37]/30 transition-all cursor-pointer flex items-center justify-between group"
+                            className="p-3 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--gold-subtle)] border border-[var(--border-primary)] hover:border-[var(--border-gold)] transition-all cursor-pointer flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <Sparkles className="w-4 h-4 text-[#d4af37] shrink-0" />
+                              <Sparkles className="w-4 h-4 text-[var(--gold-primary)] shrink-0" />
                               <div className="min-w-0">
-                                <h4 className="text-white text-sm font-semibold group-hover:text-[#d4af37] transition-colors truncate">
+                                <h4 className="text-[var(--text-primary)] text-sm font-semibold group-hover:text-[var(--gold-primary)] transition-colors truncate">
                                   {item.title}
                                 </h4>
-                                <span className="text-[11px] text-zinc-400 block truncate">{item.category} • {item.summary}</span>
+                                <span className="text-[11px] text-[var(--text-muted)] block truncate">{item.category} • {item.summary}</span>
                               </div>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-[#d4af37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                            <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--gold-primary)] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                           </div>
                         ))}
                       </div>
@@ -231,7 +231,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {/* EVENTS */}
                   {matchedEvents.length > 0 && (
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
                         Events ({matchedEvents.length})
                       </span>
                       <div className="space-y-1.5">
@@ -239,18 +239,18 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             key={item.id}
                             onClick={() => navigateTo(`/events/${item.slug}`)}
-                            className="p-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/10 border border-white/5 hover:border-[#d4af37]/30 transition-all cursor-pointer flex items-center justify-between group"
+                            className="p-3 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--gold-subtle)] border border-[var(--border-primary)] hover:border-[var(--border-gold)] transition-all cursor-pointer flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <Calendar className="w-4 h-4 text-[#d4af37] shrink-0" />
+                              <Calendar className="w-4 h-4 text-[var(--gold-primary)] shrink-0" />
                               <div className="min-w-0">
-                                <h4 className="text-white text-sm font-semibold group-hover:text-[#d4af37] transition-colors truncate">
+                                <h4 className="text-[var(--text-primary)] text-sm font-semibold group-hover:text-[var(--gold-primary)] transition-colors truncate">
                                   {item.title}
                                 </h4>
-                                <span className="text-[11px] text-zinc-400 block truncate">{item.event_date} • {item.location}</span>
+                                <span className="text-[11px] text-[var(--text-muted)] block truncate">{item.event_date} • {item.location}</span>
                               </div>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-[#d4af37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                            <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--gold-primary)] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                           </div>
                         ))}
                       </div>
@@ -260,7 +260,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {/* TEAM MEMBERS */}
                   {matchedMembers.length > 0 && (
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
                         Team & Leadership ({matchedMembers.length})
                       </span>
                       <div className="space-y-1.5">
@@ -268,18 +268,18 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             key={item.id}
                             onClick={() => navigateTo('/team')}
-                            className="p-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/10 border border-white/5 hover:border-[#d4af37]/30 transition-all cursor-pointer flex items-center justify-between group"
+                            className="p-3 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--gold-subtle)] border border-[var(--border-primary)] hover:border-[var(--border-gold)] transition-all cursor-pointer flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <Users className="w-4 h-4 text-[#d4af37] shrink-0" />
+                              <Users className="w-4 h-4 text-[var(--gold-primary)] shrink-0" />
                               <div className="min-w-0">
-                                <h4 className="text-white text-sm font-semibold group-hover:text-[#d4af37] transition-colors truncate">
+                                <h4 className="text-[var(--text-primary)] text-sm font-semibold group-hover:text-[var(--gold-primary)] transition-colors truncate">
                                   {item.name}
                                 </h4>
-                                <span className="text-[11px] text-zinc-400 block truncate">{item.role}</span>
+                                <span className="text-[11px] text-[var(--text-muted)] block truncate">{item.role}</span>
                               </div>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-[#d4af37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                            <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--gold-primary)] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                           </div>
                         ))}
                       </div>
@@ -289,7 +289,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {/* EDITORIALS */}
                   {matchedEditorials.length > 0 && (
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
                         Editorial Publications ({matchedEditorials.length})
                       </span>
                       <div className="space-y-1.5">
@@ -297,18 +297,18 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             key={item.id}
                             onClick={() => navigateTo(`/editorials/${item.slug}`)}
-                            className="p-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/10 border border-white/5 hover:border-[#d4af37]/30 transition-all cursor-pointer flex items-center justify-between group"
+                            className="p-3 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--gold-subtle)] border border-[var(--border-primary)] hover:border-[var(--border-gold)] transition-all cursor-pointer flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <FileText className="w-4 h-4 text-[#d4af37] shrink-0" />
+                              <FileText className="w-4 h-4 text-[var(--gold-primary)] shrink-0" />
                               <div className="min-w-0">
-                                <h4 className="text-white text-sm font-semibold group-hover:text-[#d4af37] transition-colors truncate">
+                                <h4 className="text-[var(--text-primary)] text-sm font-semibold group-hover:text-[var(--gold-primary)] transition-colors truncate">
                                   {item.title}
                                 </h4>
-                                <span className="text-[11px] text-zinc-400 block truncate">By {item.author} • {item.category}</span>
+                                <span className="text-[11px] text-[var(--text-muted)] block truncate">By {item.author} • {item.category}</span>
                               </div>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-[#d4af37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                            <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--gold-primary)] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                           </div>
                         ))}
                       </div>
@@ -318,7 +318,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {/* PHOTOS */}
                   {matchedPhotos.length > 0 && (
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
                         Photo Gallery ({matchedPhotos.length})
                       </span>
                       <div className="space-y-1.5">
@@ -326,18 +326,18 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                           <div
                             key={item.id}
                             onClick={() => navigateTo('/gallery')}
-                            className="p-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/10 border border-white/5 hover:border-[#d4af37]/30 transition-all cursor-pointer flex items-center justify-between group"
+                            className="p-3 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--gold-subtle)] border border-[var(--border-primary)] hover:border-[var(--border-gold)] transition-all cursor-pointer flex items-center justify-between group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <ImageIcon className="w-4 h-4 text-[#d4af37] shrink-0" />
+                              <ImageIcon className="w-4 h-4 text-[var(--gold-primary)] shrink-0" />
                               <div className="min-w-0">
-                                <h4 className="text-white text-sm font-semibold group-hover:text-[#d4af37] transition-colors truncate">
+                                <h4 className="text-[var(--text-primary)] text-sm font-semibold group-hover:text-[var(--gold-primary)] transition-colors truncate">
                                   {item.caption || item.album_name}
                                 </h4>
-                                <span className="text-[11px] text-zinc-400 block truncate">{item.album_name}</span>
+                                <span className="text-[11px] text-[var(--text-muted)] block truncate">{item.album_name}</span>
                               </div>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-[#d4af37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                            <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--gold-primary)] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                           </div>
                         ))}
                       </div>
@@ -349,8 +349,8 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
             </div>
 
             {/* Footer hints */}
-            <div className="px-6 py-2.5 bg-[#14141a] border-t border-white/10 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
-              <span>Press <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300">ESC</kbd> to close</span>
+            <div className="px-6 py-2.5 bg-[var(--bg-card)] border-t border-[var(--border-secondary)] flex items-center justify-between text-[11px] text-[var(--text-muted)] font-mono">
+              <span>Press <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-dark)] text-[var(--text-secondary)]">ESC</kbd> to close</span>
               <span>RACNM Search Engine</span>
             </div>
           </motion.div>

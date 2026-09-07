@@ -16,7 +16,7 @@ export default function NotFound() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-md space-y-6 relative z-10"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#18181c] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--bg-card)] border border-[#d4af37]/40 text-xs font-semibold text-[#d4af37]">
           <Sparkles className="w-3.5 h-3.5" />
           <span>404 • PAGE NOT FOUND</span>
         </div>
@@ -31,11 +31,11 @@ export default function NotFound() {
           404
         </motion.div>
 
-        <h1 className="font-serif-heading text-4xl font-bold text-white -mt-4">
+        <h1 className="font-serif-heading text-4xl font-bold text-[var(--text-primary)] -mt-4">
           Chapter Lost
         </h1>
 
-        <p className="text-zinc-400 text-sm leading-relaxed">
+        <p className="text-[var(--text-muted)] text-sm leading-relaxed">
           The page or event story you are looking for has moved or does not exist in our archive.
         </p>
 
@@ -53,7 +53,7 @@ export default function NotFound() {
             <span>Return to Homepage</span>
           </Link>
 
-          <div className="pt-6 border-t border-white/10 flex flex-wrap justify-center gap-3 text-xs font-semibold text-zinc-400">
+          <div className="pt-6 border-t border-[var(--border-secondary)] flex flex-wrap justify-center gap-3 text-xs font-semibold text-[var(--text-muted)]">
             <Link href="/about" className="hover:text-[#d4af37] transition-colors">About Us</Link>
             <span>•</span>
             <Link href="/initiatives" className="hover:text-[#d4af37] transition-colors">Initiatives</Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface ParticleFieldProps {
   count?: number;
@@ -9,6 +9,18 @@ interface ParticleFieldProps {
 
 export default function ParticleField({ count = 65, className = '' }: ParticleFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Observe theme changes
+  const [isLight, setIsLight] = useState(false);
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsLight(document.documentElement.getAttribute('data-theme') === 'light');
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,7 +67,7 @@ export default function ParticleField({ count = 65, className = '' }: ParticleFi
           speedX: (Math.random() - 0.5) * 0.25,
           speedY: (Math.random() - 0.5) * 0.25,
           opacity: Math.random() * 0.5 + 0.1,
-          maxOpacity: Math.random() * 0.5 + 0.35,
+          maxOpacity: (Math.random() * 0.5 + 0.35) * (isLight ? 0.35 : 1),
           twinkleSpeed: Math.random() * 0.03 + 0.01,
           twinkleAngle: Math.random() * Math.PI * 2,
           color: goldColors[Math.floor(Math.random() * goldColors.length)],
@@ -150,7 +162,7 @@ export default function ParticleField({ count = 65, className = '' }: ParticleFi
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationId);
     };
-  }, [count]);
+  }, [count, isLight]);
 
   return (
     <canvas

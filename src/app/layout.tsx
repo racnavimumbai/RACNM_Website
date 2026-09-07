@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import ParticleField from '@/components/ParticleField';
 import SocialFloatingBubble from '@/components/SocialFloatingBubble';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -77,6 +78,22 @@ export const metadata: Metadata = {
   }
 };
 
+// Inline script to prevent FOUC — reads localStorage before first paint
+const themeInitScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('rcnm-theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch(e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -105,29 +122,34 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} dark h-full`}>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} h-full`} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#08080b] text-[#f8fafc] font-sans antialiased flex flex-col min-h-screen relative">
-        {/* Global Subtle Golden Sparkles Background */}
-        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-          <ParticleField count={75} />
-        </div>
+      <body className="bg-[var(--bg-dark)] text-[var(--text-primary)] font-sans antialiased flex flex-col min-h-screen relative">
+        <ThemeProvider>
+          {/* Global Subtle Golden Sparkles Background */}
+          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+            <ParticleField count={75} />
+          </div>
 
-        {/* Noise Texture Overlay */}
-        <div className="noise-overlay" aria-hidden="true" />
-        
-        {/* Scroll Progress Bar */}
-        <ScrollProgress />
-        
-        <Header />
-        <main className="flex-1 pt-[72px] page-enter relative z-10">{children}</main>
-        <Footer />
-        <SocialFloatingBubble />
+          {/* Noise Texture Overlay */}
+          <div className="noise-overlay" aria-hidden="true" />
+          
+          {/* Scroll Progress Bar */}
+          <ScrollProgress />
+          
+          <Header />
+          <main className="flex-1 pt-[72px] page-enter relative z-10">{children}</main>
+          <Footer />
+          <SocialFloatingBubble />
+        </ThemeProvider>
         
         {/* Vercel Web Analytics & Real User Speed Insights */}
         <Analytics />

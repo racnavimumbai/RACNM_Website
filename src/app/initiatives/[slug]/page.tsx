@@ -62,7 +62,7 @@ export default function InitiativeDetailPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center text-center">
         <div className="space-y-4">
-          <h1 className="font-serif-heading text-4xl text-white">Initiative Not Found</h1>
+          <h1 className="font-serif-heading text-4xl text-[var(--text-primary)]">Initiative Not Found</h1>
           <Link href="/initiatives" className="btn-editorial-primary">Back to Initiatives</Link>
         </div>
       </div>
@@ -70,12 +70,12 @@ export default function InitiativeDetailPage() {
   }
 
   return (
-    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="space-y-16 py-12 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-[var(--text-primary)]">
       {/* Back Button */}
       <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }}>
         <Link
           href="/initiatives"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-[#d4af37] transition-colors group"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--text-muted)] hover:text-[#d4af37] transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Back to All Initiatives</span>
@@ -93,10 +93,10 @@ export default function InitiativeDetailPage() {
           <Sparkles className="w-3.5 h-3.5" />
           <span>{initiative.category}</span>
         </div>
-        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+        <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
           {initiative.title}
         </h1>
-        <p className="text-zinc-300 text-base sm:text-lg leading-relaxed">
+        <p className="text-[var(--text-secondary)] text-base sm:text-lg leading-relaxed">
           {initiative.summary}
         </p>
       </motion.div>
@@ -106,7 +106,7 @@ export default function InitiativeDetailPage() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.7, delay: 0.2 }}
-        className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group"
+        className="relative aspect-video rounded-3xl overflow-hidden border border-[var(--border-secondary)] shadow-2xl group"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -142,10 +142,10 @@ export default function InitiativeDetailPage() {
         className="space-y-8 pt-6"
       >
         <div className="space-y-2">
-          <h2 className="font-serif-heading text-3xl font-bold text-white">
+          <h2 className="font-serif-heading text-3xl font-bold text-[var(--text-primary)]">
             Connected Events & Projects
           </h2>
-          <p className="text-zinc-400 text-sm">
+          <p className="text-[var(--text-muted)] text-sm">
             Events conducted under {initiative.title} across Navi Mumbai.
           </p>
         </div>
@@ -170,10 +170,10 @@ export default function InitiativeDetailPage() {
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{formatDate(event.event_date)}</span>
                   </div>
-                  <h3 className="font-serif-heading text-xl font-bold text-white group-hover:text-[#d4af37] transition-colors">
+                  <h3 className="font-serif-heading text-xl font-bold text-[var(--text-primary)] group-hover:text-[#d4af37] transition-colors">
                     {event.title}
                   </h3>
-                  <p className="text-zinc-400 text-xs line-clamp-2">
+                  <p className="text-[var(--text-muted)] text-xs line-clamp-2">
                     {event.summary}
                   </p>
                 </div>

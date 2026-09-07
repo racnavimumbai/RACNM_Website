@@ -63,25 +63,25 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
           <span className="px-3.5 py-1 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] text-xs font-semibold">
             {editorial.category}
           </span>
-          <span className="flex items-center gap-1 text-xs text-zinc-400">
+          <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
             <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
             {formatDate(editorial.published_at)}
           </span>
         </div>
 
-        <h1 className="font-serif-heading text-4xl sm:text-5xl font-bold text-white tracking-tight leading-snug">
+        <h1 className="font-serif-heading text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-tight leading-snug">
           {editorial.title}
         </h1>
 
-        <div className="flex items-center gap-2 text-xs text-zinc-300">
-          <span>By <strong className="text-white">{editorial.author}</strong></span>
+        <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+          <span>By <strong className="text-[var(--text-primary)]">{editorial.author}</strong></span>
           <span>•</span>
           <span>Rotaract Club of Navi Mumbai</span>
         </div>
       </div>
 
       {/* Cover Image */}
-      <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+      <div className="relative aspect-video rounded-3xl overflow-hidden border border-[var(--border-secondary)] shadow-2xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={editorial.cover_image}
@@ -92,12 +92,12 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
 
       {/* PDF Download Callout if available */}
       {editorial.pdf_url && (
-        <div className="p-6 rounded-2xl bg-[#18181c] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+        <div className="p-6 rounded-2xl bg-[var(--bg-card)] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="font-serif-heading font-bold text-white text-lg">
+            <h3 className="font-serif-heading font-bold text-[var(--text-primary)] text-lg">
               Official PDF Edition Available
             </h3>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-[var(--text-muted)]">
               Download or view the high-resolution publication PDF file.
             </p>
           </div>
@@ -115,7 +115,7 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
       )}
 
       {/* Content Text */}
-      <div className="bg-[#121215] border border-white/10 rounded-3xl p-8 sm:p-12 font-sans">
+      <div className="bg-[var(--bg-surface)] border border-[var(--border-secondary)] rounded-3xl p-8 sm:p-12 font-sans">
         <MarkdownRenderer content={editorial.content} />
       </div>
     </div>

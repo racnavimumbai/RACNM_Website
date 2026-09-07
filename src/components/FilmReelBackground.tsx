@@ -56,10 +56,10 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
   return (
     <div className="absolute inset-0 overflow-hidden select-none z-[5] pointer-events-auto">
       
-      {/* Background Dimmer Mask Layers */}
-      <div className="absolute inset-0 bg-[#08080b]/40 z-0 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#08080b]/80 via-transparent to-[#08080b]/90 pointer-events-none z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(8,8,11,0.85)_85%)] pointer-events-none z-0" />
+      {/* Background Dimmer Mask Layers — dynamically blends with theme bg */}
+      <div className="absolute inset-0 bg-[var(--bg-dark)]/40 z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-dark)]/85 via-transparent to-[var(--bg-dark)]/95 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_var(--bg-dark)_85%)] pointer-events-none z-0" />
 
       {/* Film Strip Row 1 — Upper Track */}
       <div className="absolute top-12 sm:top-16 inset-x-0 overflow-visible py-1 z-10 transform -rotate-1 pointer-events-auto">

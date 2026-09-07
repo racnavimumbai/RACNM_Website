@@ -143,7 +143,7 @@ export default function SocialFloatingBubble() {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 6, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-full mr-3.5 px-3 py-1.5 rounded-lg bg-[#18181b]/95 backdrop-blur-md border border-white/10 text-white text-xs font-semibold shadow-2xl pointer-events-none whitespace-nowrap z-10 flex items-center"
+                        className="social-fab-panel absolute right-full mr-3.5 px-3 py-1.5 rounded-lg bg-[#18181b]/95 backdrop-blur-md border border-white/10 text-white text-xs font-semibold shadow-2xl pointer-events-none whitespace-nowrap z-10 flex items-center"
                       >
                         {item.name}
                         {/* Caret pointing right towards the icon */}
@@ -152,21 +152,17 @@ export default function SocialFloatingBubble() {
                     )}
                   </AnimatePresence>
 
-                  {/* Circular Social Icon Button */}
+                  {/* Circular Social Icon Button with Vibrant Brand Colors */}
                   <motion.a
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.ariaLabel}
-                    whileHover={{ scale: 1.12 }}
+                    whileHover={{ scale: 1.15 }}
                     whileTap={{ scale: 0.94 }}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg ${
-                      isHovered
-                        ? item.hoverClass
-                        : 'bg-[#0f172a]/90 backdrop-blur-md border border-white/15 text-white/90 hover:text-white'
-                    }`}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border border-white/20 text-white ${item.hoverClass}`}
                   >
-                    <Icon className="w-5 h-5 transition-transform" />
+                    <Icon className="w-5 h-5 transition-transform drop-shadow-sm" />
                   </motion.a>
                 </motion.div>
               );
@@ -179,14 +175,14 @@ export default function SocialFloatingBubble() {
       <motion.button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.06 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         aria-label={isOpen ? 'Close social links menu' : 'Open social links menu'}
         aria-expanded={isOpen}
-        className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors duration-300 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-rose-500/40 ${
+        className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl focus:outline-none ${
           isOpen
-            ? 'bg-[#e11d48] text-white shadow-[0_8px_30px_rgba(225,29,72,0.45)] border border-rose-400/40'
-            : 'bg-white text-[#0f172a] shadow-[0_8px_30px_rgba(0,0,0,0.45)] border border-white/30 hover:bg-slate-100'
+            ? 'bg-[#e11d48] text-white shadow-[0_8px_30px_rgba(225,29,72,0.5)] border border-rose-400/50'
+            : 'bg-gradient-to-tr from-[#e6bc3b] via-[#d4af37] to-[#b8860b] text-black shadow-[0_8px_30px_rgba(212,175,55,0.45)] border border-[#fef08a]/60 hover:shadow-[0_10px_35px_rgba(212,175,55,0.6)]'
         }`}
       >
         <AnimatePresence mode="wait" initial={false}>
