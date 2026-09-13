@@ -37,22 +37,13 @@ export default function TeamPage() {
         transition={{ duration: 0.6 }}
         className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
-            MASTHEAD NO. 07
-          </span>
-          <span className="text-[var(--text-muted)]">•</span>
-          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
-            BOARD OF DIRECTORS (2024-25)
-          </span>
-        </div>
 
         <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Leadership & Board
         </h1>
 
         <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
-          The 45th Board of Directors bringing together dedicated students, creative minds, and young professionals steering Rotaract Club of Navi Mumbai under MAGNUM OPUS.
+          Meet the 45th team of leaders - a group of like-minded individuals dedicated to create an impact through the Rotaract Club of Navi Mumbai, under the banner Magnum Opus.
         </p>
       </motion.div>
 

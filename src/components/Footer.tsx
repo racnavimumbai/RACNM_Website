@@ -136,7 +136,7 @@ export default function Footer() {
               </div>
 
               <p className="text-xs leading-relaxed max-w-sm">
-                <strong className="text-[var(--text-primary)]">Rotaract Club of Navi Mumbai</strong> (RID 3142, Zone 1) is a premier youth leadership organization established in 1982. Celebrating 45 years of service, fellowship, and social impact under our annual theme — <strong className="text-[var(--text-primary)]">MAGNUM OPUS</strong>.
+                <strong className="text-[var(--text-primary)]">Rotaract Club of Navi Mumbai</strong> (Zone 1, RID 3142) is a premium youth leadership organization established in 1982. Celebrating 45 years of excellence in service, fellowship, and social impact, we continue to lead under our year theme: <strong className="text-[var(--text-primary)]">MAGNUM OPUS</strong>.
               </p>
 
               {/* Social Links with hover effects */}

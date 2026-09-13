@@ -66,17 +66,7 @@ export default function AboutPage() {
           animate="visible"
           variants={staggerContainer}
         >
-          <motion.div variants={itemFade} className="flex items-center gap-3 border-b border-[var(--border-primary)] pb-4">
-            <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
-              ARCHIVE NO. 45
-            </span>
-            <span className="text-[var(--text-muted)]">•</span>
-            <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
-              EST. 1982 NAVI MUMBAI
-            </span>
-          </motion.div>
-
-          <motion.div variants={itemFade} className="max-w-4xl space-y-4 pt-6">
+          <motion.div variants={itemFade} className="max-w-4xl space-y-4">
             <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)] leading-tight">
               The Story of <br />
               <span className="italic font-normal text-gold-gradient">Rotaract Club of Navi Mumbai</span>

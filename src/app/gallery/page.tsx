@@ -60,7 +60,7 @@ export default function GalleryPage() {
           Photo <span className="text-gold-gradient">Gallery</span>
         </h1>
         <p className="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">
-          A living photographic archive capturing the energy, fellowship, and ground-level impact of Rotaract Club of Navi Mumbai across the years.
+          A living photographic archive capturing the energy, fellowship, and ground-level impact of our Club across the years.
         </p>
         {filteredPhotos.length > 0 && (
           <p className="text-xs text-[var(--text-muted)]">{filteredPhotos.length} photo{filteredPhotos.length !== 1 ? 's' : ''} in this collection</p>

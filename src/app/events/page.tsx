@@ -42,22 +42,13 @@ export default function EventsPage() {
         transition={{ duration: 0.6 }}
         className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
-            CHRONICLE NO. 04
-          </span>
-          <span className="text-[var(--text-muted)]">•</span>
-          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
-            EVENT STORIES
-          </span>
-        </div>
 
         <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Events & Living Stories
         </h1>
 
         <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
-          Every event is a chapter in our Magnum Opus. Explore impact metrics, narratives, and photographs from our recent activities across Navi Mumbai.
+          Every event is a chapter in our story. Explore with us the impact that we created and the memories that we made.
         </p>
       </motion.div>
 

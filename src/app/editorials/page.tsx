@@ -53,10 +53,10 @@ export default function EditorialsPage() {
           <span>DIGITAL PUBLICATION & MAGAZINE ARCHIVE</span>
         </div>
         <h1 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
-          Editor&apos;s <span className="text-gold-gradient">Corner</span>
+          From the Editor&apos;s <span className="text-gold-gradient">Desk</span>
         </h1>
         <p className="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">
-          Explore our official monthly bulletins, thought pieces, annual publications, and member-written stories.
+          Meet our editorial team, who, through their words, take us on a literary journey of the Club.
         </p>
       </motion.div>
 

@@ -37,15 +37,6 @@ export default function InitiativesPage() {
         transition={{ duration: 0.6 }}
         className="border-b border-[var(--border-primary)] pb-8 space-y-4 page-hero-glow"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest">
-            DOSSIER NO. 03
-          </span>
-          <span className="text-[var(--text-muted)]">•</span>
-          <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-widest">
-            THRUST AREAS
-          </span>
-        </div>
 
         <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
           Our Initiatives & Thrust Areas

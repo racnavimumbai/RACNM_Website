@@ -177,7 +177,7 @@ export default function HomePage() {
               href="/events"
               className="px-8 py-4 btn-gold-action uppercase tracking-wider text-xs font-extrabold flex items-center gap-2 shadow-2xl"
             >
-              <span>Explore Living Stories</span>
+              <span>Explore Our Stories</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
@@ -240,10 +240,10 @@ export default function HomePage() {
               <div className="p-5 rounded-2xl modern-card text-center relative">
                 <p className="text-xs font-bold text-[#d4af37] uppercase tracking-widest flex items-center justify-center gap-2">
                   <Calendar className="w-4 h-4 text-[#d4af37]" />
-                  <span>UPCOMING PROJECTS & COMMUNITY ACTION</span>
+                  <span>UPCOMING PROJECTS & EVENTS</span>
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1 font-sans">
-                  Stay tuned for our upcoming fellowship drives, health camps, and eco-initiatives across Navi Mumbai.
+                  Keep an eye out for projects that you love (And hit us up if you want to join us!)
                 </p>
               </div>
             )}
@@ -264,21 +264,31 @@ export default function HomePage() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-6 p-8 sm:p-12 modern-card-gold"
         >
           
-          {[
+          {([
             { number: 45, suffix: '', label: 'Years of Service', sublabel: 'Est. 1982', gold: true },
-            { number: 1000, suffix: '+', label: 'Projects Executed', sublabel: 'Social & Community Action', gold: false },
-            { number: 50000, suffix: '+', label: 'Lives Impacted', sublabel: 'Across Navi Mumbai', gold: true },
-            { number: 1, suffix: '', label: 'Oldest Pioneer Club', sublabel: 'Zone 1, District 3142', gold: false, prefix: 'Zone ' },
-          ].map((stat, idx) => (
-            <div key={idx} className={`space-y-1 text-center p-4 ${idx < 3 ? 'border-r border-[var(--border-secondary)]' : ''} hover:-translate-y-1 transition-transform duration-300`}>
-              <AnimatedCounter
-                target={stat.number}
-                suffix={stat.suffix}
-                prefix={stat.prefix}
-                className={`font-serif-heading font-bold text-4xl sm:text-6xl block ${stat.gold ? 'stat-number' : 'text-[var(--text-primary)]'}`}
-              />
+            { number: 1000, suffix: '+', label: 'Projects Executed', gold: false },
+            { number: 10000, suffix: '+', label: 'Lives Impacted', sublabel: 'Across Navi Mumbai', gold: true },
+            { displayText: "Navi Mumbai's", label: 'Oldest Club', sublabel: 'District 3142', gold: false },
+          ] as { number?: number; suffix?: string; prefix?: string; label: string; sublabel?: string; gold?: boolean; displayText?: string }[]).map((stat, idx) => (
+            <div key={idx} className={`space-y-1 text-center p-4 ${idx < 3 ? 'border-r border-[var(--border-secondary)]' : ''} hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-center`}>
+              {stat.displayText ? (
+                <span className={`font-serif-heading font-bold text-2xl sm:text-3xl xl:text-4xl block ${stat.gold ? 'stat-number' : 'text-[var(--text-primary)]'}`}>
+                  {stat.displayText}
+                </span>
+              ) : (
+                <AnimatedCounter
+                  target={stat.number!}
+                  suffix={stat.suffix}
+                  prefix={stat.prefix}
+                  className={`font-serif-heading font-bold text-4xl sm:text-6xl block ${stat.gold ? 'stat-number' : 'text-[var(--text-primary)]'}`}
+                />
+              )}
               <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-primary)] block">{stat.label}</span>
-              <span className="text-[11px] text-[var(--text-muted)] block">{stat.sublabel}</span>
+              {stat.sublabel ? (
+                <span className="text-[11px] text-[var(--text-muted)] block">{stat.sublabel}</span>
+              ) : (
+                <span className="text-[11px] block opacity-0 pointer-events-none">&nbsp;</span>
+              )}
             </div>
           ))}
 
@@ -303,7 +313,7 @@ export default function HomePage() {
             <span>OUR CORE PILLARS</span>
           </span>
           <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
-            Thrust Areas of RCNM
+            Our Thrust Areas
           </h2>
           <p className="text-[var(--text-muted)] text-sm sm:text-base max-w-2xl">
             Thrust areas are the compass guiding us toward progress and innovation across Navi Mumbai.
@@ -425,7 +435,7 @@ export default function HomePage() {
                 Featured Event Stories
               </h2>
               <p className="text-[var(--text-muted)] text-sm max-w-xl">
-                Every event is a chapter in our Magnum Opus. Explore photographs, metrics, and narratives from our recent activities.
+                Every event is a chapter in our story. Explore photographs, metrics, and narratives from our recent activities.
               </p>
             </div>
 
@@ -539,7 +549,7 @@ export default function HomePage() {
               Moments Captured in Time
             </h2>
             <p className="text-[var(--text-muted)] text-sm max-w-xl">
-              Photographs are the living evidence of our fellowship, energy, and work. Explore recent moments from the 45th Year.
+              Dive into the visual album of the memories we made.
             </p>
           </div>
 
@@ -689,13 +699,13 @@ export default function HomePage() {
 
           <div className="max-w-3xl mx-auto space-y-5 relative z-10">
             <span className="text-xs font-bold text-[#d4af37] tracking-widest uppercase">
-              BECOME PART OF SOMETHING GREATER
+              BECOME PART OF OUR STORY
             </span>
             <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight leading-tight">
-              Ready to write your chapter in our <span className="text-gold-gradient">MAGNUM OPUS</span>?
+              Ready to become a part of our <span className="text-gold-gradient">Family</span>?
             </h2>
             <p className="text-[var(--text-secondary)] text-base leading-relaxed">
-              Rotaract is more than an organization — it is a sanctuary of lifelong friendships, leadership opportunities, community service, and memories that stay with you forever.
+              The Rotaract Club of Navi Mumbai is more than just an organization; it is a family away from home, a place of opportunities and memories that will stay with you forever.
             </p>
             <div className="pt-4 flex items-center justify-center gap-4">
               <Link
