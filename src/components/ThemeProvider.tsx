@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useCallback, useSyncExternalStore } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -13,31 +13,49 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'rcnm-theme';
+const THEME_CHANGE_EVENT = 'rcnm-theme-change';
+
+function subscribe(callback: () => void) {
+  window.addEventListener('storage', callback);
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+  return () => {
+    window.removeEventListener('storage', callback);
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+  };
+}
+
+function getSnapshot(): Theme {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
+    if (stored === 'light' || stored === 'dark') return stored;
+    const currentAttr = document.documentElement.getAttribute('data-theme') as Theme | null;
+    if (currentAttr === 'light' || currentAttr === 'dark') return currentAttr;
+  } catch {
+    // Ignore error
+  }
+  return 'dark';
+}
+
+function getServerSnapshot(): Theme {
+  return 'dark';
+}
+
+function subscribeMounted() {
+  return () => {};
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // Read the theme that was already applied by the inline script in <head>
-    const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-    const currentAttr = document.documentElement.getAttribute('data-theme') as Theme | null;
-    
-    if (stored === 'light' || stored === 'dark') {
-      setThemeState(stored);
-    } else if (currentAttr === 'light' || currentAttr === 'dark') {
-      setThemeState(currentAttr);
-    } else {
-      // Default to dark
-      setThemeState('dark');
-    }
-    setMounted(true);
-  }, []);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const mounted = useSyncExternalStore(subscribeMounted, () => true, () => false);
 
   const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem(STORAGE_KEY, newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    try {
+      localStorage.setItem(STORAGE_KEY, newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+      window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+    } catch (e) {
+      console.error('Failed to set theme', e);
+    }
   }, []);
 
   const toggleTheme = useCallback(() => {

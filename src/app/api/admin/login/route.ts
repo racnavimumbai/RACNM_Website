@@ -5,8 +5,25 @@ import { createAdminSessionToken, ADMIN_COOKIE_NAME } from '@/lib/auth/server';
 import { createServerClient } from '@supabase/ssr';
 import { Database } from '@/lib/supabase/database.types';
 
+import { rateLimit, getClientIp } from '@/lib/rateLimit';
+
 export async function POST(request: Request) {
   try {
+    // 1. IP Rate Limiting (max 5 login attempts per 15 minutes per IP)
+    const clientIp = getClientIp(request);
+    const rl = rateLimit(`admin_login_${clientIp}`, 5, 15 * 60 * 1000);
+    if (!rl.success) {
+      return NextResponse.json(
+        {
+          error: `Too many login attempts. For security, please wait ${rl.resetSeconds} seconds before trying again.`
+        },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rl.resetSeconds) }
+        }
+      );
+    }
+
     const body = await request.json();
     const { email, password } = body;
 
@@ -63,10 +80,21 @@ export async function POST(request: Request) {
 
       authenticated = true;
     } else {
-      // 2. Offline / Mock Mode Only: Passcode fallback when Supabase is not connected
-      const serverPasscode = process.env.ADMIN_PASSCODE || 'MAGNUMOPUS2026';
+      // 2. Passcode verification when Supabase Auth is not configured
+      const serverPasscode = process.env.ADMIN_PASSCODE;
+      if (!serverPasscode) {
+        if (process.env.NODE_ENV === 'production') {
+          console.error('[CRITICAL SECURITY ERROR] ADMIN_PASSCODE environment variable is not configured!');
+          return NextResponse.json(
+            { error: 'Server configuration error: ADMIN_PASSCODE must be set in environment variables.' },
+            { status: 500 }
+          );
+        }
+      }
+
+      const expectedPasscode = serverPasscode || 'MAGNUMOPUS2026';
       const inputBuffer = Buffer.from(password);
-      const expectedBuffer = Buffer.from(serverPasscode);
+      const expectedBuffer = Buffer.from(expectedPasscode);
 
       if (inputBuffer.length === expectedBuffer.length) {
         authenticated = crypto.timingSafeEqual(inputBuffer, expectedBuffer);

@@ -6,12 +6,26 @@ import { Database } from '@/lib/supabase/database.types';
 export const ADMIN_COOKIE_NAME = 'rcnm_admin_session';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
+let ephemeralSecret: string | null = null;
+
 function getSessionSecret(): string {
-  return (
-    process.env.ADMIN_SESSION_SECRET ||
-    process.env.NEXTAUTH_SECRET ||
-    'rcnm_secure_fallback_admin_secret_salt_2026_magnum_opus'
-  );
+  if (process.env.ADMIN_SESSION_SECRET) {
+    return process.env.ADMIN_SESSION_SECRET;
+  }
+  if (process.env.NEXTAUTH_SECRET) {
+    return process.env.NEXTAUTH_SECRET;
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    console.warn(
+      '[SECURITY WARNING] ADMIN_SESSION_SECRET environment variable is not set. Generating an ephemeral in-memory signing secret for this session.'
+    );
+  }
+
+  if (!ephemeralSecret) {
+    ephemeralSecret = crypto.randomBytes(32).toString('hex');
+  }
+  return ephemeralSecret;
 }
 
 /**

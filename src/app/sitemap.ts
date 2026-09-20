@@ -11,19 +11,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getEditorials()
   ]);
 
-  const eventUrls = events.map(e => ({
+  const safeDate = (dateStr?: string | null): Date => {
+    if (!dateStr) return new Date();
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? new Date() : d;
+  };
+
+  const publishedEvents = events.filter(e => e.status === 'published');
+  const publishedEditorials = editorials.filter(ed => ed.status === 'published');
+
+  const eventUrls = publishedEvents.map(e => ({
     url: `${baseUrl}/events/${e.slug}`,
-    lastModified: new Date(e.created_at)
+    lastModified: safeDate(e.created_at)
   }));
 
   const initiativeUrls = initiatives.map(i => ({
     url: `${baseUrl}/initiatives/${i.slug}`,
-    lastModified: new Date(i.created_at)
+    lastModified: safeDate(i.created_at)
   }));
 
-  const editorialUrls = editorials.map(ed => ({
+  const editorialUrls = publishedEditorials.map(ed => ({
     url: `${baseUrl}/editorials/${ed.slug}`,
-    lastModified: new Date(ed.published_at)
+    lastModified: safeDate(ed.published_at)
   }));
 
   const staticRoutes = [

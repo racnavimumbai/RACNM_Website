@@ -1,17 +1,21 @@
 'use client';
 
-import { useEffect, useCallback, useState } from 'react';
+import { useState, useEffect, useCallback, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
-import { X, ChevronLeft, ChevronRight, Download, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GalleryPhoto } from '@/lib/data/mockData';
+import { X, ChevronLeft, ChevronRight, Download, Image as ImageIcon } from 'lucide-react';
+import { GalleryPhoto } from '@/lib/data/api';
 
 interface LightboxModalProps {
   isOpen: boolean;
   onClose: () => void;
   photos: GalleryPhoto[];
-  currentIndex: number;
+  currentIndex?: number;
   onNavigate: (index: number) => void;
+}
+
+function subscribeMounted() {
+  return () => {};
 }
 
 export default function LightboxModal({
@@ -21,12 +25,8 @@ export default function LightboxModal({
   currentIndex = 0,
   onNavigate
 }: LightboxModalProps) {
-  const [mounted, setMounted] = useState(false);
-  const [imgError, setImgError] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(subscribeMounted, () => true, () => false);
+  const [erroredUrl, setErroredUrl] = useState<string | null>(null);
 
   // Safe clamping of index
   const safeIndex = photos.length > 0 
@@ -34,11 +34,7 @@ export default function LightboxModal({
     : 0;
 
   const currentPhoto = photos[safeIndex];
-
-  // Reset img error on index change
-  useEffect(() => {
-    setImgError(false);
-  }, [safeIndex, currentPhoto?.image_url]);
+  const imgError = Boolean(currentPhoto && erroredUrl === currentPhoto.image_url);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return;
@@ -162,7 +158,7 @@ export default function LightboxModal({
                   <img
                     src={currentPhoto.image_url}
                     alt={currentPhoto.caption || 'Rotaract Club of Navi Mumbai Event Photograph'}
-                    onError={() => setImgError(true)}
+                    onError={() => setErroredUrl(currentPhoto.image_url)}
                     className="max-h-[70vh] w-auto max-w-full object-contain select-none rounded-2xl"
                   />
                 </motion.div>
