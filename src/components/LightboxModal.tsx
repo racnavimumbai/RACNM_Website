@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { useEffect, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { X, ChevronLeft, ChevronRight, Download, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GalleryPhoto } from '@/lib/data/mockData';
 
@@ -16,165 +17,220 @@ interface LightboxModalProps {
 export default function LightboxModal({
   isOpen,
   onClose,
-  photos,
-  currentIndex,
+  photos = [],
+  currentIndex = 0,
   onNavigate
 }: LightboxModalProps) {
+  const [mounted, setMounted] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Safe clamping of index
+  const safeIndex = photos.length > 0 
+    ? Math.max(0, Math.min(currentIndex, photos.length - 1)) 
+    : 0;
+
+  const currentPhoto = photos[safeIndex];
+
+  // Reset img error on index change
+  useEffect(() => {
+    setImgError(false);
+  }, [safeIndex, currentPhoto?.image_url]);
+
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return;
     if (e.key === 'Escape') onClose();
-    if (e.key === 'ArrowLeft' && currentIndex > 0) onNavigate(currentIndex - 1);
-    if (e.key === 'ArrowRight' && currentIndex < photos.length - 1) onNavigate(currentIndex + 1);
-  }, [isOpen, currentIndex, photos.length, onClose, onNavigate]);
+    if (e.key === 'ArrowLeft' && safeIndex > 0) onNavigate(safeIndex - 1);
+    if (e.key === 'ArrowRight' && safeIndex < photos.length - 1) onNavigate(safeIndex + 1);
+  }, [isOpen, safeIndex, photos.length, onClose, onNavigate]);
 
   useEffect(() => {
+    if (!isOpen) return;
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+  }, [isOpen, handleKeyDown]);
 
-  // Prevent body scroll when modal is open
+  // Lock body scroll cleanly and always restore on close/unmount
   useEffect(() => {
     if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
     }
-    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  if (!isOpen || !photos[currentIndex]) return null;
+  if (!mounted || !isOpen || !currentPhoto) return null;
 
-  const currentPhoto = photos[currentIndex];
-
-  return (
+  const modalContent = (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && currentPhoto && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur-2xl"
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[100] flex flex-col bg-black/95 backdrop-blur-2xl select-none"
+          onClick={(e) => {
+            // Close if user clicks the dark backdrop outside controls and image
+            if (e.target === e.currentTarget) {
+              onClose();
+            }
+          }}
         >
-          {/* Top Controls */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.3 }}
-            className="p-4 sm:p-6 flex items-center justify-between z-20 bg-gradient-to-b from-black/80 to-transparent"
-          >
-            <div className="text-white min-w-0">
-              <span className="font-serif-heading font-bold text-[#d4af37] text-lg block truncate">
-                {currentPhoto.album_name}
+          {/* Top Controls Header */}
+          <div className="p-4 sm:p-6 flex items-center justify-between z-30 bg-gradient-to-b from-black/90 via-black/60 to-transparent shrink-0">
+            <div className="text-white min-w-0 pr-4">
+              <span className="font-serif-heading font-bold text-[#d4af37] text-lg sm:text-xl block truncate">
+                {currentPhoto.album_name || 'RACNM Photo Archive'}
               </span>
-              <span className="text-xs text-zinc-400 block">
-                Photo {currentIndex + 1} of {photos.length} • Rotaract Year {currentPhoto.rotaract_year}
+              <span className="text-xs text-zinc-400 block mt-0.5">
+                Photo {safeIndex + 1} of {photos.length}
+                {currentPhoto.rotaract_year ? ` • Rotaract Year ${currentPhoto.rotaract_year}` : ''}
               </span>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              <a
-                href={currentPhoto.image_url}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-full bg-white/10 text-zinc-200 hover:text-[#d4af37] hover:bg-white/20 transition-all duration-200 border border-white/10"
-                title="Download image"
-              >
-                <Download className="w-5 h-5" />
-              </a>
+              {currentPhoto.image_url && (
+                <a
+                  href={currentPhoto.image_url}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-white/10 text-zinc-200 hover:text-[#d4af37] hover:bg-white/20 transition-all border border-white/10"
+                  title="Open full image in new tab"
+                >
+                  <Download className="w-5 h-5" />
+                </a>
+              )}
               <button
+                type="button"
                 onClick={onClose}
-                className="p-2.5 rounded-full bg-white/10 text-zinc-200 hover:text-white hover:bg-red-500/30 transition-all duration-200 border border-white/10"
+                className="p-2.5 rounded-xl bg-white/10 text-zinc-200 hover:text-white hover:bg-red-500/30 transition-all border border-white/10 cursor-pointer"
                 aria-label="Close Lightbox"
+                title="Close (Esc)"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Main Image Display */}
-          <div className="flex-1 relative flex items-center justify-center px-4 min-h-0">
-            {/* Previous Button */}
-            {currentIndex > 0 && (
+          {/* Main Photo Center Container */}
+          <div
+            className="flex-1 relative flex items-center justify-center px-4 sm:px-16 min-h-0 overflow-hidden"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) onClose();
+            }}
+          >
+            {/* Previous Arrow Button */}
+            {safeIndex > 0 && (
               <button
-                onClick={() => onNavigate(currentIndex - 1)}
-                className="absolute left-2 sm:left-6 z-20 p-3 rounded-full bg-black/60 border border-white/10 text-white hover:bg-[#d4af37] hover:text-black hover:border-[#d4af37] transition-all shadow-xl"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(safeIndex - 1);
+                }}
+                className="absolute left-3 sm:left-6 z-30 p-3 rounded-full bg-black/70 border border-white/20 text-white hover:bg-[#d4af37] hover:text-black hover:border-[#d4af37] transition-all shadow-2xl cursor-pointer"
                 aria-label="Previous photo"
+                title="Previous (Left Arrow)"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
             )}
 
-            {/* Image with crossfade */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="relative overflow-hidden rounded-xl border border-white/10 shadow-2xl max-h-[70vh]"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={currentPhoto.image_url}
-                  alt={currentPhoto.caption}
-                  className="max-h-[70vh] w-auto max-w-full object-contain select-none"
-                />
-              </motion.div>
-            </AnimatePresence>
+            {/* Photo with Framer Motion Transition */}
+            <div className="relative max-h-[70vh] max-w-[90vw] flex items-center justify-center">
+              {imgError ? (
+                <div className="flex flex-col items-center justify-center p-12 bg-zinc-900/80 rounded-2xl border border-white/10 text-center space-y-3">
+                  <ImageIcon className="w-12 h-12 text-zinc-600 mx-auto" />
+                  <p className="text-zinc-400 text-sm">Image could not be loaded</p>
+                </div>
+              ) : (
+                <motion.div
+                  key={`photo-${safeIndex}-${currentPhoto.image_url}`}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="relative overflow-hidden rounded-2xl border border-[#d4af37]/30 shadow-[0_10px_50px_rgba(0,0,0,0.8)] max-h-[70vh]"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={currentPhoto.image_url}
+                    alt={currentPhoto.caption || 'Rotaract Club of Navi Mumbai Event Photograph'}
+                    onError={() => setImgError(true)}
+                    className="max-h-[70vh] w-auto max-w-full object-contain select-none rounded-2xl"
+                  />
+                </motion.div>
+              )}
+            </div>
 
-            {/* Next Button */}
-            {currentIndex < photos.length - 1 && (
+            {/* Next Arrow Button */}
+            {safeIndex < photos.length - 1 && (
               <button
-                onClick={() => onNavigate(currentIndex + 1)}
-                className="absolute right-2 sm:right-6 z-20 p-3 rounded-full bg-black/60 border border-white/10 text-white hover:bg-[#d4af37] hover:text-black hover:border-[#d4af37] transition-all shadow-xl"
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(safeIndex + 1);
+                }}
+                className="absolute right-3 sm:right-6 z-30 p-3 rounded-full bg-black/70 border border-white/20 text-white hover:bg-[#d4af37] hover:text-black hover:border-[#d4af37] transition-all shadow-2xl cursor-pointer"
                 aria-label="Next photo"
+                title="Next (Right Arrow)"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
             )}
           </div>
 
-          {/* Bottom: Caption + Thumbnail Strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.3 }}
-            className="p-4 sm:p-6 z-20 bg-gradient-to-t from-black/90 to-transparent space-y-4"
-          >
+          {/* Bottom Controls: Caption + Thumbnail Strip */}
+          <div className="p-4 sm:p-6 z-30 bg-gradient-to-t from-black/95 via-black/80 to-transparent space-y-3 shrink-0">
             {/* Caption */}
-            <p className="text-zinc-200 text-sm sm:text-base font-medium max-w-2xl mx-auto text-center">
-              {currentPhoto.caption}
-            </p>
+            {currentPhoto.caption && (
+              <p className="text-zinc-200 text-xs sm:text-sm font-medium max-w-2xl mx-auto text-center leading-relaxed">
+                {currentPhoto.caption}
+              </p>
+            )}
 
             {/* Thumbnail Strip */}
             {photos.length > 1 && (
-              <div className="flex items-center justify-center gap-2 overflow-x-auto pb-1 max-w-3xl mx-auto">
-                {photos.map((photo, idx) => (
-                  <button
-                    key={photo.id}
-                    onClick={() => onNavigate(idx)}
-                    className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all duration-200 shrink-0 ${
-                      idx === currentIndex
-                        ? 'border-[#d4af37] shadow-[0_0_12px_rgba(212,175,55,0.4)] scale-110'
-                        : 'border-white/10 opacity-50 hover:opacity-80 hover:border-white/30'
-                    }`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={photo.image_url}
-                      alt={photo.caption}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+              <div className="flex items-center justify-center gap-2 overflow-x-auto pb-1 max-w-3xl mx-auto scrollbar-thin">
+                {photos.map((photo, idx) => {
+                  const isCurrent = idx === safeIndex;
+                  return (
+                    <button
+                      key={`thumb-${photo.id || 'photo'}-${idx}`}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onNavigate(idx);
+                      }}
+                      className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                        isCurrent
+                          ? 'border-[#d4af37] shadow-[0_0_15px_rgba(212,175,55,0.6)] scale-110'
+                          : 'border-white/15 opacity-50 hover:opacity-90 hover:border-white/40'
+                      }`}
+                      aria-label={`Go to photo ${idx + 1}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={photo.image_url}
+                        alt={photo.caption || `Thumbnail ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
-          </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }

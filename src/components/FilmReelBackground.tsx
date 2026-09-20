@@ -5,7 +5,7 @@ import { GalleryPhoto } from '@/lib/data/mockData';
 
 interface FilmReelBackgroundProps {
   photos?: GalleryPhoto[];
-  onPhotoClick?: (photo: GalleryPhoto, index: number) => void;
+  onPhotoClick?: (photo: GalleryPhoto, index: number, allPhotos: GalleryPhoto[]) => void;
 }
 
 const DEFAULT_FILM_IMAGES = [
@@ -45,13 +45,19 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
     return combined.slice(0, 12);
   }, [photos]);
 
-  // Split into two tracks (6 photos each track)
-  const track1 = useMemo(() => fullPhotoList.slice(0, 6), [fullPhotoList]);
-  const track2 = useMemo(() => fullPhotoList.slice(6, 12), [fullPhotoList]);
+  // Split into two tracks (6 photos each track) with original index preserved
+  const track1WithIndex = useMemo(
+    () => fullPhotoList.slice(0, 6).map((photo, i) => ({ photo, originalIndex: i })),
+    [fullPhotoList]
+  );
+  const track2WithIndex = useMemo(
+    () => fullPhotoList.slice(6, 12).map((photo, i) => ({ photo, originalIndex: 6 + i })),
+    [fullPhotoList]
+  );
 
-  // Double tracks for seamless continuous infinite marquee loop
-  const loopTrack1 = useMemo(() => [...track1, ...track1, ...track1], [track1]);
-  const loopTrack2 = useMemo(() => [...track2, ...track2, ...track2], [track2]);
+  // Repeat tracks for seamless continuous infinite marquee loop
+  const loopTrack1 = useMemo(() => [...track1WithIndex, ...track1WithIndex, ...track1WithIndex], [track1WithIndex]);
+  const loopTrack2 = useMemo(() => [...track2WithIndex, ...track2WithIndex, ...track2WithIndex], [track2WithIndex]);
 
   return (
     <div className="absolute inset-0 overflow-hidden select-none z-[5] pointer-events-auto">
@@ -67,7 +73,7 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
           {loopTrack1.map((item, idx) => (
             <div
               key={`t1-${idx}`}
-              onClick={() => onPhotoClick?.(item, idx % fullPhotoList.length)}
+              onClick={() => onPhotoClick?.(item.photo, item.originalIndex, fullPhotoList)}
               className="group relative flex-shrink-0 w-44 sm:w-56 aspect-[16/10] bg-[#121218] border-y-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl transition-all duration-300 hover:scale-110 hover:z-50 cursor-pointer pointer-events-auto"
             >
               {/* Sprocket Perforations Top & Bottom */}
@@ -86,8 +92,8 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
               <div className="w-full h-full p-2 bg-black">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={item.image_url}
-                  alt={item.caption || 'Film reel archived memory'}
+                  src={item.photo.image_url}
+                  alt={item.photo.caption || 'Film reel archived memory'}
                   className="w-full h-full object-cover grayscale opacity-80 contrast-125 group-hover:grayscale-0 group-hover:opacity-100 group-hover:contrast-100 transition-all duration-300 ease-out border border-white/10 group-hover:border-[#d4af37] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.8)]"
                 />
               </div>
@@ -102,7 +108,7 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
           {loopTrack2.map((item, idx) => (
             <div
               key={`t2-${idx}`}
-              onClick={() => onPhotoClick?.(item, idx % fullPhotoList.length)}
+              onClick={() => onPhotoClick?.(item.photo, item.originalIndex, fullPhotoList)}
               className="group relative flex-shrink-0 w-44 sm:w-56 aspect-[16/10] bg-[#121218] border-y-4 border-zinc-900 rounded-sm overflow-hidden shadow-2xl transition-all duration-300 hover:scale-110 hover:z-50 cursor-pointer pointer-events-auto"
             >
               {/* Sprocket Perforations Top & Bottom */}
@@ -121,8 +127,8 @@ export default function FilmReelBackground({ photos = [], onPhotoClick }: FilmRe
               <div className="w-full h-full p-2 bg-black">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={item.image_url}
-                  alt={item.caption || 'Film reel archived memory'}
+                  src={item.photo.image_url}
+                  alt={item.photo.caption || 'Film reel archived memory'}
                   className="w-full h-full object-cover grayscale opacity-80 contrast-125 group-hover:grayscale-0 group-hover:opacity-100 group-hover:contrast-100 transition-all duration-300 ease-out border border-white/10 group-hover:border-[#d4af37] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.8)]"
                 />
               </div>

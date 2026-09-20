@@ -72,6 +72,7 @@ export default function HomePage() {
   // Modal states
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentPhotoIdx, setCurrentPhotoIdx] = useState(0);
+  const [reelPhotosList, setReelPhotosList] = useState<GalleryPhoto[]>([]);
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState<{ title: string; url: string | null }>({ title: '', url: null });
 
@@ -104,8 +105,11 @@ export default function HomePage() {
 
   const activeReelPhotos = photos.length > 0 ? photos : DEFAULT_FALLBACK_PHOTOS;
 
-  const handleOpenPhoto = (_photo: GalleryPhoto, idx: number) => {
-    setCurrentPhotoIdx(idx);
+  const handleOpenPhoto = (_photo: GalleryPhoto, idx: number, allPhotos?: GalleryPhoto[]) => {
+    const list = allPhotos && allPhotos.length > 0 ? allPhotos : activeReelPhotos;
+    setReelPhotosList(list);
+    const safeIdx = Math.max(0, Math.min(idx, list.length - 1));
+    setCurrentPhotoIdx(safeIdx);
     setLightboxOpen(true);
   };
 
@@ -724,7 +728,7 @@ export default function HomePage() {
       <LightboxModal
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        photos={activeReelPhotos}
+        photos={reelPhotosList.length > 0 ? reelPhotosList : activeReelPhotos}
         currentIndex={currentPhotoIdx}
         onNavigate={idx => setCurrentPhotoIdx(idx)}
       />
