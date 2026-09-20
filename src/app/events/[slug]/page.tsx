@@ -64,7 +64,7 @@ export default async function EventDetailPage({
     organizer: {
       '@type': 'Organization',
       name: 'Rotaract Club of Navi Mumbai',
-      url: 'https://rotaractclubofnavimumbai.org'
+      url: 'https://rotaractnavimumbai.com'
     }
   };
 

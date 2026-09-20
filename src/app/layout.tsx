@@ -25,7 +25,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rotaractclubofnavimumbai.org'),
+  metadataBase: new URL('https://rotaractnavimumbai.com'),
   title: {
     default: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
     template: '%s | Rotaract Club of Navi Mumbai'
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://rotaractclubofnavimumbai.org',
+    url: 'https://rotaractnavimumbai.com',
     siteName: 'Rotaract Club of Navi Mumbai',
     title: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
     description: 'Premier community-based youth leadership & social impact organization in Navi Mumbai. Est. 1982 • District 3142.',
@@ -104,8 +104,8 @@ export default function RootLayout({
     '@type': 'NGO',
     name: 'Rotaract Club of Navi Mumbai',
     alternateName: 'RACNM',
-    url: 'https://rotaractclubofnavimumbai.org',
-    logo: 'https://rotaractclubofnavimumbai.org/icon.png',
+    url: 'https://rotaractnavimumbai.com',
+    logo: 'https://rotaractnavimumbai.com/icon.png',
     foundingDate: '1982',
     address: {
       '@type': 'PostalAddress',

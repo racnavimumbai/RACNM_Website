@@ -21,7 +21,7 @@ function escapeHtml(str: string | undefined | null): string {
 }
 
 export async function sendJoinNotificationEmail(data: ApplicationEmailData): Promise<boolean> {
-  const recipientEmail = process.env.NOTIFICATION_EMAIL || 'info@rotaractclubofnavimumbai.org, yashsarawgi20@gmail.com';
+  const recipientEmail = process.env.NOTIFICATION_EMAIL || 'info@rotaractnavimumbai.com, yashsarawgi20@gmail.com';
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = parseInt(process.env.SMTP_PORT || '465', 10);
   const smtpUser = process.env.SMTP_USER;
@@ -86,7 +86,7 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
             <div class="value" style="white-space: pre-wrap; line-height: 1.6;">${safeMotivation}</div>
           </div>
 
-          <a href="https://rotaractclubofnavimumbai.org/admin/applications" class="cta-btn">View in Admin CMS Dashboard</a>
+          <a href="https://rotaractnavimumbai.com/admin/applications" class="cta-btn">View in Admin CMS Dashboard</a>
 
           <div class="footer">
             Submitted via Rotaract Club of Navi Mumbai Official Portal • Confidential Application Record

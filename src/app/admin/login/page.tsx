@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 required
-                placeholder="admin@rotaractclubofnavimumbai.org"
+                placeholder="admin@rotaractnavimumbai.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#18181c] border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#d4af37]"

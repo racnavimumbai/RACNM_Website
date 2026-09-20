@@ -37,7 +37,7 @@ export default async function EditorialDetailPage({ params }: { params: Promise<
     publisher: {
       '@type': 'Organization',
       name: 'Rotaract Club of Navi Mumbai',
-      url: 'https://rotaractclubofnavimumbai.org'
+      url: 'https://rotaractnavimumbai.com'
     }
   };
 

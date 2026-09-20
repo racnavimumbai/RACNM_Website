@@ -3,7 +3,7 @@ import { getEvents, getInitiatives, getEditorials } from '@/lib/data/api';
 import { siteConfig } from '@/lib/siteConfig';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://rotaractclubofnavimumbai.org';
+  const baseUrl = 'https://rotaractnavimumbai.com';
 
   const [events, initiatives, editorials] = await Promise.all([
     getEvents(),

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin', '/admin/', '/api/']
     },
-    sitemap: 'https://rotaractclubofnavimumbai.org/sitemap.xml'
+    sitemap: 'https://rotaractnavimumbai.com/sitemap.xml'
   };
 }
