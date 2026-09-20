@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { InstagramIcon, LinkedinIcon, YoutubeIcon } from '@/components/SocialIcons';
 import { useTheme } from '@/components/ThemeProvider';
 import { cn } from '@/lib/utils';
+import { siteConfig } from '@/lib/siteConfig';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -177,7 +178,9 @@ export default function Footer() {
                   { href: '/editorials', label: 'Newsletters & Press' },
                   { href: '/team', label: 'Leadership & Board' },
                   { href: '/join', label: 'Join Rotaract', highlight: true },
-                ].map((item) => (
+                ]
+                  .filter((item) => !(siteConfig.hideAboutUs && item.href === '/about'))
+                  .map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}

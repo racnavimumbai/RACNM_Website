@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { siteConfig } from '@/lib/siteConfig';
 
 export default function NotFound() {
   return (
@@ -54,8 +55,12 @@ export default function NotFound() {
           </Link>
 
           <div className="pt-6 border-t border-[var(--border-secondary)] flex flex-wrap justify-center gap-3 text-xs font-semibold text-[var(--text-muted)]">
-            <Link href="/about" className="hover:text-[#d4af37] transition-colors">About Us</Link>
-            <span>•</span>
+            {!siteConfig.hideAboutUs && (
+              <>
+                <Link href="/about" className="hover:text-[#d4af37] transition-colors">About Us</Link>
+                <span>•</span>
+              </>
+            )}
             <Link href="/initiatives" className="hover:text-[#d4af37] transition-colors">Initiatives</Link>
             <span>•</span>
             <Link href="/events" className="hover:text-[#d4af37] transition-colors">Events</Link>

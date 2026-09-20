@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Award, MapPin, ArrowRight } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 import SectionDivider from '@/components/SectionDivider';
+import { siteConfig } from '@/lib/siteConfig';
 
 const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -56,6 +58,10 @@ const fourWayTests = [
 ];
 
 export default function AboutPage() {
+  if (siteConfig.hideAboutUs) {
+    notFound();
+  }
+
   return (
     <div className="space-y-28 py-12 pb-24 bg-transparent text-[var(--text-primary)]">
       

@@ -8,8 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import GlobalSearchModal from '@/components/GlobalSearchModal';
 import { useTheme } from '@/components/ThemeProvider';
+import { siteConfig } from '@/lib/siteConfig';
 
-const navItems = [
+const baseNavItems = [
   { name: 'Home', href: '/' },
   { name: 'About Us', href: '/about' },
   { name: 'Initiatives', href: '/initiatives' },
@@ -18,6 +19,10 @@ const navItems = [
   { name: 'Editorial', href: '/editorials' },
   { name: 'Team', href: '/team' }
 ];
+
+const navItems = siteConfig.hideAboutUs
+  ? baseNavItems.filter(item => item.href !== '/about')
+  : baseNavItems;
 
 export default function Header() {
   const pathname = usePathname();

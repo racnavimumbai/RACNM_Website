@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getEvents, getInitiatives, getEditorials } from '@/lib/data/api';
+import { siteConfig } from '@/lib/siteConfig';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://rotaractclubofnavimumbai.org';
@@ -25,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(ed.published_at)
   }));
 
-  const staticUrls = [
+  const staticRoutes = [
     '',
     '/about',
     '/initiatives',
@@ -34,7 +35,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/editorials',
     '/team',
     '/join'
-  ].map(route => ({
+  ].filter(route => !(siteConfig.hideAboutUs && route === '/about'));
+
+  const staticUrls = staticRoutes.map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date()
   }));
