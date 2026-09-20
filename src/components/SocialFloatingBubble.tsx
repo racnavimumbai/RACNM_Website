@@ -84,8 +84,8 @@ export default function SocialFloatingBubble() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Hide on admin portal (except login page)
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Hide on studio portal (except login page)
+  if (pathname.startsWith('/studio') && pathname !== '/studio/login') {
     return null;
   }
 

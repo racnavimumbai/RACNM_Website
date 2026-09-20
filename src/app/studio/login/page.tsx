@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
         }
       }
 
-      router.push('/admin');
+      router.push('/studio');
       router.refresh();
     } catch (err: unknown) {
       console.error(err);
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h1 className="font-serif-heading text-3xl font-bold text-white">
-            RACNM Admin CMS
+            RACNM Studio CMS
           </h1>
           <p className="text-zinc-400 text-xs">
             Sign in with your authorized admin account to manage portal assets.

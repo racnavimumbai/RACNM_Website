@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', '/admin/', '/api/']
+      disallow: ['/studio', '/studio/', '/admin', '/admin/', '/api/']
     },
     sitemap: 'https://rotaractnavimumbai.com/sitemap.xml'
   };

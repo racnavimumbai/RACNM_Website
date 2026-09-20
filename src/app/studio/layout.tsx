@@ -21,13 +21,13 @@ import {
 import { cn } from '@/lib/utils';
 
 const adminNav = [
-  { name: 'Dashboard Overview', href: '/admin', icon: LayoutDashboard },
-  { name: 'Event Manager', href: '/admin/events', icon: Calendar },
-  { name: 'Thrust Initiatives', href: '/admin/initiatives', icon: Sparkles },
-  { name: 'Photo Gallery', href: '/admin/gallery', icon: ImageIcon },
-  { name: 'Editorials & Bulletins', href: '/admin/editorials', icon: FileText },
-  { name: 'Leadership & Board', href: '/admin/team', icon: Users },
-  { name: 'Member Applications', href: '/admin/applications', icon: Inbox }
+  { name: 'Dashboard Overview', href: '/studio', icon: LayoutDashboard },
+  { name: 'Event Manager', href: '/studio/events', icon: Calendar },
+  { name: 'Thrust Initiatives', href: '/studio/initiatives', icon: Sparkles },
+  { name: 'Photo Gallery', href: '/studio/gallery', icon: ImageIcon },
+  { name: 'Editorials & Bulletins', href: '/studio/editorials', icon: FileText },
+  { name: 'Leadership & Board', href: '/studio/team', icon: Users },
+  { name: 'Member Applications', href: '/studio/applications', icon: Inbox }
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -37,25 +37,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/admin/login') return;
+    if (pathname === '/studio/login') return;
 
     const checkAuth = async () => {
       try {
         const res = await fetch('/api/admin/verify');
         if (!res.ok) {
-          router.push('/admin/login');
+          router.push('/studio/login');
           return;
         }
         setAuthorized(true);
       } catch {
-        router.push('/admin/login');
+        router.push('/studio/login');
       }
     };
 
     checkAuth();
   }, [pathname, router]);
 
-  if (pathname === '/admin/login') {
+  if (pathname === '/studio/login') {
     return <>{children}</>;
   }
 
@@ -63,7 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen bg-[#0a0a0c] flex flex-col items-center justify-center text-zinc-400 text-xs font-mono space-y-2">
         <div className="w-5 h-5 border-2 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <span>Authenticating Admin Session...</span>
+        <span>Authenticating Studio Session...</span>
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     } catch {
       // Ignore
     }
-    router.push('/admin/login');
+    router.push('/studio/login');
     router.refresh();
   };
 

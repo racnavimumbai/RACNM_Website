@@ -86,7 +86,7 @@ export async function sendJoinNotificationEmail(data: ApplicationEmailData): Pro
             <div class="value" style="white-space: pre-wrap; line-height: 1.6;">${safeMotivation}</div>
           </div>
 
-          <a href="https://rotaractnavimumbai.com/admin/applications" class="cta-btn">View in Admin CMS Dashboard</a>
+          <a href="https://rotaractnavimumbai.com/studio/applications" class="cta-btn">View in Studio CMS Dashboard</a>
 
           <div class="footer">
             Submitted via Rotaract Club of Navi Mumbai Official Portal • Confidential Application Record

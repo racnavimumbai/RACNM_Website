@@ -58,7 +58,7 @@ export default function Header() {
     setMobileMenuOpen(false);
   }
 
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  if (pathname.startsWith('/studio') && pathname !== '/studio/login') {
     return null;
   }
 

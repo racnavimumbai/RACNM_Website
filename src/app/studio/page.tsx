@@ -70,7 +70,7 @@ export default function AdminDashboardPage() {
         </div>
 
         <Link
-          href="/admin/events"
+          href="/studio/events"
           className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-black font-bold text-xs hover:scale-105 transition-all shadow-md flex items-center gap-2 shrink-0"
         >
           <PlusCircle className="w-4 h-4" />
@@ -145,7 +145,7 @@ export default function AdminDashboardPage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
-              href="/admin/events"
+              href="/studio/events"
               className="p-6 rounded-2xl bg-[#121215] border border-white/10 hover:border-[#d4af37]/50 transition-all space-y-2 group"
             >
               <Calendar className="w-6 h-6 text-[#d4af37]" />
@@ -158,7 +158,7 @@ export default function AdminDashboardPage() {
             </Link>
 
             <Link
-              href="/admin/editorials"
+              href="/studio/editorials"
               className="p-6 rounded-2xl bg-[#121215] border border-white/10 hover:border-[#d4af37]/50 transition-all space-y-2 group"
             >
               <FileText className="w-6 h-6 text-[#d4af37]" />
@@ -171,7 +171,7 @@ export default function AdminDashboardPage() {
             </Link>
 
             <Link
-              href="/admin/gallery"
+              href="/studio/gallery"
               className="p-6 rounded-2xl bg-[#121215] border border-white/10 hover:border-[#d4af37]/50 transition-all space-y-2 group"
             >
               <ImageIcon className="w-6 h-6 text-[#d4af37]" />
@@ -184,7 +184,7 @@ export default function AdminDashboardPage() {
             </Link>
 
             <Link
-              href="/admin/applications"
+              href="/studio/applications"
               className="p-6 rounded-2xl bg-[#121215] border border-white/10 hover:border-[#d4af37]/50 transition-all space-y-2 group"
             >
               <Inbox className="w-6 h-6 text-[#d4af37]" />
@@ -204,7 +204,7 @@ export default function AdminDashboardPage() {
             <h2 className="font-serif-heading text-2xl font-bold text-white">
               Recent Inquiries
             </h2>
-            <Link href="/admin/applications" className="text-xs text-[#d4af37] font-semibold hover:underline">
+            <Link href="/studio/applications" className="text-xs text-[#d4af37] font-semibold hover:underline">
               View All
             </Link>
           </div>

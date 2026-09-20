@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server';
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect /admin routes (except /admin/login)
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Protect /studio routes (except /studio/login)
+  if (pathname.startsWith('/studio') && pathname !== '/studio/login') {
     const sessionCookie = request.cookies.get('rcnm_admin_session')?.value;
     
     // Check if Supabase auth cookies exist (prefixed with sb-)
@@ -14,7 +14,7 @@ export function proxy(request: NextRequest) {
     );
 
     if (!sessionCookie && !hasSupabaseCookie) {
-      const loginUrl = new URL('/admin/login', request.url);
+      const loginUrl = new URL('/studio/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
     }
@@ -24,5 +24,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/studio/:path*'],
 };
