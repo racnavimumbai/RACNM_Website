@@ -50,17 +50,18 @@ export const metadata: Metadata = {
     description: 'Premier community-based youth leadership & social impact organization in Navi Mumbai. Est. 1982 • District 3142.',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200&auto=format&fit=crop',
+        url: 'https://rotaractnavimumbai.com/images/logo-full.png',
         width: 1200,
         height: 630,
-        alt: 'Rotaract Club of Navi Mumbai 45th Year'
+        alt: 'Rotaract Club of Navi Mumbai Official Logo'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Rotaract Club of Navi Mumbai | 45th Year MAGNUM OPUS',
-    description: 'Premier youth leadership & community impact organization in Navi Mumbai. Est. 1982.'
+    description: 'Premier youth leadership & community impact organization in Navi Mumbai. Est. 1982.',
+    images: ['https://rotaractnavimumbai.com/images/logo-full.png']
   },
   robots: {
     index: true,
