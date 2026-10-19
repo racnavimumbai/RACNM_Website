@@ -13,7 +13,7 @@ export async function generateMetadata({
   if (!initiative) return { title: 'Initiative Not Found' };
 
   return {
-    title: `${initiative.title} | RCNM Thrust Areas`,
+    title: `${initiative.title} | RCNM Initiatives`,
     description: initiative.summary,
     openGraph: {
       title: `${initiative.title} | Rotaract Club of Navi Mumbai`,

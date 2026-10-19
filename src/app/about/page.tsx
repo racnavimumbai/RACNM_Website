@@ -31,7 +31,7 @@ const timelineEvents = [
   {
     year: '1995',
     title: 'Expansion into Youth Empowerment',
-    description: 'Expanded thrust areas to include career counseling, blood donation marathons, and local environmental drives, setting benchmarks across District 3142.'
+    description: 'Expanded initiatives to include career counseling, blood donation marathons, and local environmental drives, setting benchmarks across District 3142.'
   },
   {
     year: '2010',

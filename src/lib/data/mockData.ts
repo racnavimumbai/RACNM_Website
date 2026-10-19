@@ -95,7 +95,7 @@ export const initialInitiatives: Initiative[] = [
     title: "Project Literacy & Skill Catalyst",
     slug: "project-literacy-skill-catalyst",
     summary: "Empowering under-resourced schools and youth in Navi Mumbai through digital education, books, and career guidance.",
-    description: "Launched as one of RCNM's flagship community thrusts, Project Literacy provides quality learning kits, sets up digital mini-labs, and conducts career counseling sessions across Navi Mumbai municipal schools. Over 4,000 students have benefited directly.",
+    description: "Launched as one of RCNM's flagship community initiatives, Project Literacy provides quality learning kits, sets up digital mini-labs, and conducts career counseling sessions across Navi Mumbai municipal schools. Over 4,000 students have benefited directly.",
     category: "Education",
     cover_image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop",
     is_featured: true,

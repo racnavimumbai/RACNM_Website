@@ -99,7 +99,7 @@ export default function AdminDashboardPage() {
           <span className="font-serif-heading text-3xl font-bold text-white block">
             {initiatives.length}
           </span>
-          <span className="text-[10px] text-zinc-500 block">Active Thrust Areas</span>
+          <span className="text-[10px] text-zinc-500 block">Active Initiatives</span>
         </div>
 
         <div className="p-5 rounded-2xl bg-[#121215] border border-white/10 space-y-2">

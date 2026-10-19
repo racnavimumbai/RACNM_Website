@@ -203,7 +203,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
                   {matchedInitiatives.length > 0 && (
                     <div className="space-y-2">
                       <span className="text-[10px] font-bold text-[var(--gold-primary)] uppercase tracking-widest block font-mono">
-                        Thrust Initiatives ({matchedInitiatives.length})
+                        Initiatives ({matchedInitiatives.length})
                       </span>
                       <div className="space-y-1.5">
                         {matchedInitiatives.map(item => (

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Thrust Initiatives & Core Pillars',
-  description: 'Discover the core thrust areas of Rotaract Club of Navi Mumbai: Community Service, Youth Development, Environmental Sustainability, and Vocational Excellence.',
+  title: 'Our Initiatives & Core Pillars',
+  description: 'Discover the core initiatives of Rotaract Club of Navi Mumbai: Community Service, Youth Development, Environmental Sustainability, and Vocational Excellence.',
   openGraph: {
-    title: 'Thrust Initiatives | Rotaract Club of Navi Mumbai',
-    description: 'Core focus areas driving lasting social change and leadership in Navi Mumbai.',
+    title: 'Initiatives | Rotaract Club of Navi Mumbai',
+    description: 'Core initiatives driving lasting social change and leadership in Navi Mumbai.',
   }
 };
 

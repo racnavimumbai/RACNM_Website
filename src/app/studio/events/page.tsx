@@ -339,7 +339,7 @@ export default function AdminEventsPage() {
                 />
 
                 <div className="space-y-1">
-                  <label className="text-zinc-400 block">Thrust Category / Initiative</label>
+                  <label className="text-zinc-400 block">Linked Initiative</label>
                   <select
                     value={editingEvent.initiative_id || ''}
                     onChange={e => setEditingEvent({ ...editingEvent, initiative_id: e.target.value })}

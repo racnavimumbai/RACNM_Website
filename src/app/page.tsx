@@ -302,7 +302,7 @@ export default function HomePage() {
       <SectionDivider />
 
       {/* ═══════════════════════════════════════════════════════════════ */}
-      {/* THRUST AREAS VISUAL EXPLORER                                  */}
+      {/* INITIATIVES VISUAL EXPLORER                                   */}
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <motion.div
@@ -317,10 +317,10 @@ export default function HomePage() {
             <span>OUR CORE PILLARS</span>
           </span>
           <h2 className="font-serif-heading text-4xl sm:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
-            Our Thrust Areas
+            Our Initiatives
           </h2>
           <p className="text-[var(--text-muted)] text-sm sm:text-base max-w-2xl">
-            Thrust areas are the compass guiding us toward progress and innovation across Navi Mumbai.
+            Our initiatives are the compass guiding us toward progress and innovation across Navi Mumbai.
           </p>
         </motion.div>
 

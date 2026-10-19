@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils';
 const adminNav = [
   { name: 'Dashboard Overview', href: '/studio', icon: LayoutDashboard },
   { name: 'Event Manager', href: '/studio/events', icon: Calendar },
-  { name: 'Thrust Initiatives', href: '/studio/initiatives', icon: Sparkles },
+  { name: 'Initiatives', href: '/studio/initiatives', icon: Sparkles },
   { name: 'Photo Gallery', href: '/studio/gallery', icon: ImageIcon },
   { name: 'Editorials & Bulletins', href: '/studio/editorials', icon: FileText },
   { name: 'Leadership & Board', href: '/studio/team', icon: Users },

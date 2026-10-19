@@ -86,7 +86,7 @@ export default function AdminInitiativesPage() {
             Initiatives Manager
           </h1>
           <p className="text-zinc-400 text-xs">
-            Manage your flagship thrust areas (Education, Environment, Leadership Growth, etc.).
+            Manage your flagship initiatives (Education, Environment, Leadership Growth, etc.).
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export default function AdminInitiativesPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-300 uppercase block">Thrust Category (Set Any Custom Category)</label>
+                <label className="text-xs font-bold text-zinc-300 uppercase block">Initiative Category (Set Any Custom Category)</label>
                 <input
                   type="text"
                   list="category-suggestions"

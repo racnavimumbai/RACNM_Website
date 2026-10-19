@@ -39,11 +39,11 @@ export default function InitiativesPage() {
       >
 
         <h1 className="font-serif-heading text-5xl sm:text-7xl font-normal text-[var(--text-primary)]">
-          Our Initiatives & Thrust Areas
+          Our Initiatives
         </h1>
 
         <p className="text-[var(--text-secondary)] text-sm sm:text-base max-w-2xl font-sans leading-relaxed">
-          Thrust Areas are the compass guiding us toward progress and innovation, propelling our club forward on the path of excellence across Navi Mumbai.
+          Our initiatives are the compass guiding us toward progress and innovation, propelling our club forward on the path of excellence across Navi Mumbai.
         </p>
       </motion.div>
 
