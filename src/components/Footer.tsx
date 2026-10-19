@@ -92,7 +92,7 @@ export default function Footer() {
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
         >
           <div className={cn(
-            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-14 border-b",
+            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-14 border-b",
             theme === 'light' ? 'border-black/8' : 'border-white/10'
           )}>
             
@@ -193,19 +193,6 @@ export default function Footer() {
               </ul>
             </motion.div>
 
-            {/* Thrust Areas */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <h4 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
-                Thrust Areas
-              </h4>
-              <ul className="space-y-2.5 text-xs">
-                <li><Link href="/initiatives" className="hover:text-[var(--text-primary)] transition-colors duration-200">Education & Skill Building</Link></li>
-                <li><Link href="/initiatives" className="hover:text-[var(--text-primary)] transition-colors duration-200">Environmental Action</Link></li>
-                <li><Link href="/initiatives" className="hover:text-[var(--text-primary)] transition-colors duration-200">Leadership Growth</Link></li>
-                <li><Link href="/initiatives" className="hover:text-[var(--text-primary)] transition-colors duration-200">Community Healthcare</Link></li>
-                <li><Link href="/initiatives" className="hover:text-[var(--text-primary)] transition-colors duration-200">International Service</Link></li>
-              </ul>
-            </motion.div>
 
             {/* Location Details */}
             <motion.div variants={itemVariants} className="space-y-4">
