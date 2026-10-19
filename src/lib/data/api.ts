@@ -1,4 +1,5 @@
 import { getSupabaseBrowserClient } from '@/lib/supabase/client';
+import { formatImageUrl } from '@/lib/utils';
 import {
   initialInitiatives,
   initialEvents,
@@ -72,14 +73,18 @@ function setLocal<T>(key: string, val: T) {
 // INITIATIVES
 export async function getInitiatives(): Promise<Initiative[]> {
   const db = getDb();
+  let list: Initiative[];
   if (db) {
     const { data, error } = await db
       .from('initiatives')
       .select('*')
       .order('created_at', { ascending: false });
-    if (!error && data) return data as unknown as Initiative[];
+    if (!error && data) list = data as unknown as Initiative[];
+    else list = getLocal<Initiative[]>(STORAGE_KEYS.INITIATIVES, initialInitiatives);
+  } else {
+    list = getLocal<Initiative[]>(STORAGE_KEYS.INITIATIVES, initialInitiatives);
   }
-  return getLocal<Initiative[]>(STORAGE_KEYS.INITIATIVES, initialInitiatives);
+  return list.map(i => ({ ...i, cover_image: formatImageUrl(i.cover_image) }));
 }
 
 export async function getInitiativeBySlug(slug: string): Promise<Initiative | null> {
@@ -153,14 +158,22 @@ export async function deleteInitiative(id: string): Promise<boolean> {
 // EVENTS
 export async function getEvents(): Promise<EventItem[]> {
   const db = getDb();
+  let list: EventItem[];
   if (db) {
     const { data, error } = await db
       .from('events')
       .select('*')
       .order('event_date', { ascending: false });
-    if (!error && data) return data as unknown as EventItem[];
+    if (!error && data) list = data as unknown as EventItem[];
+    else list = getLocal<EventItem[]>(STORAGE_KEYS.EVENTS, initialEvents);
+  } else {
+    list = getLocal<EventItem[]>(STORAGE_KEYS.EVENTS, initialEvents);
   }
-  return getLocal<EventItem[]>(STORAGE_KEYS.EVENTS, initialEvents);
+  return list.map(e => ({
+    ...e,
+    cover_image: formatImageUrl(e.cover_image),
+    gallery_images: (e.gallery_images || []).map(formatImageUrl)
+  }));
 }
 
 export async function getEventBySlug(slug: string): Promise<EventItem | null> {
@@ -241,14 +254,18 @@ export async function deleteEvent(id: string): Promise<boolean> {
 // GALLERY
 export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
   const db = getDb();
+  let list: GalleryPhoto[];
   if (db) {
     const { data, error } = await db
       .from('gallery_photos')
       .select('*')
       .order('sort_order', { ascending: true });
-    if (!error && data) return data as unknown as GalleryPhoto[];
+    if (!error && data) list = data as unknown as GalleryPhoto[];
+    else list = getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, initialGalleryPhotos);
+  } else {
+    list = getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, initialGalleryPhotos);
   }
-  return getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, initialGalleryPhotos);
+  return list.map(p => ({ ...p, image_url: formatImageUrl(p.image_url) }));
 }
 
 export async function saveGalleryPhoto(photo: Partial<GalleryPhoto>): Promise<GalleryPhoto> {
@@ -315,14 +332,18 @@ export async function deleteGalleryPhoto(id: string): Promise<boolean> {
 // EDITORIALS
 export async function getEditorials(): Promise<Editorial[]> {
   const db = getDb();
+  let list: Editorial[];
   if (db) {
     const { data, error } = await db
       .from('editorials')
       .select('*')
       .order('published_at', { ascending: false });
-    if (!error && data) return data as unknown as Editorial[];
+    if (!error && data) list = data as unknown as Editorial[];
+    else list = getLocal<Editorial[]>(STORAGE_KEYS.EDITORIALS, initialEditorials);
+  } else {
+    list = getLocal<Editorial[]>(STORAGE_KEYS.EDITORIALS, initialEditorials);
   }
-  return getLocal<Editorial[]>(STORAGE_KEYS.EDITORIALS, initialEditorials);
+  return list.map(e => ({ ...e, cover_image: formatImageUrl(e.cover_image) }));
 }
 
 export async function getEditorialBySlug(slug: string): Promise<Editorial | null> {
@@ -396,29 +417,24 @@ export async function deleteEditorial(id: string): Promise<boolean> {
 
 // TEAM
 export async function getBoardMembers(year: string = '2024-25'): Promise<BoardMember[]> {
-  const db = getDb();
-  if (db) {
-    const { data, error } = await db
-      .from('board_members')
-      .select('*')
-      .eq('rotaract_year', year)
-      .order('sort_order', { ascending: true });
-    if (!error && data && Array.isArray(data) && data.length > 0) return data as unknown as BoardMember[];
-  }
-  const list = getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
+  const list = await getAllBoardMembers();
   return list.filter(m => m.rotaract_year === year).sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getAllBoardMembers(): Promise<BoardMember[]> {
   const db = getDb();
+  let list: BoardMember[];
   if (db) {
     const { data, error } = await db
       .from('board_members')
       .select('*')
       .order('sort_order', { ascending: true });
-    if (!error && data) return data as unknown as BoardMember[];
+    if (!error && data) list = data as unknown as BoardMember[];
+    else list = getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
+  } else {
+    list = getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
   }
-  return getLocal<BoardMember[]>(STORAGE_KEYS.TEAM, initialBoardMembers);
+  return list.map(m => ({ ...m, image_url: formatImageUrl(m.image_url) }));
 }
 
 export async function saveBoardMember(member: Partial<BoardMember>): Promise<BoardMember> {

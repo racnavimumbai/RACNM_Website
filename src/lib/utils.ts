@@ -35,3 +35,47 @@ export async function deleteUploadedImage(imageUrl: string | undefined | null) {
     console.error('Failed to delete image:', err);
   }
 }
+
+/**
+ * Extracts the file ID from various Google Drive link formats.
+ */
+export function extractGoogleDriveFileId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  // Don't treat folder links as single files
+  if (trimmed.includes('/folders/')) return null;
+
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /\/open\?id=([a-zA-Z0-9_-]+)/,
+    /\/uc\?.*id=([a-zA-Z0-9_-]+)/,
+    /\/thumbnail\?.*id=([a-zA-Z0-9_-]+)/,
+    /id=([a-zA-Z0-9_-]+)/
+  ];
+
+  for (const pattern of patterns) {
+    const match = trimmed.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
+/**
+ * Normalizes an image URL for display in <img> tags.
+ * If a raw Google Drive link is passed (e.g. legacy data),
+ * it converts it to Google's high-res thumbnail CDN so it doesn't fail in the browser.
+ */
+export function formatImageUrl(url: string | null | undefined): string {
+  if (!url) return '';
+  const trimmed = url.trim();
+  if (trimmed.includes('drive.google.com') || trimmed.includes('docs.google.com')) {
+    const driveId = extractGoogleDriveFileId(trimmed);
+    if (driveId) {
+      return `https://lh3.googleusercontent.com/d/${driveId}`;
+    }
+  }
+  return trimmed;
+}
+
